@@ -37,8 +37,11 @@
   flex-shrink: 0;
 }
 
-.about__avatar-icon {
-  color: var(--color-accent);
+.about__avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius-lg, 2rem);
+  object-fit: cover;
 }
 
 .about__bio {

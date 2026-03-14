@@ -9,7 +9,7 @@
 
     <!-- Filters -->
     <div class="projects-page__filters">
-      @for (filter of allFilters; track filter) {
+      @for (filter of allFilters(); track filter) {
         <button
           class="filter-btn"
           [class.filter-btn--active]="activeFilter() === filter"

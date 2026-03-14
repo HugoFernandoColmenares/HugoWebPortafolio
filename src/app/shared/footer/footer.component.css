@@ -11,6 +11,7 @@
   justify-content: space-between;
   gap: var(--space-md);
   flex-wrap: wrap;
+  padding: 0 2rem;
 }
 
 .footer__left {
@@ -61,6 +62,7 @@
   text-decoration: none;
   transition: all var(--transition-fast);
 }
+
 .footer__social:hover {
   color: var(--color-accent);
   border-color: var(--color-accent);
@@ -68,9 +70,19 @@
 }
 
 @media (max-width: 600px) {
+  .footer {
+    padding: var(--space-sm) 0;
+  }
+
+  .footer__left {
+    grid-column: span 2;
+  }
+
   .footer__inner {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Creamos dos columnas iguales */
+    gap: var(--space-xs);
+    justify-items: center;
     text-align: center;
-    align-items: center;
   }
 }
