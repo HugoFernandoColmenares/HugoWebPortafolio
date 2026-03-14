@@ -1,0 +1,36 @@
+<section class="projects-page section">
+  <div class="container">
+
+    <!-- Heading -->
+    <div class="projects-page__heading text-center">
+      <h1>{{ ts.t()['projects_heading'] }}</h1>
+      <p class="text-muted">{{ ts.t()['projects_subheading'] }}</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="projects-page__filters">
+      @for (filter of allFilters; track filter) {
+        <button
+          class="filter-btn"
+          [class.filter-btn--active]="activeFilter() === filter"
+          (click)="setFilter(filter)"
+        >
+          {{ filter === 'All' ? ts.t()['projects_filter_all'] : filter }}
+        </button>
+      }
+    </div>
+
+    <!-- Grid -->
+    <div class="projects-page__grid">
+      @for (project of filteredProjects; track project.id) {
+        <app-project-card [project]="project" />
+      }
+      @empty {
+        <div class="projects-page__empty">
+          <p class="text-muted">No projects match this filter.</p>
+        </div>
+      }
+    </div>
+
+  </div>
+</section>

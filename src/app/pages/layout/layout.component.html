@@ -1,0 +1,6 @@
+<app-header (toggleSidebar)="sidebarOpen.set(!sidebarOpen())" />
+<app-sidebar [isOpen]="sidebarOpen()" (close)="sidebarOpen.set(false)" />
+<main class="main-content">
+    <router-outlet />
+</main>
+<app-footer />
