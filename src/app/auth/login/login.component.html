@@ -1,0 +1,57 @@
+<div class="auth-form">
+  <div class="auth-form__header">
+    <h1>{{ labels.title }}</h1>
+    <p>{{ labels.subtitle }}</p>
+  </div>
+
+  @if (errorMessage) {
+    <div class="auth-form__alert auth-form__alert--error" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form__body">
+    <div class="auth-form__group">
+      <label class="auth-form__label" for="login-email">{{ labels.email }}</label>
+      <input
+        id="login-email"
+        type="email"
+        class="auth-form__input"
+        [class.auth-form__input--error]="f.email.invalid && f.email.touched"
+        formControlName="email"
+        autocomplete="email"
+      />
+    </div>
+
+    <div class="auth-form__group">
+      <label class="auth-form__label" for="login-password">{{ labels.password }}</label>
+      <input
+        id="login-password"
+        type="password"
+        class="auth-form__input"
+        [class.auth-form__input--error]="f.password.invalid && f.password.touched"
+        formControlName="password"
+        autocomplete="current-password"
+      />
+    </div>
+
+    <button type="submit" class="auth-form__submit" [disabled]="loading">
+      @if (loading) {
+        <span class="auth-form__spinner"></span>
+      }
+      {{ labels.submit }}
+    </button>
+  </form>
+
+  <div class="auth-form__footer">
+    <button type="button" class="auth-form__link" (click)="goToRecovery.emit()">
+      {{ labels.forgotPassword }}
+    </button>
+    <p>
+      {{ labels.noAccount }}
+      <button type="button" class="auth-form__link" (click)="goToRegister.emit()">
+        {{ labels.register }}
+      </button>
+    </p>
+  </div>
+</div>

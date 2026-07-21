@@ -1,0 +1,87 @@
+<div class="auth-form">
+  <div class="auth-form__header">
+    <h1>{{ labels.title }}</h1>
+    <p>{{ labels.subtitle }}</p>
+  </div>
+
+  @if (errorMessage) {
+    <div class="auth-form__alert auth-form__alert--error" role="alert">
+      {{ errorMessage }}
+    </div>
+  }
+
+  @if (successMessage) {
+    <div class="auth-form__alert auth-form__alert--success" role="status">
+      {{ successMessage }}
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form__body">
+    <div class="auth-form__group">
+      <label class="auth-form__label" for="register-name">{{ labels.fullName }}</label>
+      <input
+        id="register-name"
+        type="text"
+        class="auth-form__input"
+        [class.auth-form__input--error]="f.fullName.invalid && f.fullName.touched"
+        formControlName="fullName"
+        autocomplete="name"
+      />
+    </div>
+
+    <div class="auth-form__group">
+      <label class="auth-form__label" for="register-email">{{ labels.email }}</label>
+      <input
+        id="register-email"
+        type="email"
+        class="auth-form__input"
+        [class.auth-form__input--error]="f.email.invalid && f.email.touched"
+        formControlName="email"
+        autocomplete="email"
+      />
+    </div>
+
+    <div class="auth-form__group">
+      <label class="auth-form__label" for="register-password">{{ labels.password }}</label>
+      <input
+        id="register-password"
+        type="password"
+        class="auth-form__input"
+        [class.auth-form__input--error]="f.password.invalid && f.password.touched"
+        formControlName="password"
+        autocomplete="new-password"
+      />
+    </div>
+
+    <div class="auth-form__group">
+      <label class="auth-form__label" for="register-confirm">{{ labels.confirmPassword }}</label>
+      <input
+        id="register-confirm"
+        type="password"
+        class="auth-form__input"
+        [class.auth-form__input--error]="f.confirmPassword.invalid && f.confirmPassword.touched"
+        formControlName="confirmPassword"
+        autocomplete="new-password"
+      />
+      @if (showPasswordMismatch) {
+        <span class="auth-form__hint auth-form__hint--error">{{ labels.passwordMismatch }}</span>
+      }
+    </div>
+
+    <button type="submit" class="auth-form__submit" [disabled]="loading">
+      @if (loading) {
+        <span class="auth-form__spinner"></span>
+      }
+      {{ labels.submit }}
+    </button>
+  </form>
+
+  <div class="auth-form__footer">
+    <p>
+      {{ labels.hasAccount }}
+      <button type="button" class="auth-form__link" (click)="goToLogin.emit()">
+        {{ labels.login }}
+      </button>
+    </p>
+  </div>
+</div>
