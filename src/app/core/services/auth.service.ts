@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Session } from '@supabase/supabase-js';
-import { AuthResult, LoginCredentials, RegisterCredentials, } from '../models/auth-credentials.model';
+import { AuthResult, ConfirmRegisterStatus, LoginCredentials, RegisterCredentials, } from '../models/auth-credentials.model';
 import { UserProfile } from '../models/user.model';
 import { mapUserProfile } from '../mappers/user.mapper';
 import { SupabaseService } from './supabase.service';
@@ -61,6 +61,7 @@ export class AuthService {
       password: credentials.password,
       options: {
         data: { full_name: credentials.fullName },
+        emailRedirectTo: `${appEnvironment.siteUrl}/#/auth/confirm-register`,
       },
     });
 
@@ -98,6 +99,61 @@ export class AuthService {
     }
 
     this.isRecoveryMode.set(false);
+  }
+
+  async confirmEmailRegistration(): Promise<ConfirmRegisterStatus> {
+    const queryParams = new URLSearchParams(window.location.search);
+    const code = queryParams.get('code');
+
+    if (code) {
+      const { error } = await this.supabase.client.auth.exchangeCodeForSession(code);
+      if (error) {
+        return 'error';
+      }
+    }
+
+    const hash = window.location.hash;
+    const hasAuthParams =
+      hash.includes('access_token=') ||
+      hash.includes('type=signup') ||
+      hash.includes('type=email');
+
+    if (hasAuthParams) {
+      const authFragment = hash.includes('access_token=')
+        ? hash.slice(hash.indexOf('access_token='))
+        : '';
+
+      if (authFragment) {
+        const params = new URLSearchParams(authFragment.replace(/#/g, '&'));
+        const accessToken = params.get('access_token');
+        const refreshToken = params.get('refresh_token');
+
+        if (accessToken && refreshToken) {
+          const { error } = await this.supabase.client.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+
+          if (error) {
+            return 'error';
+          }
+        }
+      }
+    }
+
+    const { data: { session }, error: sessionError } = await this.supabase.client.auth.getSession();
+
+    if (sessionError) {
+      return 'error';
+    }
+
+    if (!session) {
+      return hasAuthParams || code ? 'error' : 'invalid';
+    }
+
+    await this.loadProfile();
+    await this.signOut();
+    return 'success';
   }
 
   private async loadProfile(): Promise<void> {

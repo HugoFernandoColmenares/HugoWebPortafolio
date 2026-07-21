@@ -1,24 +1,24 @@
 <div class="auth-form">
   <div class="auth-form__header">
-    <h1>{{ labels.title }}</h1>
-    <p>{{ labels.subtitle }}</p>
+    <h1>{{ facade.registerLabels().title }}</h1>
+    <p>{{ facade.registerLabels().subtitle }}</p>
   </div>
 
-  @if (errorMessage) {
+  @if (facade.errorMessage()) {
     <div class="auth-form__alert auth-form__alert--error" role="alert">
-      {{ errorMessage }}
+      {{ facade.errorMessage() }}
     </div>
   }
 
-  @if (successMessage) {
+  @if (facade.successMessage()) {
     <div class="auth-form__alert auth-form__alert--success" role="status">
-      {{ successMessage }}
+      {{ facade.successMessage() }}
     </div>
   }
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form__body">
     <div class="auth-form__group">
-      <label class="auth-form__label" for="register-name">{{ labels.fullName }}</label>
+      <label class="auth-form__label" for="register-name">{{ facade.registerLabels().fullName }}</label>
       <input
         id="register-name"
         type="text"
@@ -30,7 +30,7 @@
     </div>
 
     <div class="auth-form__group">
-      <label class="auth-form__label" for="register-email">{{ labels.email }}</label>
+      <label class="auth-form__label" for="register-email">{{ facade.registerLabels().email }}</label>
       <input
         id="register-email"
         type="email"
@@ -42,7 +42,7 @@
     </div>
 
     <div class="auth-form__group">
-      <label class="auth-form__label" for="register-password">{{ labels.password }}</label>
+      <label class="auth-form__label" for="register-password">{{ facade.registerLabels().password }}</label>
       <input
         id="register-password"
         type="password"
@@ -54,7 +54,7 @@
     </div>
 
     <div class="auth-form__group">
-      <label class="auth-form__label" for="register-confirm">{{ labels.confirmPassword }}</label>
+      <label class="auth-form__label" for="register-confirm">{{ facade.registerLabels().confirmPassword }}</label>
       <input
         id="register-confirm"
         type="password"
@@ -64,23 +64,23 @@
         autocomplete="new-password"
       />
       @if (showPasswordMismatch) {
-        <span class="auth-form__hint auth-form__hint--error">{{ labels.passwordMismatch }}</span>
+        <span class="auth-form__hint auth-form__hint--error">{{ facade.registerLabels().passwordMismatch }}</span>
       }
     </div>
 
-    <button type="submit" class="auth-form__submit" [disabled]="loading">
-      @if (loading) {
+    <button type="submit" class="auth-form__submit" [disabled]="facade.loading()">
+      @if (facade.loading()) {
         <span class="auth-form__spinner"></span>
       }
-      {{ labels.submit }}
+      {{ facade.registerLabels().submit }}
     </button>
   </form>
 
   <div class="auth-form__footer">
     <p>
-      {{ labels.hasAccount }}
-      <button type="button" class="auth-form__link" (click)="goToLogin.emit()">
-        {{ labels.login }}
+      {{ facade.registerLabels().hasAccount }}
+      <button type="button" class="auth-form__link" (click)="facade.goToLogin()">
+        {{ facade.registerLabels().login }}
       </button>
     </p>
   </div>

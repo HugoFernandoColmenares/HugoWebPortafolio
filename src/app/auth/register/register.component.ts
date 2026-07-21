@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RegisterCredentials } from '../../core/models/auth-credentials.model';
+import { AuthFacadeService } from '../../core/services/auth-facade.service';
 
 @Component({
   selector: 'app-register',
@@ -11,27 +11,10 @@ import { RegisterCredentials } from '../../core/models/auth-credentials.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-  @Input({ required: true }) loading = false;
-  @Input() errorMessage = '';
-  @Input() successMessage = '';
-  @Input({ required: true }) labels!: {
-    title: string;
-    subtitle: string;
-    fullName: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    submit: string;
-    hasAccount: string;
-    login: string;
-    passwordMismatch: string;
-  };
-
-  @Output() submitRegister = new EventEmitter<RegisterCredentials>();
-  @Output() goToLogin = new EventEmitter<void>();
+  readonly facade = inject(AuthFacadeService);
+  private readonly fb = inject(FormBuilder);
 
   showPasswordMismatch = false;
-  private readonly fb = new FormBuilder();
 
   readonly form = this.fb.nonNullable.group({
     fullName: ['', [Validators.required, Validators.minLength(2)]],
@@ -58,6 +41,6 @@ export class RegisterComponent {
     }
 
     this.showPasswordMismatch = false;
-    this.submitRegister.emit({ fullName, email, password });
+    void this.facade.onRegister({ fullName, email, password });
   }
 }

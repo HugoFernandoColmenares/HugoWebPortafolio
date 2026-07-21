@@ -21,3 +21,5 @@ export interface PasswordUpdateRequest {
 export interface AuthResult {
   requiresEmailConfirmation: boolean;
 }
+
+export type ConfirmRegisterStatus = 'loading' | 'success' | 'error' | 'invalid';

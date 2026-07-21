@@ -1,8 +1,6 @@
-import { Component, ChangeDetectionStrategy, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PasswordUpdateRequest, RecoveryRequest } from '../../core/models/auth-credentials.model';
-
-export type RecoveryMode = 'request' | 'update';
+import { AuthFacadeService } from '../../core/services/auth-facade.service';
 
 @Component({
   selector: 'app-recovery-password',
@@ -13,30 +11,10 @@ export type RecoveryMode = 'request' | 'update';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecoveryPasswordComponent {
-  @Input({ required: true }) mode: RecoveryMode = 'request';
-  @Input({ required: true }) loading = false;
-  @Input() errorMessage = '';
-  @Input() successMessage = '';
-  @Input({ required: true }) labels!: {
-    requestTitle: string;
-    requestSubtitle: string;
-    updateTitle: string;
-    updateSubtitle: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    submitRequest: string;
-    submitUpdate: string;
-    backToLogin: string;
-    passwordMismatch: string;
-  };
-
-  @Output() submitRecovery = new EventEmitter<RecoveryRequest>();
-  @Output() submitPasswordUpdate = new EventEmitter<PasswordUpdateRequest>();
-  @Output() goToLogin = new EventEmitter<void>();
+  readonly facade = inject(AuthFacadeService);
+  private readonly fb = inject(FormBuilder);
 
   showPasswordMismatch = false;
-  private readonly fb = new FormBuilder();
 
   readonly requestForm = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -61,7 +39,7 @@ export class RecoveryPasswordComponent {
       return;
     }
 
-    this.submitRecovery.emit(this.requestForm.getRawValue());
+    void this.facade.onRecovery(this.requestForm.getRawValue());
   }
 
   onUpdateSubmit(): void {
@@ -77,6 +55,6 @@ export class RecoveryPasswordComponent {
     }
 
     this.showPasswordMismatch = false;
-    this.submitPasswordUpdate.emit({ password, confirmPassword });
+    void this.facade.onPasswordUpdate({ password, confirmPassword });
   }
 }

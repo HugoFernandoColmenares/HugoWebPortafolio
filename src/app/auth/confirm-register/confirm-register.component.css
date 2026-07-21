@@ -1,0 +1,50 @@
+@import '../auth-shared.css';
+
+.auth-form--confirm {
+  min-height: 32rem;
+  justify-content: center;
+}
+
+.auth-form__status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  text-align: left;
+}
+
+.auth-form__status h1 {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  color: var(--color-text-heading);
+}
+
+.auth-form__status p {
+  color: var(--color-text-muted);
+  font-size: 1.5rem;
+  line-height: 1.7;
+  max-width: 42rem;
+}
+
+.auth-form__icon {
+  font-size: 3.2rem;
+  line-height: 1;
+}
+
+.auth-form__spinner--large {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-width: 3px;
+}
+
+.auth-form__status--loading .auth-form__spinner {
+  border-color: rgba(56, 189, 248, 0.25);
+  border-top-color: var(--color-accent);
+}
+
+.auth-form__status--success h1 {
+  color: #22c55e;
+}
+
+.auth-form__status--error h1 {
+  color: #ef4444;
+}

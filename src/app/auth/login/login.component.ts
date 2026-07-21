@@ -1,6 +1,6 @@
-import { Component, ChangeDetectionStrategy, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginCredentials } from '../../core/models/auth-credentials.model';
+import { AuthFacadeService } from '../../core/services/auth-facade.service';
 
 @Component({
   selector: 'app-login',
@@ -11,24 +11,8 @@ import { LoginCredentials } from '../../core/models/auth-credentials.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  @Input({ required: true }) loading = false;
-  @Input() errorMessage = '';
-  @Input({ required: true }) labels!: {
-    title: string;
-    subtitle: string;
-    email: string;
-    password: string;
-    submit: string;
-    noAccount: string;
-    register: string;
-    forgotPassword: string;
-  };
-
-  @Output() submitLogin = new EventEmitter<LoginCredentials>();
-  @Output() goToRegister = new EventEmitter<void>();
-  @Output() goToRecovery = new EventEmitter<void>();
-
-  private readonly fb = new FormBuilder();
+  readonly facade = inject(AuthFacadeService);
+  private readonly fb = inject(FormBuilder);
 
   readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -45,6 +29,6 @@ export class LoginComponent {
       return;
     }
 
-    this.submitLogin.emit(this.form.getRawValue());
+    void this.facade.onLogin(this.form.getRawValue());
   }
 }

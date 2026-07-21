@@ -1,0 +1,120 @@
+.not-found {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-height));
+  overflow: hidden;
+}
+
+.not-found__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.not-found__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.35;
+}
+
+.not-found__blob--1 {
+  top: 10%;
+  left: -8%;
+  width: 36rem;
+  height: 36rem;
+  background: rgba(56, 189, 248, 0.35);
+}
+
+.not-found__blob--2 {
+  right: -10%;
+  bottom: 8%;
+  width: 42rem;
+  height: 42rem;
+  background: rgba(129, 140, 248, 0.28);
+}
+
+.not-found__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-sm);
+  padding: var(--space-lg) var(--space-md);
+}
+
+.not-found__code {
+  font-size: clamp(8rem, 18vw, 14rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.not-found__title {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  max-width: 60rem;
+}
+
+.not-found__subtitle {
+  max-width: 52rem;
+  color: var(--color-text-muted);
+  font-size: 1.6rem;
+  line-height: 1.7;
+}
+
+.not-found__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: var(--space-sm);
+}
+
+.not-found__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem 2.4rem;
+  border-radius: var(--radius-md);
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.not-found__btn--primary {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
+}
+
+.not-found__btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+}
+
+.not-found__btn--outline {
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+  background: transparent;
+}
+
+.not-found__btn--outline:hover {
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .not-found__actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .not-found__btn {
+    width: 100%;
+  }
+}

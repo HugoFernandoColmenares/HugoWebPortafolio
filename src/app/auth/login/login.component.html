@@ -1,18 +1,18 @@
 <div class="auth-form">
   <div class="auth-form__header">
-    <h1>{{ labels.title }}</h1>
-    <p>{{ labels.subtitle }}</p>
+    <h1>{{ facade.loginLabels().title }}</h1>
+    <p>{{ facade.loginLabels().subtitle }}</p>
   </div>
 
-  @if (errorMessage) {
+  @if (facade.errorMessage()) {
     <div class="auth-form__alert auth-form__alert--error" role="alert">
-      {{ errorMessage }}
+      {{ facade.errorMessage() }}
     </div>
   }
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form__body">
     <div class="auth-form__group">
-      <label class="auth-form__label" for="login-email">{{ labels.email }}</label>
+      <label class="auth-form__label" for="login-email">{{ facade.loginLabels().email }}</label>
       <input
         id="login-email"
         type="email"
@@ -24,7 +24,7 @@
     </div>
 
     <div class="auth-form__group">
-      <label class="auth-form__label" for="login-password">{{ labels.password }}</label>
+      <label class="auth-form__label" for="login-password">{{ facade.loginLabels().password }}</label>
       <input
         id="login-password"
         type="password"
@@ -35,22 +35,22 @@
       />
     </div>
 
-    <button type="submit" class="auth-form__submit" [disabled]="loading">
-      @if (loading) {
+    <button type="submit" class="auth-form__submit" [disabled]="facade.loading()">
+      @if (facade.loading()) {
         <span class="auth-form__spinner"></span>
       }
-      {{ labels.submit }}
+      {{ facade.loginLabels().submit }}
     </button>
   </form>
 
   <div class="auth-form__footer">
-    <button type="button" class="auth-form__link" (click)="goToRecovery.emit()">
-      {{ labels.forgotPassword }}
+    <button type="button" class="auth-form__link" (click)="facade.goToRecovery()">
+      {{ facade.loginLabels().forgotPassword }}
     </button>
     <p>
-      {{ labels.noAccount }}
-      <button type="button" class="auth-form__link" (click)="goToRegister.emit()">
-        {{ labels.register }}
+      {{ facade.loginLabels().noAccount }}
+      <button type="button" class="auth-form__link" (click)="facade.goToRegister()">
+        {{ facade.loginLabels().register }}
       </button>
     </p>
   </div>

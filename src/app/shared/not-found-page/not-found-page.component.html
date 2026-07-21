@@ -1,1 +1,21 @@
-<p>not-found-page works!</p>
+<section class="not-found section">
+  <div class="not-found__bg">
+    <div class="not-found__blob not-found__blob--1"></div>
+    <div class="not-found__blob not-found__blob--2"></div>
+  </div>
+
+  <div class="container not-found__content">
+    <p class="not-found__code gradient-text">404</p>
+    <h1 class="not-found__title">{{ ts.t()['not_found_title'] }}</h1>
+    <p class="not-found__subtitle">{{ ts.t()['not_found_subtitle'] }}</p>
+
+    <div class="not-found__actions">
+      <a routerLink="/" class="not-found__btn not-found__btn--primary">
+        {{ ts.t()['not_found_home'] }}
+      </a>
+      <a routerLink="/projects" class="not-found__btn not-found__btn--outline">
+        {{ ts.t()['not_found_projects'] }}
+      </a>
+    </div>
+  </div>
+</section>
