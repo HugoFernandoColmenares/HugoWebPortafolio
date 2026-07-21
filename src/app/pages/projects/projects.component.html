@@ -21,16 +21,22 @@
     </div>
 
     <!-- Grid -->
-    <div class="projects-page__grid">
-      @for (project of filteredProjects(); track project.id) {
-        <app-project-card [project]="project" />
-      }
-      @empty {
-        <div class="projects-page__empty">
-          <p class="text-muted">No projects match this filter.</p>
-        </div>
-      }
-    </div>
+    @if (loading()) {
+      <p class="projects-page__status text-muted">{{ ts.t().projects_loading }}</p>
+    } @else if (loadError()) {
+      <p class="projects-page__status text-muted">{{ ts.t().projects_load_error }}</p>
+    } @else {
+      <div class="projects-page__grid">
+        @for (project of filteredProjects(); track project.id) {
+          <app-project-card [project]="project" />
+        }
+        @empty {
+          <div class="projects-page__empty">
+            <p class="text-muted">{{ ts.t().projects_empty_filter }}</p>
+          </div>
+        }
+      </div>
+    }
 
   </div>
 </section>

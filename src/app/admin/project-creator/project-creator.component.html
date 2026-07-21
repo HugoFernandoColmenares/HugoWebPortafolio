@@ -1,1 +1,22 @@
-<p>project-creator works!</p>
+<section class="project-creator">
+  @if (viewMode() === 'list') {
+    <app-project-table
+      [projects]="projects()"
+      [loading]="loading()"
+      [labels]="tableLabels()"
+      (addProject)="onAddProject()"
+      (viewProject)="onViewProject($event)"
+      (editProject)="onEditProject($event)"
+      (deleteProject)="onDeleteProject($event)"
+    />
+  } @else {
+    <app-project-form
+      [mode]="formMode()"
+      [project]="selectedProject()"
+      [loading]="saving()"
+      [labels]="formLabels()"
+      (saveProject)="onSaveProject($event)"
+      (cancelForm)="onCancelForm()"
+    />
+  }
+</section>

@@ -1,0 +1,87 @@
+<div class="project-table">
+  <div class="project-table__header">
+    <div>
+      <h2>{{ labels().title }}</h2>
+      <p>{{ labels().subtitle }}</p>
+    </div>
+    <p-button
+      [label]="labels().add"
+      icon="pi pi-plus"
+      (onClick)="addProject.emit()"
+    />
+  </div>
+
+  <div class="project-table__wrapper">
+    <p-table
+      [value]="projects()"
+      [loading]="loading()"
+      [rowHover]="true"
+      [showGridlines]="true"
+      styleClass="project-table__grid"
+    >
+      <ng-template #header>
+        <tr>
+          <th>{{ labels().columnTitle }}</th>
+          <th>{{ labels().columnStatus }}</th>
+          <th>{{ labels().columnTechnologies }}</th>
+          <th>{{ labels().columnFeatured }}</th>
+          <th class="project-table__actions-col">{{ labels().columnActions }}</th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-project>
+        <tr>
+          <td>
+            <span class="project-table__title">{{ project.title }}</span>
+          </td>
+          <td>
+            <p-tag
+              [value]="statusLabel(project.status)"
+              [severity]="statusSeverity(project.status)"
+            />
+          </td>
+          <td>
+            <span class="project-table__tech">{{ project.technologies.join(', ') }}</span>
+          </td>
+          <td>
+            {{ project.featured ? labels().featuredYes : labels().featuredNo }}
+          </td>
+          <td class="project-table__actions">
+            <p-button
+              icon="pi pi-eye"
+              [rounded]="true"
+              [text]="true"
+              severity="info"
+              [pTooltip]="labels().view"
+              (onClick)="viewProject.emit(project)"
+            />
+            <p-button
+              icon="pi pi-pencil"
+              [rounded]="true"
+              [text]="true"
+              severity="secondary"
+              [pTooltip]="labels().edit"
+              (onClick)="editProject.emit(project)"
+            />
+            <p-button
+              icon="pi pi-trash"
+              [rounded]="true"
+              [text]="true"
+              severity="danger"
+              [pTooltip]="labels().delete"
+              (onClick)="deleteProject.emit(project)"
+            />
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template #emptymessage>
+        <tr>
+          <td colspan="5" class="project-table__empty">
+            {{ labels().empty }}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 
-import { Project } from '../../../core/models/project.model';
+import { PortfolioProject } from '../../../core/models/portfolio-project.model';
 import { TechBadgeComponent } from '../tech-badge/tech-badge.component';
 import { TranslationService } from '../../../core/services/translation.service';
 
@@ -15,7 +15,7 @@ import { TranslationService } from '../../../core/services/translation.service';
       }
 
       <div class="card__image-wrapper">
-        <img [src]="project.imageUrl" [alt]="project.titleKey" class="card__image" loading="lazy" />
+        <img [src]="project.imageUrl" [alt]="project.title" class="card__image" loading="lazy" />
         <div class="card__image-overlay">
           <div class="card__links">
             @if (project.githubUrl) {
@@ -40,10 +40,14 @@ import { TranslationService } from '../../../core/services/translation.service';
 
       <div class="card__body">
         <div [class]="'card__status card__status--' + project.status">
-          {{ project.status === 'completed' ? ts.t()['projects_status_completed'] : ts.t()['projects_status_wip'] }}
+          @switch (project.status) {
+            @case ('completed') { {{ ts.t().projects_status_completed }} }
+            @case ('in-progress') { {{ ts.t().projects_status_wip }} }
+            @default { {{ ts.t().projects_status_planned }} }
+          }
         </div>
-        <h3 class="card__title">{{ project.titleKey }}</h3>
-        <p class="card__description">{{ project.descriptionKey }}</p>
+        <h3 class="card__title">{{ project.title }}</h3>
+        <p class="card__description">{{ project.description }}</p>
         <div class="card__techs">
           @for (tech of project.technologies; track tech) {
             <app-tech-badge [tech]="tech" />
@@ -183,6 +187,6 @@ import { TranslationService } from '../../../core/services/translation.service';
   `]
 })
 export class ProjectCardComponent {
-  @Input({ required: true }) project!: Project;
+  @Input({ required: true }) project!: PortfolioProject;
   readonly ts = inject(TranslationService);
 }

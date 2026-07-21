@@ -8,7 +8,7 @@ This README is the executive summary of the project. Detailed standards live in 
 
 ## Overview
 
-A standalone Angular 22 application with signal-based reactivity, hash-based routing, bilingual support (English/Spanish), dark/light theming, and Supabase-backed authentication and data persistence. The UI is built with a custom token-driven CSS system (mobile-first, no CSS framework).
+A standalone Angular 22 application with signal-based reactivity, hash-based routing, bilingual support (English/Spanish), dark/light theming, and Supabase-backed authentication and data persistence. Public pages use a custom token-driven CSS system; the admin area uses PrimeNG (free tier) with PrimeIcons, themed to match portfolio tokens.
 
 ---
 
@@ -17,7 +17,8 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 | Area | Technology |
 |------|------------|
 | Frontend | Angular 22, TypeScript, Standalone Components, Signals |
-| Styling | Custom CSS (62.5% REM scale, CSS custom properties) |
+| Public UI styling | Custom CSS (62.5% REM scale, CSS custom properties) |
+| Admin UI | PrimeNG 21 (MIT, no license key), PrimeIcons, `@primeuix/themes` |
 | Backend | Supabase (Auth, PostgreSQL, RLS) |
 | Environment | `@ngx-env/builder` (`NG_APP_*` variables) |
 | Migrations | Supabase CLI |
@@ -36,14 +37,15 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 - Authentication flows: login, register, password recovery, email confirmation
 - Centralized notifications via SweetAlert2 modals (`NotificationService`) styled with design tokens
 - Protected admin area with user profile loaded from Supabase
-- Database migrations for contact messages, users, and roles
+- Public `/projects` page loaded from Supabase via `PortfolioProjectService`
+- Admin project creator: CRUD for portfolio projects (PrimeNG table + form, Supabase `portfolio_projects`)
+- Seed migration for initial portfolio projects
+- Database migrations for contact messages, users, roles, and portfolio projects
 - Lazy-loaded routes and standalone component architecture
 
 ### Planned
 
-- Project creator: full CRUD for portfolio projects/posts in the admin area
 - Role-based access control (ADMIN, MODERATOR, USER) enforced in guards and services
-- Admin table and form components for content management
 - Migrate build pipeline fully to `@angular/build` when `@ngx-env/builder` supports Angular 22
 - Automated test coverage for core services and guards
 - SEO and performance optimizations for production deployment
@@ -80,6 +82,7 @@ Full rules: `design_guidelines.md` (local, gitignored).
 - Generic/reusable CSS classes belong in `styles.css`; component CSS files contain only component-specific styles and media queries
 - BEM-inspired class naming; Inter as primary typeface
 - Light/dark themes via `data-theme` attribute
+- Admin CRUD screens use PrimeNG with Aura preset customized to portfolio accent colors
 
 ---
 
@@ -91,6 +94,7 @@ Full rules: `architecture_guidelines.md` (local, gitignored).
 - All services and models live under `core/`; no service files elsewhere
 - Interfaces and types are defined in `core/models`, never inside components
 - Feature folders: `pages` (public), `auth` (auth UI), `admin` (protected CRUD)
+- Admin `project-creator`: parent orchestrates state; `table` and `form` children use `@Input` / `@Output` only
 - Before creating components, verify no similar component already exists
 - Target 200–250 lines per component; refactor into child or shared components when exceeded
 - SOLID, DRY, and KISS principles apply to all changes
@@ -133,6 +137,19 @@ Configure Supabase Auth redirect URLs for hash routing, for example:
 
 - `http://localhost:4200/#/auth/confirm-register`
 - `http://localhost:4200/#/auth/recovery-password`
+- `https://your-app.vercel.app/#/auth/confirm-register` (production)
+
+---
+
+## Deploy to Vercel
+
+1. Import the repository in [Vercel](https://vercel.com).
+2. Framework preset: **Other** (configured via `vercel.json`).
+3. Set environment variables from `.env.production.example` (`NG_APP_*`).
+4. Set `NG_APP_SITE_URL` to your production URL (e.g. `https://your-app.vercel.app`).
+5. Deploy. Output directory: `dist/web-portafolio/browser`.
+
+The app uses hash routing (`/#/...`), so no server-side route configuration is required beyond the SPA fallback in `vercel.json`.
 
 ---
 

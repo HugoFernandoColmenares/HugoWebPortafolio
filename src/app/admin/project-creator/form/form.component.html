@@ -1,0 +1,73 @@
+<form class="project-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <header class="project-form__header">
+    <h2>{{ heading() }}</h2>
+  </header>
+
+  <div class="project-form__grid">
+    <div class="project-form__field project-form__field--full">
+      <label for="project-title">{{ labels().title }}</label>
+      <input pInputText id="project-title" formControlName="title" />
+    </div>
+
+    <div class="project-form__field project-form__field--full">
+      <label for="project-description">{{ labels().description }}</label>
+      <textarea pTextarea id="project-description" formControlName="description" rows="5"></textarea>
+    </div>
+
+    <div class="project-form__field project-form__field--full">
+      <label for="project-image">{{ labels().imageUrl }}</label>
+      <input pInputText id="project-image" formControlName="imageUrl" />
+    </div>
+
+    <div class="project-form__field project-form__field--full">
+      <label for="project-tech">{{ labels().technologies }}</label>
+      <input pInputText id="project-tech" formControlName="technologiesText" />
+      <small>{{ labels().technologiesHint }}</small>
+    </div>
+
+    <div class="project-form__field">
+      <label for="project-github">{{ labels().githubUrl }}</label>
+      <input pInputText id="project-github" formControlName="githubUrl" />
+    </div>
+
+    <div class="project-form__field">
+      <label for="project-live">{{ labels().liveUrl }}</label>
+      <input pInputText id="project-live" formControlName="liveUrl" />
+    </div>
+
+    <div class="project-form__field">
+      <label for="project-status">{{ labels().status }}</label>
+      <p-select
+        inputId="project-status"
+        formControlName="status"
+        [options]="statusOptions()"
+        optionLabel="label"
+        optionValue="value"
+      />
+    </div>
+
+    <div class="project-form__field project-form__field--checkbox">
+      <p-checkbox inputId="project-featured" formControlName="featured" [binary]="true" />
+      <label for="project-featured">{{ labels().featured }}</label>
+    </div>
+  </div>
+
+  <footer class="project-form__actions">
+    <p-button
+      type="button"
+      [label]="labels().cancel"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="cancelForm.emit()"
+    />
+
+    @if (mode() !== 'view') {
+      <p-button
+        type="submit"
+        [label]="labels().save"
+        icon="pi pi-check"
+        [loading]="loading()"
+      />
+    }
+  </footer>
+</form>
