@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+
 import { TranslationService } from '../../../core/services/translation.service';
 
 @Component({
   selector: 'app-language-toggle',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `
     <button
       class="lang-toggle"
@@ -17,6 +17,7 @@ import { TranslationService } from '../../../core/services/translation.service';
       <span [class.lang-active]="ts.currentLang() === 'es'">ES</span>
     </button>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [`
     .lang-toggle {
       display: inline-flex;

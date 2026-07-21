@@ -1,5 +1,5 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+
 import { Project } from '../../core/models/project.model';
 import { TranslationService } from '../../core/services/translation.service';
 import { ProjectCardComponent } from '../../shared/components/project-card/project-card.component';
@@ -7,8 +7,9 @@ import { ProjectCardComponent } from '../../shared/components/project-card/proje
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, ProjectCardComponent],
+  imports: [ProjectCardComponent],
   templateUrl: './projects.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './projects.component.css'
 })
 export class ProjectsComponent {

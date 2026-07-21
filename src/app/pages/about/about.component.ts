@@ -1,19 +1,22 @@
-import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { TranslationService } from '../../core/services/translation.service';
+import { AppConfigService } from '../../core/services/app-config.service';
 import { TechBadgeComponent } from '../../shared/components/tech-badge/tech-badge.component';
 import { Skill } from '../../core/models/skill.model';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, TechBadgeComponent],
+  imports: [ReactiveFormsModule, TechBadgeComponent],
   templateUrl: './about.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './about.component.css'
 })
 export class AboutComponent {
   readonly ts = inject(TranslationService);
+  readonly config = inject(AppConfigService);
   private fb = inject(FormBuilder);
 
   readonly skills: Skill[] = [

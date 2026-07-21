@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
+
 
 const TECH_COLORS: Record<string, string> = {
   'Angular': '#dd0031',
@@ -25,8 +25,9 @@ const TECH_COLORS: Record<string, string> = {
 @Component({
   selector: 'app-tech-badge',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   template: `<span class="tech-badge" [style.--badge-color]="color">{{ tech }}</span>`,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [`
     .tech-badge {
       display: inline-flex;

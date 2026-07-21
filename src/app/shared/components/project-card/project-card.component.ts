@@ -1,5 +1,5 @@
-import { Component, Input, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
+
 import { Project } from '../../../core/models/project.model';
 import { TechBadgeComponent } from '../tech-badge/tech-badge.component';
 import { TranslationService } from '../../../core/services/translation.service';
@@ -7,7 +7,7 @@ import { TranslationService } from '../../../core/services/translation.service';
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [CommonModule, TechBadgeComponent],
+  imports: [TechBadgeComponent],
   template: `
     <article class="card" [class.card--featured]="project.featured">
       @if (project.featured) {
@@ -52,6 +52,7 @@ import { TranslationService } from '../../../core/services/translation.service';
       </div>
     </article>
   `,
+  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [`
     .card {
       background: var(--color-surface, #fff);
