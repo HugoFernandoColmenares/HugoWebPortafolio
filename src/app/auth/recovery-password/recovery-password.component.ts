@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthFacadeService } from '../../core/services/auth-facade.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-recovery-password',
@@ -13,8 +14,7 @@ import { AuthFacadeService } from '../../core/services/auth-facade.service';
 export class RecoveryPasswordComponent {
   readonly facade = inject(AuthFacadeService);
   private readonly fb = inject(FormBuilder);
-
-  showPasswordMismatch = false;
+  private readonly notifications = inject(NotificationService);
 
   readonly requestForm = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],
@@ -50,11 +50,10 @@ export class RecoveryPasswordComponent {
 
     const { password, confirmPassword } = this.updateForm.getRawValue();
     if (password !== confirmPassword) {
-      this.showPasswordMismatch = true;
+      void this.notifications.error(this.facade.recoveryLabels().passwordMismatch);
       return;
     }
 
-    this.showPasswordMismatch = false;
     void this.facade.onPasswordUpdate({ password, confirmPassword });
   }
 }

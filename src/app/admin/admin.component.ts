@@ -3,6 +3,8 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { TranslationService } from '../core/services/translation.service';
 import { AuthService } from '../core/services/auth.service';
 
+import { NotificationService } from '../core/services/notification.service';
+
 @Component({
   selector: 'app-admin',
   standalone: true,
@@ -15,9 +17,15 @@ export class AdminComponent {
   readonly ts = inject(TranslationService);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly notifications = inject(NotificationService);
 
   async signOut(): Promise<void> {
-    await this.auth.signOut();
-    await this.router.navigateByUrl('/');
+    try {
+      await this.auth.signOut();
+      await this.router.navigateByUrl('/');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unable to sign out.';
+      void this.notifications.error(message);
+    }
   }
 }

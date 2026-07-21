@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { TranslationService } from '../../core/services/translation.service';
 import { AppConfigService } from '../../core/services/app-config.service';
 import { ContactService } from '../../core/services/contact.service';
+import { NotificationService } from '../../core/services/notification.service';
 import { TechBadgeComponent } from '../../shared/components/tech-badge/tech-badge.component';
 import { Skill } from '../../core/models/skill.model';
 
@@ -19,7 +20,8 @@ export class AboutComponent {
   readonly ts = inject(TranslationService);
   readonly config = inject(AppConfigService);
   private readonly contactService = inject(ContactService);
-  private fb = inject(FormBuilder);
+  private readonly notifications = inject(NotificationService);
+  private readonly fb = inject(FormBuilder);
 
   readonly skills: Skill[] = [
     { name: 'Angular', level: 90, category: 'frontend' },
@@ -45,8 +47,6 @@ export class AboutComponent {
     message: ['', [Validators.required, Validators.minLength(10)]],
   });
 
-  submitted = false;
-  submitError = false;
   sending = false;
 
   get f() { return this.contactForm.controls; }
@@ -58,7 +58,6 @@ export class AboutComponent {
     }
 
     this.sending = true;
-    this.submitError = false;
 
     const { name, email, message } = this.contactForm.getRawValue();
 
@@ -68,10 +67,10 @@ export class AboutComponent {
         email: email!,
         message: message!,
       });
-      this.submitted = true;
+      void this.notifications.success(this.ts.t()['about_contact_success']);
       this.contactForm.reset();
     } catch {
-      this.submitError = true;
+      void this.notifications.error(this.ts.t()['about_contact_error']);
     } finally {
       this.sending = false;
     }

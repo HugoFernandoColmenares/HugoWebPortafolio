@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NotificationService } from './core/services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,10 @@ import { RouterOutlet } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './app.component.css'
 })
-export class AppComponent {
-  title = 'WebPortafolio';
+export class AppComponent implements OnInit {
+  private readonly notifications = inject(NotificationService);
+
+  ngOnInit(): void {
+    this.notifications.notifyMissingSupabaseConfig();
+  }
 }

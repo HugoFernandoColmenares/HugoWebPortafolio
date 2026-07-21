@@ -1,3 +1,5 @@
+@import 'sweetalert2/dist/sweetalert2.min.css';
+
 /* ==========================================================================
    Global Styles — Hugo Fernando Colmenares Portfolio
    62.5% REM Trick: 1rem = 10px
@@ -199,3 +201,66 @@ ul, ol { list-style: none; }
 ::-webkit-scrollbar-track { background: var(--color-surface-2); }
 ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+
+/* ==========================================================================
+   SweetAlert2 — Portfolio notification theme
+   ========================================================================== */
+
+.app-notification {
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+  font-family: var(--font-main) !important;
+  padding: var(--space-md) !important;
+}
+
+.app-notification__title {
+  color: var(--color-text-heading) !important;
+  font-size: 1.6rem !important;
+  font-weight: var(--font-weight-semibold) !important;
+}
+
+.app-notification__content {
+  color: var(--color-text) !important;
+  font-size: 1.5rem !important;
+  line-height: 1.6 !important;
+}
+
+.app-notification__confirm,
+.app-notification__cancel {
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  font-size: 1.4rem !important;
+  font-weight: var(--font-weight-semibold) !important;
+  padding: 1rem 1.8rem !important;
+}
+
+.app-notification__confirm {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%) !important;
+  color: #fff !important;
+}
+
+.app-notification__cancel {
+  background: var(--color-surface-2) !important;
+  color: var(--color-text) !important;
+}
+
+.swal2-icon.swal2-success {
+  border-color: #22c55e !important;
+  color: #22c55e !important;
+}
+
+.swal2-icon.swal2-error {
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+.swal2-icon.swal2-warning {
+  border-color: #f59e0b !important;
+  color: #f59e0b !important;
+}
+
+.swal2-icon.swal2-info {
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}

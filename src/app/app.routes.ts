@@ -23,10 +23,6 @@ export const routes: Routes = [
         redirectTo: 'home',
         pathMatch: 'full',
       },
-      {
-        path: '**',
-        loadComponent: () => import('./shared/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent),
-      },
     ],
   },
   {
@@ -54,10 +50,6 @@ export const routes: Routes = [
         path: 'recovery-password',
         loadComponent: () => import('./auth/recovery-password/recovery-password.component').then(m => m.RecoveryPasswordComponent),
       },
-      {
-        path: '**',
-        loadComponent: () => import('./shared/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent),
-      },
     ],
   },
   {
@@ -77,10 +69,6 @@ export const routes: Routes = [
       {
         path: 'project-creator',
         loadComponent: () => import('./admin/project-creator/project-creator.component').then(m => m.ProjectCreatorComponent),
-      },
-      {
-        path: '**',
-        loadComponent: () => import('./shared/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent),
       },
     ],
   },

@@ -42,18 +42,7 @@
     <div class="about__contact">
       <h2 class="about__section-title">{{ ts.t()['about_contact_heading'] }}</h2>
 
-      @if (submitted) {
-        <div class="about__success">
-          ✅ {{ ts.t()['about_contact_success'] }}
-        </div>
-      } @else {
-        <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-
-          @if (submitError) {
-            <div class="about__error">
-              {{ ts.t()['about_contact_error'] }}
-            </div>
-          }
+      <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
 
           <div class="form-row">
             <div class="form-group">
@@ -113,8 +102,7 @@
             }
           </button>
 
-        </form>
-      }
+      </form>
     </div>
 
   </div>

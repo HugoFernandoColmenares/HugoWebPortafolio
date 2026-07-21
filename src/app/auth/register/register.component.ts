@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthFacadeService } from '../../core/services/auth-facade.service';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -13,8 +14,7 @@ import { AuthFacadeService } from '../../core/services/auth-facade.service';
 export class RegisterComponent {
   readonly facade = inject(AuthFacadeService);
   private readonly fb = inject(FormBuilder);
-
-  showPasswordMismatch = false;
+  private readonly notifications = inject(NotificationService);
 
   readonly form = this.fb.nonNullable.group({
     fullName: ['', [Validators.required, Validators.minLength(2)]],
@@ -36,11 +36,10 @@ export class RegisterComponent {
     const { fullName, email, password, confirmPassword } = this.form.getRawValue();
 
     if (password !== confirmPassword) {
-      this.showPasswordMismatch = true;
+      void this.notifications.error(this.facade.registerLabels().passwordMismatch);
       return;
     }
 
-    this.showPasswordMismatch = false;
     void this.facade.onRegister({ fullName, email, password });
   }
 }

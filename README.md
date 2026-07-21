@@ -34,6 +34,7 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 - Dark and light theme support
 - Contact form integration via Supabase
 - Authentication flows: login, register, password recovery, email confirmation
+- Centralized notifications via SweetAlert2 modals (`NotificationService`) styled with design tokens
 - Protected admin area with user profile loaded from Supabase
 - Database migrations for contact messages, users, and roles
 - Lazy-loaded routes and standalone component architecture

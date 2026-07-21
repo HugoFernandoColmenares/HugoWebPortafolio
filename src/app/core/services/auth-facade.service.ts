@@ -2,6 +2,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthError } from '@supabase/supabase-js';
 import { AuthService } from './auth.service';
+import { NotificationService } from './notification.service';
 import { TranslationService } from './translation.service';
 import { ConfirmRegisterStatus, LoginCredentials, PasswordUpdateRequest, RegisterCredentials, RecoveryRequest, } from '../models/auth-credentials.model';
 
@@ -10,10 +11,9 @@ export class AuthFacadeService {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
   private readonly ts = inject(TranslationService);
+  private readonly notifications = inject(NotificationService);
 
   readonly loading = signal(false);
-  readonly errorMessage = signal('');
-  readonly successMessage = signal('');
   readonly confirmStatus = signal<ConfirmRegisterStatus>('loading');
 
   private confirmationHandled = false;
@@ -77,20 +77,18 @@ export class AuthFacadeService {
   }
 
   async onRegister(credentials: RegisterCredentials): Promise<void> {
-    this.resetMessages();
-
     try {
       this.loading.set(true);
       const result = await this.auth.signUp(credentials);
 
       if (result.requiresEmailConfirmation) {
-        this.successMessage.set(this.ts.t()['auth_register_confirm_email']);
+        void this.notifications.success(this.ts.t()['auth_register_confirm_email']);
         return;
       }
 
       await this.router.navigateByUrl('/');
     } catch (error) {
-      this.errorMessage.set(this.resolveErrorMessage(error));
+      void this.notifications.error(this.resolveErrorMessage(error));
     } finally {
       this.loading.set(false);
     }
@@ -106,7 +104,7 @@ export class AuthFacadeService {
 
   async onPasswordUpdate(request: PasswordUpdateRequest): Promise<void> {
     if (request.password !== request.confirmPassword) {
-      this.errorMessage.set(this.ts.t()['auth_password_mismatch']);
+      void this.notifications.error(this.ts.t()['auth_password_mismatch']);
       return;
     }
 
@@ -146,29 +144,22 @@ export class AuthFacadeService {
     redirectTo: string | null,
     successMsg = '',
   ): Promise<void> {
-    this.resetMessages();
-
     try {
       this.loading.set(true);
       await action();
 
       if (successMsg) {
-        this.successMessage.set(successMsg);
+        void this.notifications.success(successMsg);
       }
 
       if (redirectTo) {
         await this.router.navigateByUrl(redirectTo);
       }
     } catch (error) {
-      this.errorMessage.set(this.resolveErrorMessage(error));
+      void this.notifications.error(this.resolveErrorMessage(error));
     } finally {
       this.loading.set(false);
     }
-  }
-
-  private resetMessages(): void {
-    this.errorMessage.set('');
-    this.successMessage.set('');
   }
 
   private resolveErrorMessage(error: unknown): string {

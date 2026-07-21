@@ -4,12 +4,6 @@
     <p>{{ facade.loginLabels().subtitle }}</p>
   </div>
 
-  @if (facade.errorMessage()) {
-    <div class="auth-form__alert auth-form__alert--error" role="alert">
-      {{ facade.errorMessage() }}
-    </div>
-  }
-
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form__body">
     <div class="auth-form__group">
       <label class="auth-form__label" for="login-email">{{ facade.loginLabels().email }}</label>
