@@ -83,6 +83,20 @@ const EN_TRANSLATIONS = {
   not_found_subtitle: 'The page you are looking for does not exist or may have been moved.',
   not_found_home: 'Back to home',
   not_found_projects: 'View projects',
+  // Admin
+  admin_brand_title: 'Admin panel',
+  admin_nav_profile: 'Profile',
+  admin_nav_project_creator: 'Project creator',
+  admin_back_site: 'Back to site',
+  admin_sign_out: 'Sign out',
+  admin_profile_title: 'Your profile',
+  admin_profile_subtitle: 'Account details loaded from Supabase.',
+  admin_profile_full_name: 'Full name',
+  admin_profile_email: 'Email',
+  admin_profile_role: 'Role',
+  admin_profile_member_since: 'Member since',
+  admin_profile_loading: 'Loading profile...',
+  admin_profile_empty: 'No profile record found for this account yet.',
 } as const;
 
 export type TranslationKey = keyof typeof EN_TRANSLATIONS;
@@ -171,6 +185,20 @@ const TRANSLATIONS: Record<Language, Translations> = {
     not_found_subtitle: 'La página que buscas no existe o fue movida.',
     not_found_home: 'Volver al inicio',
     not_found_projects: 'Ver proyectos',
+    // Admin
+    admin_brand_title: 'Panel de administración',
+    admin_nav_profile: 'Perfil',
+    admin_nav_project_creator: 'Creador de proyectos',
+    admin_back_site: 'Volver al sitio',
+    admin_sign_out: 'Cerrar sesión',
+    admin_profile_title: 'Tu perfil',
+    admin_profile_subtitle: 'Datos de cuenta cargados desde Supabase.',
+    admin_profile_full_name: 'Nombre completo',
+    admin_profile_email: 'Email',
+    admin_profile_role: 'Rol',
+    admin_profile_member_since: 'Miembro desde',
+    admin_profile_loading: 'Cargando perfil...',
+    admin_profile_empty: 'Aún no hay un registro de perfil para esta cuenta.',
   },
 };
 

@@ -1,0 +1,110 @@
+.profile {
+  max-width: 72rem;
+}
+
+.profile__header h1 {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  margin-bottom: 0.8rem;
+}
+
+.profile__header p {
+  color: var(--color-text-muted);
+  font-size: 1.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.profile__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+.profile__card--loading,
+.profile__card--empty {
+  align-items: center;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 1.5rem;
+}
+
+.profile__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 7.2rem;
+  height: 7.2rem;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+  color: #fff;
+  font-size: 2.4rem;
+  font-weight: 700;
+}
+
+.profile__details {
+  display: grid;
+  gap: var(--space-sm);
+  margin: 0;
+}
+
+.profile__field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.profile__field dt {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.profile__field dd {
+  margin: 0;
+  font-size: 1.6rem;
+  color: var(--color-text-heading);
+}
+
+.profile__badge {
+  display: inline-flex;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  background: color-mix(in srgb, var(--color-accent) 15%, var(--color-surface));
+  color: var(--color-accent-dark);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.profile__muted {
+  color: var(--color-text-muted);
+}
+
+.profile__spinner {
+  width: 2.4rem;
+  height: 2.4rem;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: profile-spin 0.8s linear infinite;
+}
+
+@keyframes profile-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (min-width: 640px) {
+  .profile__card {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .profile__details {
+    flex: 1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

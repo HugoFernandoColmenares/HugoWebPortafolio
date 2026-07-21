@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { guestGuard } from './core/guards/auth.guard';
+import { authGuard, guestGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -23,7 +23,6 @@ export const routes: Routes = [
         loadComponent: () => import('./shared/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent),
       },
     ],
-    pathMatch: 'full',
   },
   {
     path: 'auth',
@@ -37,12 +36,10 @@ export const routes: Routes = [
       {
         path: 'login',
         loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent),
-        canActivate: [guestGuard],
       },
       {
         path: 'register',
         loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent),
-        canActivate: [guestGuard],
       },
       {
         path: 'confirm-register',
@@ -51,7 +48,30 @@ export const routes: Routes = [
       {
         path: 'recovery-password',
         loadComponent: () => import('./auth/recovery-password/recovery-password.component').then(m => m.RecoveryPasswordComponent),
-        canActivate: [guestGuard],
+      },
+      {
+        path: '**',
+        loadComponent: () => import('./shared/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent),
+      },
+    ],
+  },
+  {
+    path: 'admin',
+    loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'profile',
+        pathMatch: 'full',
+      },
+      {
+        path: 'profile',
+        loadComponent: () => import('./admin/profile/profile.component').then(m => m.ProfileComponent),
+      },
+      {
+        path: 'project-creator',
+        loadComponent: () => import('./admin/project-creator/project-creator.component').then(m => m.ProjectCreatorComponent),
       },
       {
         path: '**',

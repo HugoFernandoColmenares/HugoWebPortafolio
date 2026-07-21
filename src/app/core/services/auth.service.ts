@@ -15,8 +15,14 @@ export class AuthService {
   readonly isAuthenticated = computed(() => this.session() !== null);
   readonly isRecoveryMode = signal(false);
 
+  private readonly initPromise: Promise<void>;
+
   constructor() {
-    void this.initialize();
+    this.initPromise = this.initialize();
+  }
+
+  whenReady(): Promise<void> {
+    return this.initPromise;
   }
 
   async initialize(): Promise<void> {
