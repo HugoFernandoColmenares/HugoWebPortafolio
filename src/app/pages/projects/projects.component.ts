@@ -29,7 +29,7 @@ export class ProjectsComponent {
       status: 'completed',
     },
     {
-      id: 1,
+      id: 5,
       titleKey: 'Frontend Bakery Management System',
       descriptionKey: 'Frontedn App Enterprise-grade inventory and order management system for a bakery business. Features real-time stock tracking, sales reporting, and role-based access control.',
       imageUrl: 'https://i.imgur.com/oVbyh2z.jpeg',
@@ -73,11 +73,11 @@ export class ProjectsComponent {
     return ['All', ...uniqueTechs];
   });
 
-  get filteredProjects(): Project[] {
+  readonly filteredProjects = computed<Project[]>(() => {
     const filter = this.activeFilter();
     if (filter === 'All') return this.projects;
     return this.projects.filter(p => p.technologies.includes(filter));
-  }
+  });
 
   setFilter(filter: string): void {
     this.activeFilter.set(filter);

@@ -4,7 +4,7 @@
       <span>&lt;</span>Hugo<span class="gradient-text">.</span>dev<span>/&gt;</span>
     </a>
 
-    <p class="admin-layout__brand">{{ ts.t().admin_brand_title }}</p>
+    <p class="admin-layout__brand">{{ ts.t()['admin_brand_title'] }}</p>
 
     <nav class="admin-layout__nav" aria-label="Admin navigation">
       <a
@@ -12,21 +12,21 @@
         routerLink="/admin/profile"
         routerLinkActive="admin-layout__nav-link--active"
       >
-        {{ ts.t().admin_nav_profile }}
+        {{ ts.t()['admin_nav_profile'] }}
       </a>
       <a
         class="admin-layout__nav-link"
         routerLink="/admin/project-creator"
         routerLinkActive="admin-layout__nav-link--active"
       >
-        {{ ts.t().admin_nav_project_creator }}
+        {{ ts.t()['admin_nav_project_creator'] }}
       </a>
     </nav>
 
     <div class="admin-layout__footer">
-      <a routerLink="/" class="admin-layout__back">{{ ts.t().admin_back_site }}</a>
+      <a routerLink="/" class="admin-layout__back">{{ ts.t()['admin_back_site'] }}</a>
       <button type="button" class="admin-layout__sign-out" (click)="signOut()">
-        {{ ts.t().admin_sign_out }}
+        {{ ts.t()['admin_sign_out'] }}
       </button>
     </div>
   </aside>

@@ -11,6 +11,17 @@ export interface AppEnvironment {
   supabaseKey: string;
 }
 
+const rawSupabaseUrl = import.meta.env['NG_APP_SUPABASE_URL'] ?? '';
+const rawSupabaseKey = import.meta.env['NG_APP_SUPABASE_KEY'] ?? '';
+
+if (!rawSupabaseUrl || !rawSupabaseKey) {
+  console.warn(
+    '[app-environment] NG_APP_SUPABASE_URL and/or NG_APP_SUPABASE_KEY are not set. ' +
+    'Add them to your .env or .env.development file (see .env.example). ' +
+    'Supabase features (auth, profile, etc.) will be unavailable.'
+  );
+}
+
 export const appEnvironment: AppEnvironment = {
   production: import.meta.env['NG_APP_ENV'] === 'production',
   siteUrl: import.meta.env['NG_APP_SITE_URL'] ?? 'http://localhost:4200',
@@ -20,6 +31,6 @@ export const appEnvironment: AppEnvironment = {
   cvUrl: import.meta.env['NG_APP_CV_URL'] ?? '',
   authorName: import.meta.env['NG_APP_AUTHOR_NAME'] ?? 'Hugo Fernando Colmenares',
   authorEmail: import.meta.env['NG_APP_AUTHOR_EMAIL'] ?? '',
-  supabaseUrl: import.meta.env['NG_APP_SUPABASE_URL'] ?? '',
-  supabaseKey: import.meta.env['NG_APP_SUPABASE_KEY'] ?? '',
+  supabaseUrl: rawSupabaseUrl,
+  supabaseKey: rawSupabaseKey,
 };

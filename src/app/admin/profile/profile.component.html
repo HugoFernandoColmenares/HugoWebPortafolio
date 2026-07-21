@@ -1,13 +1,13 @@
 <section class="profile">
   <header class="profile__header">
-    <h1>{{ ts.t().admin_profile_title }}</h1>
-    <p>{{ ts.t().admin_profile_subtitle }}</p>
+    <h1>{{ ts.t()['admin_profile_title'] }}</h1>
+    <p>{{ ts.t()['admin_profile_subtitle'] }}</p>
   </header>
 
   @if (isLoading()) {
     <div class="profile__card profile__card--loading" aria-live="polite">
       <span class="profile__spinner"></span>
-      <p>{{ ts.t().admin_profile_loading }}</p>
+      <p>{{ ts.t()['admin_profile_loading'] }}</p>
     </div>
   } @else if (profile(); as user) {
     <article class="profile__card">
@@ -15,17 +15,17 @@
 
       <dl class="profile__details">
         <div class="profile__field">
-          <dt>{{ ts.t().admin_profile_full_name }}</dt>
+          <dt>{{ ts.t()['admin_profile_full_name'] }}</dt>
           <dd>{{ user.fullName }}</dd>
         </div>
 
         <div class="profile__field">
-          <dt>{{ ts.t().admin_profile_email }}</dt>
+          <dt>{{ ts.t()['admin_profile_email'] }}</dt>
           <dd>{{ user.email }}</dd>
         </div>
 
         <div class="profile__field">
-          <dt>{{ ts.t().admin_profile_role }}</dt>
+          <dt>{{ ts.t()['admin_profile_role'] }}</dt>
           <dd>
             @if (user.role?.name) {
               <span class="profile__badge">{{ user.role!.name }}</span>
@@ -36,14 +36,14 @@
         </div>
 
         <div class="profile__field">
-          <dt>{{ ts.t().admin_profile_member_since }}</dt>
+          <dt>{{ ts.t()['admin_profile_member_since'] }}</dt>
           <dd>{{ user.createdAt | date: 'mediumDate' }}</dd>
         </div>
       </dl>
     </article>
   } @else {
     <div class="profile__card profile__card--empty" role="status">
-      <p>{{ ts.t().admin_profile_empty }}</p>
+      <p>{{ ts.t()['admin_profile_empty'] }}</p>
       @if (session()?.user?.email; as authEmail) {
         <p class="profile__muted">{{ authEmail }}</p>
       }

@@ -22,7 +22,7 @@
 
     <!-- Grid -->
     <div class="projects-page__grid">
-      @for (project of filteredProjects; track project.id) {
+      @for (project of filteredProjects(); track project.id) {
         <app-project-card [project]="project" />
       }
       @empty {
