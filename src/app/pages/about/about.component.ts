@@ -3,6 +3,7 @@ import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { TranslationService } from '../../core/services/translation.service';
 import { AppConfigService } from '../../core/services/app-config.service';
+import { ContactService } from '../../core/services/contact.service';
 import { TechBadgeComponent } from '../../shared/components/tech-badge/tech-badge.component';
 import { Skill } from '../../core/models/skill.model';
 
@@ -17,6 +18,7 @@ import { Skill } from '../../core/models/skill.model';
 export class AboutComponent {
   readonly ts = inject(TranslationService);
   readonly config = inject(AppConfigService);
+  private readonly contactService = inject(ContactService);
   private fb = inject(FormBuilder);
 
   readonly skills: Skill[] = [
@@ -44,21 +46,34 @@ export class AboutComponent {
   });
 
   submitted = false;
+  submitError = false;
   sending = false;
 
   get f() { return this.contactForm.controls; }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
       return;
     }
+
     this.sending = true;
-    // Simulate sending
-    setTimeout(() => {
-      this.sending = false;
+    this.submitError = false;
+
+    const { name, email, message } = this.contactForm.getRawValue();
+
+    try {
+      await this.contactService.sendMessage({
+        name: name!,
+        email: email!,
+        message: message!,
+      });
       this.submitted = true;
       this.contactForm.reset();
-    }, 1200);
+    } catch {
+      this.submitError = true;
+    } finally {
+      this.sending = false;
+    }
   }
 }

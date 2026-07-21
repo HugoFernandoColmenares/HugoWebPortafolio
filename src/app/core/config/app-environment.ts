@@ -7,6 +7,8 @@ export interface AppEnvironment {
   cvUrl: string;
   authorName: string;
   authorEmail: string;
+  supabaseUrl: string;
+  supabaseKey: string;
 }
 
 export const appEnvironment: AppEnvironment = {
@@ -18,4 +20,6 @@ export const appEnvironment: AppEnvironment = {
   cvUrl: import.meta.env['NG_APP_CV_URL'] ?? '',
   authorName: import.meta.env['NG_APP_AUTHOR_NAME'] ?? 'Hugo Fernando Colmenares',
   authorEmail: import.meta.env['NG_APP_AUTHOR_EMAIL'] ?? '',
+  supabaseUrl: import.meta.env['NG_APP_SUPABASE_URL'] ?? '',
+  supabaseKey: import.meta.env['NG_APP_SUPABASE_KEY'] ?? '',
 };

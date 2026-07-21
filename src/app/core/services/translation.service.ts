@@ -31,6 +31,9 @@ const TRANSLATIONS = {
     about_contact_name: 'Your Name',
     about_contact_email: 'Your Email',
     about_contact_message: 'Your Message',
+    about_contact_sending: 'Sending...',
+    about_contact_success: "Message sent! I'll get back to you soon.",
+    about_contact_error: 'Something went wrong. Please try again later.',
     // Footer
     footer_copy: '© 2026 Hugo Fernando Colmenares. All rights reserved.',
     footer_made_with: 'Made with Angular & ♥',
@@ -67,6 +70,9 @@ const TRANSLATIONS = {
     about_contact_name: 'Tu Nombre',
     about_contact_email: 'Tu Email',
     about_contact_message: 'Tu Mensaje',
+    about_contact_sending: 'Enviando...',
+    about_contact_success: '¡Mensaje enviado! Te responderé pronto.',
+    about_contact_error: 'Algo salió mal. Por favor, inténtalo de nuevo más tarde.',
     // Footer
     footer_copy: '© 2025 Hugo Fernando Colmenares. Todos los derechos reservados.',
     footer_made_with: 'Hecho con Angular & ♥',

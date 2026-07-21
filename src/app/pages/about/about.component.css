@@ -107,6 +107,16 @@
   font-weight: 500;
 }
 
+.about__error {
+  padding: var(--space-md);
+  background: color-mix(in srgb, #ef4444 10%, var(--color-surface));
+  border: 1px solid #ef4444;
+  border-radius: var(--radius-md, 1.2rem);
+  color: #ef4444;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
 .contact-form {
   display: flex;
   flex-direction: column;

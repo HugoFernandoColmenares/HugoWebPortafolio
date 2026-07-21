@@ -9,6 +9,8 @@ declare interface Env {
   readonly NG_APP_LINKEDIN_URL: string;
   readonly NG_APP_CV_URL: string;
   readonly NG_APP_CONTACT_API_URL: string;
+  readonly NG_APP_SUPABASE_URL: string;
+  readonly NG_APP_SUPABASE_KEY: string;
 }
 
 // Choose how to access the environment variables.
