@@ -21,6 +21,15 @@
       >
         {{ ts.t()['admin_nav_project_creator'] }}
       </a>
+      @if (isAdmin()) {
+        <a
+          class="admin-layout__nav-link"
+          routerLink="/admin/admin-panel"
+          routerLinkActive="admin-layout__nav-link--active"
+        >
+          {{ ts.t()['admin_nav_admin_panel'] }}
+        </a>
+      }
     </nav>
 
     <div class="admin-layout__footer">

@@ -46,6 +46,21 @@
   font-size: 1.3rem;
 }
 
+.project-form__image-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.project-form__image-row input[pInputText] {
+  flex: 1 1 24rem;
+}
+
+.project-form__file-input {
+  display: none;
+}
+
 .project-form__actions {
   display: flex;
   justify-content: flex-end;

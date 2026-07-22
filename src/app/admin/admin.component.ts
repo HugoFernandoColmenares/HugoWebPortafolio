@@ -19,6 +19,8 @@ export class AdminComponent {
   private readonly router = inject(Router);
   private readonly notifications = inject(NotificationService);
 
+  readonly isAdmin = this.auth.isAdmin;
+
   async signOut(): Promise<void> {
     try {
       await this.auth.signOut();

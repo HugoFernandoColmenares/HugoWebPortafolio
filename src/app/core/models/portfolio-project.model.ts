@@ -90,6 +90,8 @@ export interface ProjectFormLabels {
   title: string;
   description: string;
   imageUrl: string;
+  uploadImage: string;
+  uploadingImage: string;
   technologies: string;
   technologiesHint: string;
   githubUrl: string;

@@ -27,3 +27,16 @@ export const guestGuard: CanActivateFn = () => {
     return router.createUrlTree(['/']);
   });
 };
+
+export const adminGuard: CanActivateFn = () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+
+  return auth.whenReady().then(() => {
+    if (auth.isAuthenticated() && auth.isAdmin()) {
+      return true;
+    }
+
+    return router.createUrlTree(['/admin/profile']);
+  });
+};

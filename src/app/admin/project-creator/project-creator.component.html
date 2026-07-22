@@ -5,6 +5,7 @@
       [loading]="loading()"
       [labels]="tableLabels()"
       [categoryOptions]="categoryOptions()"
+      [canManage]="isAdmin()"
       (addProject)="onAddProject()"
       (viewProject)="onViewProject($event)"
       (editProject)="onEditProject($event)"

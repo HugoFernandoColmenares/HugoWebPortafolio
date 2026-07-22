@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard, guestGuard } from './core/guards/auth.guard';
+import { authGuard, adminGuard, guestGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -69,6 +69,11 @@ export const routes: Routes = [
       {
         path: 'project-creator',
         loadComponent: () => import('./admin/project-creator/project-creator.component').then(m => m.ProjectCreatorComponent),
+      },
+      {
+        path: 'admin-panel',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./admin/admin-panel/admin-panel.component').then(m => m.AdminPanelComponent),
       },
     ],
   },

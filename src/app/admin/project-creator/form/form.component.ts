@@ -3,9 +3,12 @@ import {
   Component,
   computed,
   effect,
+  ElementRef,
   inject,
   input,
   output,
+  signal,
+  viewChild,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Button } from 'primeng/button';
@@ -22,6 +25,9 @@ import {
   CategoryOption,
   ProjectFormLabels,
 } from '../../../core/models/portfolio-project.model';
+import { ImageService } from '../../../core/services/image.service';
+import { NotificationService } from '../../../core/services/notification.service';
+import { TranslationService } from '../../../core/services/translation.service';
 
 interface StatusOption {
   label: string;
@@ -47,6 +53,12 @@ export class ProjectFormComponent {
   readonly cancelForm = output<void>();
 
   private readonly fb = inject(FormBuilder);
+  private readonly imageService = inject(ImageService);
+  private readonly notifications = inject(NotificationService);
+  private readonly ts = inject(TranslationService);
+  private readonly fileInput = viewChild<ElementRef<HTMLInputElement>>('fileInput');
+
+  readonly uploadingImage = signal(false);
 
   readonly form = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
@@ -152,5 +164,40 @@ export class ProjectFormComponent {
       status: raw.status,
       category: raw.category,
     });
+  }
+
+  triggerImagePicker(): void {
+    this.fileInput()?.nativeElement.click();
+  }
+
+  async onImageSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    input.value = '';
+
+    if (!file || this.mode() === 'view') {
+      return;
+    }
+
+    const t = this.ts.t();
+
+    try {
+      this.uploadingImage.set(true);
+      const publicUrl = await this.imageService.uploadOptimizedImage(file, 'projects');
+      this.form.controls.imageUrl.setValue(publicUrl);
+      this.form.controls.imageUrl.markAsDirty();
+    } catch (error) {
+      let message = t.admin_image_upload_error;
+      if (error instanceof Error) {
+        if (error.message === 'INVALID_IMAGE_TYPE') {
+          message = t.admin_image_invalid_type;
+        } else if (error.message === 'IMAGE_TOO_LARGE') {
+          message = t.admin_image_too_large;
+        }
+      }
+      void this.notifications.error(message);
+    } finally {
+      this.uploadingImage.set(false);
+    }
   }
 }

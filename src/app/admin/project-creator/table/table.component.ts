@@ -46,6 +46,7 @@ export class ProjectTableComponent {
   readonly loading = input(false);
   readonly labels = input.required<ProjectTableLabels>();
   readonly categoryOptions = input<CategoryOption[]>([]);
+  readonly canManage = input(false);
 
   readonly addProject = output<void>();
   readonly viewProject = output<PortfolioProject>();

@@ -16,7 +16,26 @@
 
     <div class="project-form__field project-form__field--full">
       <label for="project-image">{{ labels().imageUrl }}</label>
-      <input pInputText id="project-image" formControlName="imageUrl" />
+      <div class="project-form__image-row">
+        <input pInputText id="project-image" formControlName="imageUrl" />
+        @if (mode() !== 'view') {
+          <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            class="project-form__file-input"
+            (change)="onImageSelected($event)"
+          />
+          <p-button
+            type="button"
+            icon="pi pi-upload"
+            [label]="uploadingImage() ? labels().uploadingImage : labels().uploadImage"
+            [loading]="uploadingImage()"
+            [disabled]="uploadingImage()"
+            (onClick)="triggerImagePicker()"
+          />
+        }
+      </div>
     </div>
 
     <div class="project-form__field project-form__field--full">

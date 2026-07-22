@@ -1,0 +1,25 @@
+<section class="admin-panel">
+  @if (viewMode() === 'list') {
+    <app-user-table
+      [users]="users()"
+      [loading]="loading()"
+      [labels]="tableLabels()"
+      [roleOptions]="roleOptions()"
+      [canManage]="true"
+      (addUser)="onAddUser()"
+      (viewUser)="onViewUser($event)"
+      (editUser)="onEditUser($event)"
+      (deleteUser)="onDeleteUser($event)"
+    />
+  } @else {
+    <app-user-form
+      [mode]="formMode()"
+      [user]="selectedUser()"
+      [loading]="saving()"
+      [labels]="formLabels()"
+      [roleOptions]="roleOptions()"
+      (saveUser)="onSaveUser($event)"
+      (cancelForm)="onCancelForm()"
+    />
+  }
+</section>

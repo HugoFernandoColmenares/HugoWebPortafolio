@@ -21,6 +21,7 @@ import {
 import { PortfolioProjectService } from '../../core/services/portfolio-project.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { TranslationService } from '../../core/services/translation.service';
+import { AuthService } from '../../core/services/auth.service';
 import { ProjectFormComponent } from './form/form.component';
 import { ProjectTableComponent } from './table/table.component';
 
@@ -35,7 +36,10 @@ import { ProjectTableComponent } from './table/table.component';
 export class ProjectCreatorComponent implements OnInit {
   private readonly projectService = inject(PortfolioProjectService);
   private readonly notifications = inject(NotificationService);
+  private readonly auth = inject(AuthService);
   readonly ts = inject(TranslationService);
+
+  readonly isAdmin = this.auth.isAdmin;
 
   readonly viewMode = signal<ProjectCreatorViewMode>('list');
   readonly projects = signal<PortfolioProject[]>([]);
@@ -79,6 +83,8 @@ export class ProjectCreatorComponent implements OnInit {
       title: t.admin_project_field_title,
       description: t.admin_project_field_description,
       imageUrl: t.admin_project_field_image_url,
+      uploadImage: t.admin_project_field_upload_image,
+      uploadingImage: t.admin_project_uploading_image,
       technologies: t.admin_project_field_technologies,
       technologiesHint: t.admin_project_field_technologies_hint,
       githubUrl: t.admin_project_field_github_url,

@@ -1,0 +1,59 @@
+<form class="user-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <header class="user-form__header">
+    <h2>{{ heading() }}</h2>
+  </header>
+
+  <div class="user-form__grid">
+    <div class="user-form__field">
+      <label for="user-full-name">{{ labels().fullName }}</label>
+      <input pInputText id="user-full-name" formControlName="fullName" />
+    </div>
+
+    <div class="user-form__field">
+      <label for="user-email">{{ labels().email }}</label>
+      <input pInputText id="user-email" type="email" formControlName="email" />
+    </div>
+
+    @if (isCreateMode()) {
+      <div class="user-form__field user-form__field--full">
+        <label for="user-password">{{ labels().password }}</label>
+        <p-password
+          inputId="user-password"
+          formControlName="password"
+          [toggleMask]="true"
+        />
+        <small>{{ labels().passwordHint }}</small>
+      </div>
+    }
+
+    <div class="user-form__field">
+      <label for="user-role">{{ labels().role }}</label>
+      <p-select
+        inputId="user-role"
+        formControlName="roleId"
+        [options]="roleOptions()"
+        optionLabel="label"
+        optionValue="value"
+      />
+    </div>
+  </div>
+
+  <footer class="user-form__actions">
+    <p-button
+      type="button"
+      [label]="labels().cancel"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="cancelForm.emit()"
+    />
+
+    @if (mode() !== 'view') {
+      <p-button
+        type="submit"
+        [label]="labels().save"
+        icon="pi pi-check"
+        [loading]="loading()"
+      />
+    }
+  </footer>
+</form>

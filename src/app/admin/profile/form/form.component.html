@@ -1,0 +1,97 @@
+<div class="profile-form">
+  <article class="profile-form__summary">
+    <div class="profile-form__avatar" aria-hidden="true">
+      {{ profile().fullName.charAt(0).toUpperCase() }}
+    </div>
+
+    <dl class="profile-form__meta">
+      <div>
+        <dt>{{ labels().email }}</dt>
+        <dd>{{ profile().email }}</dd>
+      </div>
+      <div>
+        <dt>{{ labels().role }}</dt>
+        <dd>
+          @if (profile().role?.name) {
+            <span class="profile-form__badge">{{ profile().role!.name }}</span>
+          } @else {
+            <span class="profile-form__muted">—</span>
+          }
+        </dd>
+      </div>
+      <div>
+        <dt>{{ labels().memberSince }}</dt>
+        <dd>{{ profile().createdAt | date: 'mediumDate' }}</dd>
+      </div>
+    </dl>
+  </article>
+
+  <section class="profile-form__section">
+    <header class="profile-form__header">
+      <h2>{{ labels().profileSectionTitle }}</h2>
+    </header>
+
+    <form class="profile-form__grid" [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()">
+      <div class="profile-form__field profile-form__field--full">
+        <label for="profile-full-name">{{ labels().fullName }}</label>
+        <input pInputText id="profile-full-name" formControlName="fullName" />
+      </div>
+
+      <footer class="profile-form__actions">
+        <p-button
+          type="submit"
+          [label]="labels().saveProfile"
+          icon="pi pi-check"
+          [loading]="savingProfile()"
+        />
+      </footer>
+    </form>
+  </section>
+
+  <section class="profile-form__section">
+    <header class="profile-form__header">
+      <h2>{{ labels().passwordSectionTitle }}</h2>
+      <p>{{ labels().passwordHint }}</p>
+    </header>
+
+    <form class="profile-form__grid" [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
+      <div class="profile-form__field profile-form__field--full">
+        <label for="profile-current-password">{{ labels().currentPassword }}</label>
+        <p-password
+          inputId="profile-current-password"
+          formControlName="currentPassword"
+          [feedback]="false"
+          [toggleMask]="true"
+        />
+      </div>
+
+      <div class="profile-form__field">
+        <label for="profile-new-password">{{ labels().newPassword }}</label>
+        <p-password
+          inputId="profile-new-password"
+          formControlName="newPassword"
+          [toggleMask]="true"
+        />
+      </div>
+
+      <div class="profile-form__field">
+        <label for="profile-confirm-password">{{ labels().confirmPassword }}</label>
+        <p-password
+          inputId="profile-confirm-password"
+          formControlName="confirmPassword"
+          [feedback]="false"
+          [toggleMask]="true"
+        />
+      </div>
+
+      <footer class="profile-form__actions">
+        <p-button
+          type="submit"
+          [label]="labels().changePassword"
+          icon="pi pi-lock"
+          [loading]="savingPassword()"
+        />
+      </footer>
+    </form>
+  </section>
+</div>

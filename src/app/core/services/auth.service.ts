@@ -13,6 +13,7 @@ export class AuthService {
   readonly session = signal<Session | null>(null);
   readonly profile = signal<UserProfile | null>(null);
   readonly isAuthenticated = computed(() => this.session() !== null);
+  readonly isAdmin = computed(() => this.profile()?.role?.name === 'ADMIN');
   readonly isRecoveryMode = signal(false);
 
   private readonly initPromise: Promise<void>;
@@ -105,6 +106,10 @@ export class AuthService {
     }
 
     this.isRecoveryMode.set(false);
+  }
+
+  async refreshProfile(): Promise<void> {
+    await this.loadProfile();
   }
 
   async confirmEmailRegistration(): Promise<ConfirmRegisterStatus> {

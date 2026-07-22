@@ -4,11 +4,13 @@
       <h2>{{ labels().title }}</h2>
       <p>{{ labels().subtitle }}</p>
     </div>
+    @if (canManage()) {
     <p-button
       [label]="labels().add"
       icon="pi pi-plus"
       (onClick)="addProject.emit()"
     />
+    }
   </div>
 
   <div class="project-table__filters">
@@ -88,22 +90,24 @@
               [pTooltip]="labels().view"
               (onClick)="viewProject.emit(project)"
             />
-            <p-button
-              icon="pi pi-pencil"
-              [rounded]="true"
-              [text]="true"
-              severity="secondary"
-              [pTooltip]="labels().edit"
-              (onClick)="editProject.emit(project)"
-            />
-            <p-button
-              icon="pi pi-trash"
-              [rounded]="true"
-              [text]="true"
-              severity="danger"
-              [pTooltip]="labels().delete"
-              (onClick)="deleteProject.emit(project)"
-            />
+            @if (canManage()) {
+              <p-button
+                icon="pi pi-pencil"
+                [rounded]="true"
+                [text]="true"
+                severity="secondary"
+                [pTooltip]="labels().edit"
+                (onClick)="editProject.emit(project)"
+              />
+              <p-button
+                icon="pi pi-trash"
+                [rounded]="true"
+                [text]="true"
+                severity="danger"
+                [pTooltip]="labels().delete"
+                (onClick)="deleteProject.emit(project)"
+              />
+            }
           </td>
         </tr>
       </ng-template>
