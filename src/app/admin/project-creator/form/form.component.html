@@ -36,6 +36,17 @@
     </div>
 
     <div class="project-form__field">
+      <label for="project-category">{{ labels().category }}</label>
+      <p-select
+        inputId="project-category"
+        formControlName="category"
+        [options]="categoryOptions()"
+        optionLabel="label"
+        optionValue="value"
+      />
+    </div>
+
+    <div class="project-form__field">
       <label for="project-status">{{ labels().status }}</label>
       <p-select
         inputId="project-status"

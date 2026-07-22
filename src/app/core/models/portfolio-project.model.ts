@@ -1,6 +1,19 @@
 export type PortfolioProjectStatus = 'completed' | 'in-progress' | 'planned';
 
+export type ProjectCategory =
+  | 'web-frontend'
+  | 'web-backend'
+  | 'web-fullstack'
+  | 'mobile'
+  | 'desktop'
+  | 'other';
+
 export type ProjectCreatorViewMode = 'list' | 'create' | 'edit' | 'view';
+
+export interface CategoryOption {
+  label: string;
+  value: ProjectCategory;
+}
 
 export interface PortfolioProject {
   id: string;
@@ -12,6 +25,7 @@ export interface PortfolioProject {
   liveUrl: string | null;
   featured: boolean;
   status: PortfolioProjectStatus;
+  category: ProjectCategory;
   createdAt: string;
   updatedAt: string;
   deletedAt: string | null;
@@ -27,6 +41,7 @@ export interface PortfolioProjectRow {
   live_url: string | null;
   featured: boolean;
   status: PortfolioProjectStatus;
+  category: ProjectCategory;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
@@ -41,6 +56,7 @@ export interface PortfolioProjectInput {
   liveUrl: string | null;
   featured: boolean;
   status: PortfolioProjectStatus;
+  category: ProjectCategory;
 }
 
 export interface ProjectTableLabels {
@@ -48,7 +64,11 @@ export interface ProjectTableLabels {
   subtitle: string;
   add: string;
   empty: string;
+  filterSearch: string;
+  filterCategory: string;
+  filterCategoryPlaceholder: string;
   columnTitle: string;
+  columnCategory: string;
   columnStatus: string;
   columnTechnologies: string;
   columnFeatured: string;
@@ -76,9 +96,16 @@ export interface ProjectFormLabels {
   liveUrl: string;
   featured: string;
   status: string;
+  category: string;
   save: string;
   cancel: string;
   statusCompleted: string;
   statusInProgress: string;
   statusPlanned: string;
+}
+
+export interface ProjectCategorySection {
+  category: ProjectCategory;
+  label: string;
+  projects: PortfolioProject[];
 }

@@ -63,10 +63,11 @@
       </div>
 
       <!-- Tech chips floating around avatar -->
-      <div class="hero__chip hero__chip--1">Angular</div>
-      <div class="hero__chip hero__chip--2">.NET Core</div>
-      <div class="hero__chip hero__chip--3">TypeScript</div>
-      <div class="hero__chip hero__chip--4">SQL Server</div>
+      @for (chip of heroChips; track chip.label) {
+        <div class="hero__chip" [class]="'hero__chip hero__chip--' + chip.variant">
+          {{ chip.label }}
+        </div>
+      }
     </div>
 
   </div>

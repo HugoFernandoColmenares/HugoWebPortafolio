@@ -15,6 +15,7 @@ export function mapPortfolioProject(row: PortfolioProjectRow): PortfolioProject 
     liveUrl: row.live_url,
     featured: row.featured,
     status: row.status,
+    category: row.category,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
     deletedAt: row.deleted_at,
@@ -31,5 +32,6 @@ export function mapPortfolioProjectInputToRow(input: PortfolioProjectInput) {
     live_url: input.liveUrl?.trim() || null,
     featured: input.featured,
     status: input.status,
+    category: input.category,
   };
 }

@@ -4,6 +4,7 @@
       [projects]="projects()"
       [loading]="loading()"
       [labels]="tableLabels()"
+      [categoryOptions]="categoryOptions()"
       (addProject)="onAddProject()"
       (viewProject)="onViewProject($event)"
       (editProject)="onEditProject($event)"
@@ -15,6 +16,7 @@
       [project]="selectedProject()"
       [loading]="saving()"
       [labels]="formLabels()"
+      [categoryOptions]="categoryOptions()"
       (saveProject)="onSaveProject($event)"
       (cancelForm)="onCancelForm()"
     />

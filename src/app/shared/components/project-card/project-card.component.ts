@@ -1,6 +1,7 @@
 import { Component, Input, inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { PortfolioProject } from '../../../core/models/portfolio-project.model';
+import { PROJECT_CATEGORY_TRANSLATION_KEYS } from '../../../core/constants/project-categories';
 import { TechBadgeComponent } from '../tech-badge/tech-badge.component';
 import { TranslationService } from '../../../core/services/translation.service';
 
@@ -39,12 +40,15 @@ import { TranslationService } from '../../../core/services/translation.service';
       </div>
 
       <div class="card__body">
-        <div [class]="'card__status card__status--' + project.status">
-          @switch (project.status) {
-            @case ('completed') { {{ ts.t().projects_status_completed }} }
-            @case ('in-progress') { {{ ts.t().projects_status_wip }} }
-            @default { {{ ts.t().projects_status_planned }} }
-          }
+        <div class="card__meta">
+          <span [class]="'card__status card__status--' + project.status">
+            @switch (project.status) {
+              @case ('completed') { {{ ts.t().projects_status_completed }} }
+              @case ('in-progress') { {{ ts.t().projects_status_wip }} }
+              @default { {{ ts.t().projects_status_planned }} }
+            }
+          </span>
+          <span class="card__category">{{ categoryLabel() }}</span>
         </div>
         <h3 class="card__title">{{ project.title }}</h3>
         <p class="card__description">{{ project.description }}</p>
@@ -151,6 +155,23 @@ import { TranslationService } from '../../../core/services/translation.service';
       flex: 1;
     }
 
+    .card__meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .card__category {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-accent);
+      background: color-mix(in srgb, var(--color-accent) 12%, var(--color-surface));
+      border: 1px solid color-mix(in srgb, var(--color-accent) 30%, var(--color-border));
+      border-radius: 9999px;
+      padding: 0.3rem 0.9rem;
+    }
+
     .card__status {
       font-size: 1.1rem;
       font-weight: 700;
@@ -189,4 +210,9 @@ import { TranslationService } from '../../../core/services/translation.service';
 export class ProjectCardComponent {
   @Input({ required: true }) project!: PortfolioProject;
   readonly ts = inject(TranslationService);
+
+  categoryLabel(): string {
+    const key = PROJECT_CATEGORY_TRANSLATION_KEYS[this.project.category];
+    return this.ts.t()[key];
+  }
 }

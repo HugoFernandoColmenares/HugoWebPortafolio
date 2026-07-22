@@ -17,7 +17,9 @@ import {
   PortfolioProject,
   PortfolioProjectInput,
   PortfolioProjectStatus,
+  ProjectCategory,
   ProjectCreatorViewMode,
+  CategoryOption,
   ProjectFormLabels,
 } from '../../../core/models/portfolio-project.model';
 
@@ -39,6 +41,7 @@ export class ProjectFormComponent {
   readonly project = input<PortfolioProject | null>(null);
   readonly loading = input(false);
   readonly labels = input.required<ProjectFormLabels>();
+  readonly categoryOptions = input<CategoryOption[]>([]);
 
   readonly saveProject = output<PortfolioProjectInput>();
   readonly cancelForm = output<void>();
@@ -54,6 +57,7 @@ export class ProjectFormComponent {
     liveUrl: [''],
     featured: [false],
     status: ['planned' as PortfolioProjectStatus, [Validators.required]],
+    category: ['web-fullstack' as ProjectCategory, [Validators.required]],
   });
 
   readonly statusOptions = computed<StatusOption[]>(() => {
@@ -92,6 +96,7 @@ export class ProjectFormComponent {
           liveUrl: project.liveUrl ?? '',
           featured: project.featured,
           status: project.status,
+          category: project.category,
         });
       } else {
         this.form.reset({
@@ -103,6 +108,7 @@ export class ProjectFormComponent {
           liveUrl: '',
           featured: false,
           status: 'planned',
+          category: 'web-fullstack',
         });
       }
 
@@ -144,6 +150,7 @@ export class ProjectFormComponent {
       liveUrl: raw.liveUrl.trim() || null,
       featured: raw.featured,
       status: raw.status,
+      category: raw.category,
     });
   }
 }

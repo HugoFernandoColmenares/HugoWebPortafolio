@@ -11,17 +11,47 @@
     />
   </div>
 
+  <div class="project-table__filters">
+    <p-iconfield class="project-table__search">
+      <p-inputicon styleClass="pi pi-search" />
+      <input
+        pInputText
+        type="search"
+        [value]="searchTerm()"
+        [placeholder]="labels().filterSearch"
+        (input)="onSearchInput($event)"
+      />
+    </p-iconfield>
+
+    <p-multiSelect
+      class="project-table__category-filter"
+      [options]="categoryOptions()"
+      [ngModel]="selectedCategories()"
+      (ngModelChange)="selectedCategories.set($event)"
+      optionLabel="label"
+      optionValue="value"
+      [placeholder]="labels().filterCategoryPlaceholder"
+      display="chip"
+      [showToggleAll]="true"
+      [filter]="false"
+    />
+  </div>
+
   <div class="project-table__wrapper">
     <p-table
-      [value]="projects()"
+      [value]="filteredProjects()"
       [loading]="loading()"
       [rowHover]="true"
       [showGridlines]="true"
+      [paginator]="true"
+      [rows]="rowsPerPage"
+      [rowsPerPageOptions]="[5, 10, 25, 50]"
       styleClass="project-table__grid"
     >
       <ng-template #header>
         <tr>
           <th>{{ labels().columnTitle }}</th>
+          <th>{{ labels().columnCategory }}</th>
           <th>{{ labels().columnStatus }}</th>
           <th>{{ labels().columnTechnologies }}</th>
           <th>{{ labels().columnFeatured }}</th>
@@ -33,6 +63,9 @@
         <tr>
           <td>
             <span class="project-table__title">{{ project.title }}</span>
+          </td>
+          <td>
+            <p-tag [value]="categoryLabel(project.category)" severity="secondary" />
           </td>
           <td>
             <p-tag
@@ -77,7 +110,7 @@
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="5" class="project-table__empty">
+          <td colspan="6" class="project-table__empty">
             {{ labels().empty }}
           </td>
         </tr>

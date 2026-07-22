@@ -1,14 +1,21 @@
 import { Component, computed, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 
-import { PortfolioProject } from '../../core/models/portfolio-project.model';
+import {
+  PortfolioProject,
+  ProjectCategorySection,
+} from '../../core/models/portfolio-project.model';
+import {
+  PROJECT_CATEGORIES,
+  PROJECT_CATEGORY_TRANSLATION_KEYS,
+} from '../../core/constants/project-categories';
 import { PortfolioProjectService } from '../../core/services/portfolio-project.service';
 import { TranslationService } from '../../core/services/translation.service';
-import { ProjectCardComponent } from '../../shared/components/project-card/project-card.component';
+import { ProjectCarouselComponent } from '../../shared/components/project-carousel/project-carousel.component';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [ProjectCardComponent],
+  imports: [ProjectCarouselComponent],
   templateUrl: './projects.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './projects.component.css'
@@ -17,32 +24,23 @@ export class ProjectsComponent implements OnInit {
   readonly ts = inject(TranslationService);
   private readonly projectService = inject(PortfolioProjectService);
 
-  readonly activeFilter = signal('All');
   readonly projects = signal<PortfolioProject[]>([]);
   readonly loading = signal(true);
   readonly loadError = signal(false);
 
-  readonly allFilters = computed(() => {
-    const technologies = this.projects().flatMap(p => p.technologies);
-    const uniqueTechs = [...new Set(technologies)].sort();
-    return ['All', ...uniqueTechs];
-  });
-
-  readonly filteredProjects = computed(() => {
-    const filter = this.activeFilter();
+  readonly categorySections = computed<ProjectCategorySection[]>(() => {
+    const t = this.ts.t();
     const items = this.projects();
-    if (filter === 'All') {
-      return items;
-    }
-    return items.filter(p => p.technologies.includes(filter));
+
+    return PROJECT_CATEGORIES.map(category => ({
+      category,
+      label: t[PROJECT_CATEGORY_TRANSLATION_KEYS[category]],
+      projects: items.filter(project => project.category === category),
+    })).filter(section => section.projects.length > 0);
   });
 
   ngOnInit(): void {
     void this.loadProjects();
-  }
-
-  setFilter(filter: string): void {
-    this.activeFilter.set(filter);
   }
 
   private async loadProjects(): Promise<void> {

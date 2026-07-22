@@ -7,12 +7,17 @@ import {
   signal,
 } from '@angular/core';
 import {
+  CategoryOption,
   PortfolioProject,
   PortfolioProjectInput,
   ProjectCreatorViewMode,
   ProjectFormLabels,
   ProjectTableLabels,
 } from '../../core/models/portfolio-project.model';
+import {
+  PROJECT_CATEGORIES,
+  PROJECT_CATEGORY_TRANSLATION_KEYS,
+} from '../../core/constants/project-categories';
 import { PortfolioProjectService } from '../../core/services/portfolio-project.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { TranslationService } from '../../core/services/translation.service';
@@ -45,7 +50,11 @@ export class ProjectCreatorComponent implements OnInit {
       subtitle: t.admin_project_subtitle,
       add: t.admin_project_add,
       empty: t.admin_project_empty,
+      filterSearch: t.admin_project_filter_search,
+      filterCategory: t.admin_project_filter_category,
+      filterCategoryPlaceholder: t.admin_project_filter_category_placeholder,
       columnTitle: t.admin_project_col_title,
+      columnCategory: t.admin_project_col_category,
       columnStatus: t.admin_project_col_status,
       columnTechnologies: t.admin_project_col_technologies,
       columnFeatured: t.admin_project_col_featured,
@@ -76,12 +85,21 @@ export class ProjectCreatorComponent implements OnInit {
       liveUrl: t.admin_project_field_live_url,
       featured: t.admin_project_field_featured,
       status: t.admin_project_field_status,
+      category: t.admin_project_field_category,
       save: t.admin_project_save,
       cancel: t.admin_project_cancel,
       statusCompleted: t.admin_project_status_completed,
       statusInProgress: t.admin_project_status_in_progress,
       statusPlanned: t.admin_project_status_planned,
     };
+  });
+
+  readonly categoryOptions = computed<CategoryOption[]>(() => {
+    const t = this.ts.t();
+    return PROJECT_CATEGORIES.map(category => ({
+      value: category,
+      label: t[PROJECT_CATEGORY_TRANSLATION_KEYS[category]],
+    }));
   });
 
   readonly formMode = computed<Exclude<ProjectCreatorViewMode, 'list'>>(() =>
