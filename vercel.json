@@ -4,6 +4,9 @@
   "outputDirectory": "dist/web-portafolio/browser",
   "framework": null,
   "installCommand": "npm install --legacy-peer-deps",
+  "env": {
+    "NG_APP_ENV": "production"
+  },
   "rewrites": [
     {
       "source": "/(.*)",
