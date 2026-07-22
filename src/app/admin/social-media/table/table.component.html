@@ -1,5 +1,5 @@
-<div class="social-media-table">
-  <div class="social-media-table__header">
+<div class="admin-table admin-table--social">
+  <div class="admin-table__header">
     <div>
       <h2>{{ labels().title }}</h2>
       <p>{{ labels().subtitle }}</p>
@@ -13,8 +13,8 @@
     }
   </div>
 
-  <div class="social-media-table__filters">
-    <p-iconfield class="social-media-table__search">
+  <div class="admin-table__filters">
+    <p-iconfield class="admin-table__search">
       <p-inputicon styleClass="pi pi-search" />
       <input
         pInputText
@@ -26,7 +26,7 @@
     </p-iconfield>
 
     <p-multiSelect
-      class="social-media-table__platform-filter"
+      class="admin-table__platform-filter"
       [options]="platformOptions()"
       [ngModel]="selectedPlatforms()"
       (ngModelChange)="selectedPlatforms.set($event)"
@@ -39,7 +39,7 @@
     />
   </div>
 
-  <div class="social-media-table__wrapper">
+  <div class="admin-table__wrapper">
     <p-table
       [value]="filteredLinks()"
       [loading]="loading()"
@@ -48,32 +48,47 @@
       [paginator]="true"
       [rows]="rowsPerPage"
       [rowsPerPageOptions]="[5, 10, 25, 50]"
-      styleClass="social-media-table__grid"
+      styleClass="admin-table__grid"
     >
       <ng-template #header>
         <tr>
           <th>{{ labels().columnName }}</th>
           <th>{{ labels().columnPlatform }}</th>
           <th>{{ labels().columnUrl }}</th>
+          <th>{{ labels().columnIcon }}</th>
           <th>{{ labels().columnHero }}</th>
           <th>{{ labels().columnAbout }}</th>
           <th>{{ labels().columnActive }}</th>
-          <th class="social-media-table__actions-col">{{ labels().columnActions }}</th>
+          <th class="admin-table__actions-col">{{ labels().columnActions }}</th>
         </tr>
       </ng-template>
 
       <ng-template #body let-link>
         <tr>
           <td>
-            <span class="social-media-table__name">{{ link.name }}</span>
+            <span class="admin-table__name">{{ link.name }}</span>
           </td>
           <td>
             <p-tag [value]="platformLabel(link.platform)" severity="secondary" />
           </td>
           <td>
-            <a [href]="link.url" target="_blank" rel="noopener" class="social-media-table__url">
+            <a [href]="link.url" target="_blank" rel="noopener" class="admin-table__link">
               {{ link.url }}
             </a>
+          </td>
+          <td>
+            @if (link.icon) {
+              <span class="admin-table__icon">
+                @if (link.icon.startsWith('http')) {
+                  <img [src]="link.icon" alt="" class="admin-table__icon-img" />
+                } @else {
+                  <i [class]="link.icon" aria-hidden="true"></i>
+                }
+                <span class="admin-table__muted">{{ link.icon }}</span>
+              </span>
+            } @else {
+              <span class="admin-table__muted">—</span>
+            }
           </td>
           <td>{{ link.showInHero ? labels().yes : labels().no }}</td>
           <td>{{ link.showInAbout ? labels().yes : labels().no }}</td>
@@ -83,7 +98,7 @@
               [severity]="link.isActive ? 'success' : 'warn'"
             />
           </td>
-          <td class="social-media-table__actions">
+          <td class="admin-table__actions">
             <p-button
               icon="pi pi-eye"
               [rounded]="true"
@@ -116,7 +131,7 @@
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="7" class="social-media-table__empty">
+          <td colspan="8" class="admin-table__empty">
             {{ labels().empty }}
           </td>
         </tr>

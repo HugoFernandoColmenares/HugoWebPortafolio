@@ -22,6 +22,7 @@ export interface SocialMediaLink {
   name: string;
   platform: SocialPlatform;
   url: string;
+  icon?: string;
   displayOrder: number;
   showInHero: boolean;
   showInAbout: boolean;
@@ -36,6 +37,7 @@ export interface SocialMediaLinkRow {
   name: string;
   platform: SocialPlatform;
   url: string;
+  icon?: string;
   display_order: number;
   show_in_hero: boolean;
   show_in_about: boolean;
@@ -49,6 +51,7 @@ export interface SocialMediaLinkInput {
   name: string;
   platform: SocialPlatform;
   url: string;
+  icon?: string;
   displayOrder: number;
   showInHero: boolean;
   showInAbout: boolean;
@@ -66,6 +69,7 @@ export interface SocialMediaTableLabels {
   columnName: string;
   columnPlatform: string;
   columnUrl: string;
+  columnIcon: string;
   columnHero: string;
   columnAbout: string;
   columnActive: string;
@@ -84,6 +88,8 @@ export interface SocialMediaFormLabels {
   name: string;
   platform: string;
   url: string;
+  icon: string;
+  iconPlaceholder: string;
   displayOrder: string;
   showInHero: string;
   showInAbout: string;

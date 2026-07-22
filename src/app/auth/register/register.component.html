@@ -31,26 +31,54 @@
 
     <div class="auth-form__group">
       <label class="auth-form__label" for="register-password">{{ facade.registerLabels().password }}</label>
-      <input
-        id="register-password"
-        type="password"
-        class="auth-form__input"
-        [class.auth-form__input--error]="f.password.invalid && f.password.touched"
-        formControlName="password"
-        autocomplete="new-password"
-      />
+      <div class="password-field">
+        <input
+          id="register-password"
+          [type]="showPassword() ? 'text' : 'password'"
+          class="auth-form__input"
+          [class.auth-form__input--error]="f.password.invalid && f.password.touched"
+          formControlName="password"
+          autocomplete="new-password"
+        />
+        <button
+          type="button"
+          class="password-field__toggle"
+          (click)="togglePassword()"
+          [attr.aria-label]="showPassword() ? facade.registerLabels().hidePassword : facade.registerLabels().showPassword"
+        >
+          @if (showPassword()) {
+            <i class="pi pi-eye-slash" aria-hidden="true"></i>
+          } @else {
+            <i class="pi pi-eye" aria-hidden="true"></i>
+          }
+        </button>
+      </div>
     </div>
 
     <div class="auth-form__group">
       <label class="auth-form__label" for="register-confirm">{{ facade.registerLabels().confirmPassword }}</label>
-      <input
-        id="register-confirm"
-        type="password"
-        class="auth-form__input"
-        [class.auth-form__input--error]="f.confirmPassword.invalid && f.confirmPassword.touched"
-        formControlName="confirmPassword"
-        autocomplete="new-password"
-      />
+      <div class="password-field">
+        <input
+          id="register-confirm"
+          [type]="showConfirmPassword() ? 'text' : 'password'"
+          class="auth-form__input"
+          [class.auth-form__input--error]="f.confirmPassword.invalid && f.confirmPassword.touched"
+          formControlName="confirmPassword"
+          autocomplete="new-password"
+        />
+        <button
+          type="button"
+          class="password-field__toggle"
+          (click)="toggleConfirmPassword()"
+          [attr.aria-label]="showConfirmPassword() ? facade.registerLabels().hidePassword : facade.registerLabels().showPassword"
+        >
+          @if (showConfirmPassword()) {
+            <i class="pi pi-eye-slash" aria-hidden="true"></i>
+          } @else {
+            <i class="pi pi-eye" aria-hidden="true"></i>
+          }
+        </button>
+      </div>
     </div>
 
     <button type="submit" class="auth-form__submit" [disabled]="facade.loading()">

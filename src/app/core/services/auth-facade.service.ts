@@ -31,6 +31,8 @@ export class AuthFacadeService {
     noAccount: this.ts.t()['auth_no_account'],
     register: this.ts.t()['auth_go_register'],
     forgotPassword: this.ts.t()['auth_forgot_password'],
+    showPassword: this.ts.t()['auth_show_password'],
+    hidePassword: this.ts.t()['auth_hide_password'],
   }));
 
   readonly registerLabels = computed(() => ({
@@ -44,6 +46,8 @@ export class AuthFacadeService {
     hasAccount: this.ts.t()['auth_has_account'],
     login: this.ts.t()['auth_go_login'],
     passwordMismatch: this.ts.t()['auth_password_mismatch'],
+    showPassword: this.ts.t()['auth_show_password'],
+    hidePassword: this.ts.t()['auth_hide_password'],
   }));
 
   readonly confirmLabels = computed(() => ({
@@ -70,6 +74,8 @@ export class AuthFacadeService {
     submitUpdate: this.ts.t()['auth_update_password_submit'],
     backToLogin: this.ts.t()['auth_back_login'],
     passwordMismatch: this.ts.t()['auth_password_mismatch'],
+    showPassword: this.ts.t()['auth_show_password'],
+    hidePassword: this.ts.t()['auth_hide_password'],
   }));
 
   async onLogin(credentials: LoginCredentials): Promise<void> {

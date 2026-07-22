@@ -52,6 +52,7 @@ Thumbs.db
 # Local project guidelines
 design_guidelines.md
 architecture_guidelines.md
+css_refactor_plan.md
 
 # Supabase CLI (local state & credentials)
 supabase/.branches/

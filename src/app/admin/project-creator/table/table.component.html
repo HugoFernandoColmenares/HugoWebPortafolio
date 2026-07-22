@@ -1,5 +1,5 @@
-<div class="project-table">
-  <div class="project-table__header">
+<div class="admin-table admin-table--projects">
+  <div class="admin-table__header">
     <div>
       <h2>{{ labels().title }}</h2>
       <p>{{ labels().subtitle }}</p>
@@ -13,8 +13,8 @@
     }
   </div>
 
-  <div class="project-table__filters">
-    <p-iconfield class="project-table__search">
+  <div class="admin-table__filters">
+    <p-iconfield class="admin-table__search">
       <p-inputicon styleClass="pi pi-search" />
       <input
         pInputText
@@ -26,7 +26,7 @@
     </p-iconfield>
 
     <p-multiSelect
-      class="project-table__category-filter"
+      class="admin-table__category-filter"
       [options]="categoryOptions()"
       [ngModel]="selectedCategories()"
       (ngModelChange)="selectedCategories.set($event)"
@@ -39,7 +39,7 @@
     />
   </div>
 
-  <div class="project-table__wrapper">
+  <div class="admin-table__wrapper">
     <p-table
       [value]="filteredProjects()"
       [loading]="loading()"
@@ -48,7 +48,7 @@
       [paginator]="true"
       [rows]="rowsPerPage"
       [rowsPerPageOptions]="[5, 10, 25, 50]"
-      styleClass="project-table__grid"
+      styleClass="admin-table__grid"
     >
       <ng-template #header>
         <tr>
@@ -57,14 +57,14 @@
           <th>{{ labels().columnStatus }}</th>
           <th>{{ labels().columnTechnologies }}</th>
           <th>{{ labels().columnFeatured }}</th>
-          <th class="project-table__actions-col">{{ labels().columnActions }}</th>
+          <th class="admin-table__actions-col">{{ labels().columnActions }}</th>
         </tr>
       </ng-template>
 
       <ng-template #body let-project>
         <tr>
           <td>
-            <span class="project-table__title">{{ project.title }}</span>
+            <span class="admin-table__title">{{ project.title }}</span>
           </td>
           <td>
             <p-tag [value]="categoryLabel(project.category)" severity="secondary" />
@@ -76,12 +76,12 @@
             />
           </td>
           <td>
-            <span class="project-table__tech">{{ project.technologies.join(', ') }}</span>
+            <span class="admin-table__tech">{{ project.technologies.join(', ') }}</span>
           </td>
           <td>
             {{ project.featured ? labels().featuredYes : labels().featuredNo }}
           </td>
-          <td class="project-table__actions">
+          <td class="admin-table__actions">
             <p-button
               icon="pi pi-eye"
               [rounded]="true"
@@ -114,7 +114,7 @@
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="6" class="project-table__empty">
+          <td colspan="6" class="admin-table__empty">
             {{ labels().empty }}
           </td>
         </tr>

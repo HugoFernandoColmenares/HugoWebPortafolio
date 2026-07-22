@@ -1,15 +1,15 @@
-<form class="social-media-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <header class="social-media-form__header">
+<form class="admin-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <header class="admin-form__header">
     <h2>{{ heading() }}</h2>
   </header>
 
-  <div class="social-media-form__grid">
-    <div class="social-media-form__field">
+  <div class="admin-form__grid">
+    <div class="admin-form__field">
       <label for="social-name">{{ labels().name }}</label>
       <input pInputText id="social-name" formControlName="name" />
     </div>
 
-    <div class="social-media-form__field">
+    <div class="admin-form__field">
       <label for="social-platform">{{ labels().platform }}</label>
       <p-select
         inputId="social-platform"
@@ -20,33 +20,43 @@
       />
     </div>
 
-    <div class="social-media-form__field social-media-form__field--full">
+    <div class="admin-form__field admin-form__field--full">
       <label for="social-url">{{ labels().url }}</label>
       <input pInputText id="social-url" formControlName="url" />
     </div>
 
-    <div class="social-media-form__field">
+    <div class="admin-form__field admin-form__field--full">
+      <label for="social-icon">{{ labels().icon }}</label>
+      <input
+        pInputText
+        id="social-icon"
+        formControlName="icon"
+        [placeholder]="labels().iconPlaceholder"
+      />
+    </div>
+
+    <div class="admin-form__field">
       <label for="social-order">{{ labels().displayOrder }}</label>
       <p-inputNumber inputId="social-order" formControlName="displayOrder" [min]="0" />
     </div>
 
-    <div class="social-media-form__field social-media-form__field--checkbox">
+    <div class="admin-form__field admin-form__field--checkbox">
       <p-checkbox inputId="social-hero" formControlName="showInHero" [binary]="true" />
       <label for="social-hero">{{ labels().showInHero }}</label>
     </div>
 
-    <div class="social-media-form__field social-media-form__field--checkbox">
+    <div class="admin-form__field admin-form__field--checkbox">
       <p-checkbox inputId="social-about" formControlName="showInAbout" [binary]="true" />
       <label for="social-about">{{ labels().showInAbout }}</label>
     </div>
 
-    <div class="social-media-form__field social-media-form__field--checkbox">
+    <div class="admin-form__field admin-form__field--checkbox">
       <p-checkbox inputId="social-active" formControlName="isActive" [binary]="true" />
       <label for="social-active">{{ labels().isActive }}</label>
     </div>
   </div>
 
-  <footer class="social-media-form__actions">
+  <footer class="admin-form__actions">
     <p-button
       type="button"
       [label]="labels().cancel"

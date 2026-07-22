@@ -1,21 +1,21 @@
-<form class="user-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <header class="user-form__header">
+<form class="admin-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <header class="admin-form__header">
     <h2>{{ heading() }}</h2>
   </header>
 
-  <div class="user-form__grid">
-    <div class="user-form__field">
+  <div class="admin-form__grid">
+    <div class="admin-form__field">
       <label for="user-full-name">{{ labels().fullName }}</label>
       <input pInputText id="user-full-name" formControlName="fullName" />
     </div>
 
-    <div class="user-form__field">
+    <div class="admin-form__field">
       <label for="user-email">{{ labels().email }}</label>
       <input pInputText id="user-email" type="email" formControlName="email" />
     </div>
 
     @if (isCreateMode()) {
-      <div class="user-form__field user-form__field--full">
+      <div class="admin-form__field admin-form__field--full">
         <label for="user-password">{{ labels().password }}</label>
         <p-password
           inputId="user-password"
@@ -26,7 +26,7 @@
       </div>
     }
 
-    <div class="user-form__field">
+    <div class="admin-form__field">
       <label for="user-role">{{ labels().role }}</label>
       <p-select
         inputId="user-role"
@@ -38,7 +38,7 @@
     </div>
   </div>
 
-  <footer class="user-form__actions">
+  <footer class="admin-form__actions">
     <p-button
       type="button"
       [label]="labels().cancel"

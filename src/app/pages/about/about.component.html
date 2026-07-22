@@ -9,7 +9,7 @@
     <!-- Bio + Avatar -->
     <div class="about__bio-row">
       <div class="about__avatar">
-        <div class="about__avatar-inner" style="overflow: hidden;">
+        <div class="about__avatar-inner">
           <img src="profile picture.jpeg" alt="About Me Avatar" class="about__avatar-img" />
         </div>
       </div>
@@ -32,61 +32,60 @@
     </div>
 
     <!-- Contact Form -->
-    <div class="about__contact">
+    <div class="about__contact panel">
       <h2 class="about__section-title">{{ ts.t()['about_contact_heading'] }}</h2>
 
-      <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="name">{{ ts.t()['about_contact_name'] }}</label>
+      <form class="public-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+          <div class="public-form__row">
+            <div class="form-field">
+              <label class="form-field__label" for="name">{{ ts.t()['about_contact_name'] }}</label>
               <input
                 id="name"
-                class="form-input"
+                class="form-input form-input--surface-2"
                 [class.form-input--error]="f['name'].invalid && f['name'].touched"
                 type="text"
                 formControlName="name"
                 [placeholder]="ts.t()['about_contact_name']"
               />
               @if (f['name'].invalid && f['name'].touched) {
-                <span class="form-error">Name must be at least 2 characters.</span>
+                <span class="form-field__error">Name must be at least 2 characters.</span>
               }
             </div>
 
-            <div class="form-group">
-              <label class="form-label" for="email">{{ ts.t()['about_contact_email'] }}</label>
+            <div class="form-field">
+              <label class="form-field__label" for="email">{{ ts.t()['about_contact_email'] }}</label>
               <input
                 id="email"
-                class="form-input"
+                class="form-input form-input--surface-2"
                 [class.form-input--error]="f['email'].invalid && f['email'].touched"
                 type="email"
                 formControlName="email"
                 [placeholder]="ts.t()['about_contact_email']"
               />
               @if (f['email'].invalid && f['email'].touched) {
-                <span class="form-error">Please enter a valid email address.</span>
+                <span class="form-field__error">Please enter a valid email address.</span>
               }
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="form-label" for="message">{{ ts.t()['about_contact_message'] }}</label>
+          <div class="form-field">
+            <label class="form-field__label" for="message">{{ ts.t()['about_contact_message'] }}</label>
             <textarea
               id="message"
-              class="form-input form-textarea"
+              class="form-input form-input--surface-2 form-input--textarea"
               [class.form-input--error]="f['message'].invalid && f['message'].touched"
               formControlName="message"
               [placeholder]="ts.t()['about_contact_message']"
               rows="5"
             ></textarea>
             @if (f['message'].invalid && f['message'].touched) {
-              <span class="form-error">Message must be at least 10 characters.</span>
+              <span class="form-field__error">Message must be at least 10 characters.</span>
             }
           </div>
 
-          <button type="submit" class="contact-btn" [disabled]="sending">
+          <button type="submit" class="btn-submit" [disabled]="sending">
             @if (sending) {
-              <span class="contact-btn__spinner"></span> {{ ts.t()['about_contact_sending'] }}
+              <span class="spinner spinner--on-accent"></span> {{ ts.t()['about_contact_sending'] }}
             } @else {
               {{ ts.t()['about_contact_submit'] }}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -94,7 +93,6 @@
               </svg>
             }
           </button>
-
       </form>
     </div>
 

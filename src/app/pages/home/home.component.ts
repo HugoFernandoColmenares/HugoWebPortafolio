@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, HostListener, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
 import { SocialMediaLink } from '../../core/models/social-media.model';
@@ -34,6 +34,18 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     void this.loadSocialLinks();
+  }
+
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(event: MouseEvent): void {
+    const { clientX, clientY } = event;
+    const { innerWidth, innerHeight } = window;
+
+    const x = ((clientX / innerWidth) * 100).toFixed(2);
+    const y = ((clientY / innerHeight) * 100).toFixed(2);
+
+    document.documentElement.style.setProperty('--mouse-x', `${x}%`);
+    document.documentElement.style.setProperty('--mouse-y', `${y}%`);
   }
 
   private async loadSocialLinks(): Promise<void> {

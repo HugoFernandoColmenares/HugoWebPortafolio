@@ -1,5 +1,5 @@
-<div class="user-table">
-  <div class="user-table__header">
+<div class="admin-table admin-table--users">
+  <div class="admin-table__header">
     <div>
       <h2>{{ labels().title }}</h2>
       <p>{{ labels().subtitle }}</p>
@@ -13,8 +13,8 @@
     }
   </div>
 
-  <div class="user-table__filters">
-    <p-iconfield class="user-table__search">
+  <div class="admin-table__filters">
+    <p-iconfield class="admin-table__search">
       <p-inputicon styleClass="pi pi-search" />
       <input
         pInputText
@@ -26,7 +26,7 @@
     </p-iconfield>
 
     <p-multiSelect
-      class="user-table__role-filter"
+      class="admin-table__role-filter"
       [options]="roleOptions()"
       [ngModel]="selectedRoles()"
       (ngModelChange)="selectedRoles.set($event)"
@@ -39,7 +39,7 @@
     />
 
     <p-multiSelect
-      class="user-table__status-filter"
+      class="admin-table__status-filter"
       [options]="emailStatusOptions()"
       [ngModel]="selectedEmailStatuses()"
       (ngModelChange)="selectedEmailStatuses.set($event)"
@@ -52,7 +52,7 @@
     />
   </div>
 
-  <div class="user-table__wrapper">
+  <div class="admin-table__wrapper">
     <p-table
       [value]="filteredUsers()"
       [loading]="loading()"
@@ -61,7 +61,7 @@
       [paginator]="true"
       [rows]="rowsPerPage"
       [rowsPerPageOptions]="[5, 10, 25, 50]"
-      styleClass="user-table__grid"
+      styleClass="admin-table__grid"
     >
       <ng-template #header>
         <tr>
@@ -70,14 +70,14 @@
           <th>{{ labels().columnEmailStatus }}</th>
           <th>{{ labels().columnRole }}</th>
           <th>{{ labels().columnMemberSince }}</th>
-          <th class="user-table__actions-col">{{ labels().columnActions }}</th>
+          <th class="admin-table__actions-col">{{ labels().columnActions }}</th>
         </tr>
       </ng-template>
 
       <ng-template #body let-user>
         <tr>
           <td>
-            <span class="user-table__name">{{ user.fullName }}</span>
+            <span class="admin-table__name">{{ user.fullName }}</span>
           </td>
           <td>{{ user.email }}</td>
           <td>
@@ -90,7 +90,7 @@
             <p-tag [value]="roleLabel(user.role?.name)" severity="secondary" />
           </td>
           <td>{{ user.createdAt | date: 'mediumDate' }}</td>
-          <td class="user-table__actions">
+          <td class="admin-table__actions">
             <p-button
               icon="pi pi-eye"
               [rounded]="true"
@@ -123,7 +123,7 @@
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="6" class="user-table__empty">
+          <td colspan="6" class="admin-table__empty">
             {{ labels().empty }}
           </td>
         </tr>

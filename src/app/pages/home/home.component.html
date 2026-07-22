@@ -13,10 +13,10 @@
         {{ ts.t()['hero_greeting'] }}
         <span class="text-accent">👋</span>
       </p>
-      <h1 class="hero__name animate-fade-in-up">
+      <h1 class="hero__name animate-fade-in-up gradient-text-interactive">
         {{ ts.t()['hero_name'] }}
       </h1>
-      <h2 class="hero__title animate-fade-in-up gradient-text">
+      <h2 class="hero__title animate-fade-in-up gradient-text-interactive">
         {{ ts.t()['hero_title'] }}
       </h2>
       <p class="hero__subtitle animate-fade-in-up">
@@ -48,7 +48,7 @@
       }
     </div>
 
-    <!-- Hero Avatar -->
+    <!-- Hero Avatar & Orbital Tech Chips -->
     <div class="hero__avatar-wrapper animate-fade-in-up">
       <div class="hero__avatar">
         <div class="hero__avatar-inner" style="overflow: hidden;">
@@ -57,12 +57,16 @@
         <div class="hero__avatar-ring"></div>
       </div>
 
-      <!-- Tech chips floating around avatar -->
-      @for (chip of heroChips; track chip.label) {
-        <div class="hero__chip" [class]="'hero__chip hero__chip--' + chip.variant">
-          {{ chip.label }}
-        </div>
-      }
+      <!-- Órbita giratoria con soporte de rotación inversa para texto derechito -->
+      <div class="hero__orbit">
+        @for (chip of heroChips; track chip.label) {
+          <div class="hero__chip-slot">
+            <span [class]="'hero__chip hero__chip--' + chip.variant">
+              {{ chip.label }}
+            </span>
+          </div>
+        }
+      </div>
     </div>
 
   </div>

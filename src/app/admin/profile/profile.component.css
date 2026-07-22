@@ -1,110 +1,147 @@
-.profile {
-  max-width: 72rem;
+:host {
+  display: block;
 }
 
-.profile__header h1 {
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
-  margin-bottom: 0.8rem;
-}
-
-.profile__header p {
-  color: var(--color-text-muted);
-  font-size: 1.5rem;
-  margin-bottom: var(--space-md);
-}
-
-.profile__card {
+.profile-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
-  padding: var(--space-md);
+  gap: var(--space-lg);
+  padding: var(--space-lg);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
-  box-shadow: var(--shadow-sm);
 }
 
-.profile__card--loading,
-.profile__card--empty {
-  align-items: center;
-  text-align: center;
-  color: var(--color-text-muted);
-  font-size: 1.5rem;
+/* ==========================================================================
+   1. MODO RESUMEN (Vista de la captura que fallaba)
+   ========================================================================== */
+.profile-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
 }
 
-.profile__avatar {
+.profile-summary__main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Avatar centrado en móvil, alineado a la izquierda desde tablet */
+.profile-summary__avatar {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 7.2rem;
   height: 7.2rem;
+  flex-shrink: 0;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-  color: #fff;
-  font-size: 2.4rem;
+  background: color-mix(in srgb, var(--color-primary) 15%, var(--color-surface));
+  color: var(--color-primary);
+  border: 2px solid var(--color-border);
+  font-size: 2.8rem;
   font-weight: 700;
 }
 
-.profile__details {
+/* Grid estricto para que NINGÚN campo se clave dentro de otro */
+.profile-summary__details {
   display: grid;
-  gap: var(--space-sm);
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
   margin: 0;
+  width: 100%;
 }
 
-.profile__field {
-  display: grid;
+.profile-summary__field {
+  display: flex;
+  flex-direction: column;
   gap: 0.4rem;
+  min-width: 0; /* Previene desbordamiento de cadenas largas */
 }
 
-.profile__field dt {
-  font-size: 1.3rem;
+.profile-summary__field dt {
+  font-size: 1.2rem;
   font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
 }
 
-.profile__field dd {
+.profile-summary__field dd {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
+  font-weight: 500;
   color: var(--color-text-heading);
+  word-break: break-word;
 }
 
-.profile__badge {
+/* Badge del Rol completamente contenido */
+.profile-summary__badge {
   display: inline-flex;
-  padding: 0.4rem 1rem;
+  align-items: center;
+  padding: 0.2rem 0.8rem;
   border-radius: var(--radius-full);
   background: color-mix(in srgb, var(--color-accent) 15%, var(--color-surface));
-  color: var(--color-accent-dark);
-  font-size: 1.3rem;
+  color: var(--color-accent-dark, var(--color-accent));
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
+  font-size: 1.2rem;
   font-weight: 600;
+  width: fit-content;
 }
 
-.profile__muted {
-  color: var(--color-text-muted);
+/* Acciones en fila independiente abajo */
+.profile-summary__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
 }
 
-.profile__spinner {
-  width: 2.4rem;
-  height: 2.4rem;
-  border: 2px solid var(--color-border);
-  border-top-color: var(--color-accent);
-  border-radius: 50%;
-  animation: profile-spin 0.8s linear infinite;
+/* ==========================================================================
+   2. MODO EDICIÓN (Formularios de Perfil y Contraseña)
+   ========================================================================== */
+.profile-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
-@keyframes profile-spin {
-  to { transform: rotate(360deg); }
+.profile-edit-form__title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-text-heading);
+  margin-bottom: var(--space-xs);
 }
 
+.profile-edit-form__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+}
+
+.profile-edit-form__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Breakpoints para pantallas medianas/grandes */
 @media (min-width: 640px) {
-  .profile__card {
+  .profile-summary__main {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
   }
 
-  .profile__details {
-    flex: 1;
+  .profile-summary__details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-edit-form__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }

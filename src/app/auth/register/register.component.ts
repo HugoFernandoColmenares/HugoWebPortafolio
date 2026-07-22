@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthFacadeService } from '../../core/services/auth-facade.service';
 import { NotificationService } from '../../core/services/notification.service';
@@ -16,6 +16,9 @@ export class RegisterComponent {
   private readonly fb = inject(FormBuilder);
   private readonly notifications = inject(NotificationService);
 
+  readonly showPassword = signal(false);
+  readonly showConfirmPassword = signal(false);
+
   readonly form = this.fb.nonNullable.group({
     fullName: ['', [Validators.required, Validators.minLength(2)]],
     email: ['', [Validators.required, Validators.email]],
@@ -25,6 +28,14 @@ export class RegisterComponent {
 
   get f() {
     return this.form.controls;
+  }
+
+  togglePassword(): void {
+    this.showPassword.update(value => !value);
+  }
+
+  toggleConfirmPassword(): void {
+    this.showConfirmPassword.update(value => !value);
   }
 
   onSubmit(): void {

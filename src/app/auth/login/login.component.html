@@ -19,14 +19,28 @@
 
     <div class="auth-form__group">
       <label class="auth-form__label" for="login-password">{{ facade.loginLabels().password }}</label>
-      <input
-        id="login-password"
-        type="password"
-        class="auth-form__input"
-        [class.auth-form__input--error]="f.password.invalid && f.password.touched"
-        formControlName="password"
-        autocomplete="current-password"
-      />
+      <div class="password-field">
+        <input
+          id="login-password"
+          [type]="showPassword() ? 'text' : 'password'"
+          class="auth-form__input"
+          [class.auth-form__input--error]="f.password.invalid && f.password.touched"
+          formControlName="password"
+          autocomplete="current-password"
+        />
+        <button
+          type="button"
+          class="password-field__toggle"
+          (click)="togglePassword()"
+          [attr.aria-label]="showPassword() ? facade.loginLabels().hidePassword : facade.loginLabels().showPassword"
+        >
+          @if (showPassword()) {
+            <i class="pi pi-eye-slash" aria-hidden="true"></i>
+          } @else {
+            <i class="pi pi-eye" aria-hidden="true"></i>
+          }
+        </button>
+      </div>
     </div>
 
     <button type="submit" class="auth-form__submit" [disabled]="facade.loading()">

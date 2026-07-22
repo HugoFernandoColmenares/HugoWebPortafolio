@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthFacadeService } from '../../core/services/auth-facade.service';
 
@@ -13,6 +13,11 @@ import { AuthFacadeService } from '../../core/services/auth-facade.service';
 export class LoginComponent {
   readonly facade = inject(AuthFacadeService);
   private readonly fb = inject(FormBuilder);
+  readonly showPassword = signal(false);
+
+  togglePassword(): void {
+    this.showPassword.update((val) => !val);
+  }
 
   readonly form = this.fb.nonNullable.group({
     email: ['', [Validators.required, Validators.email]],

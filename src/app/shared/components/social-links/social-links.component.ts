@@ -11,4 +11,12 @@ import { SocialMediaContext, SocialMediaLink } from '../../../core/models/social
 export class SocialLinksComponent {
   readonly links = input.required<SocialMediaLink[]>();
   readonly context = input.required<SocialMediaContext>();
+
+  isImageIcon(icon?: string): boolean {
+    return !!icon && /^https?:\/\//i.test(icon);
+  }
+
+  isClassIcon(icon?: string): boolean {
+    return !!icon && !this.isImageIcon(icon);
+  }
 }
