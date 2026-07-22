@@ -19,6 +19,8 @@ import { Tag } from 'primeng/tag';
 import { Tooltip } from 'primeng/tooltip';
 import {
   AdminUserTableLabels,
+  EmailConfirmationFilter,
+  EmailStatusOption,
   RoleOption,
 } from '../../../core/models/admin-user.model';
 import { RoleName } from '../../../core/models/role.model';
@@ -48,6 +50,7 @@ export class UserTableComponent {
   readonly loading = input(false);
   readonly labels = input.required<AdminUserTableLabels>();
   readonly roleOptions = input<RoleOption[]>([]);
+  readonly emailStatusOptions = input<EmailStatusOption[]>([]);
   readonly canManage = input(true);
 
   readonly addUser = output<void>();
@@ -57,11 +60,13 @@ export class UserTableComponent {
 
   readonly searchTerm = signal('');
   readonly selectedRoles = signal<RoleName[]>([]);
+  readonly selectedEmailStatuses = signal<EmailConfirmationFilter[]>([]);
   readonly rowsPerPage = 10;
 
   readonly filteredUsers = computed(() => {
     const query = this.searchTerm().trim().toLowerCase();
     const roles = this.selectedRoles();
+    const emailStatuses = this.selectedEmailStatuses();
     let items = this.users();
 
     if (query) {
@@ -71,6 +76,7 @@ export class UserTableComponent {
           user.email,
           user.role?.name ?? '',
           this.roleLabel(user.role?.name),
+          this.emailStatusLabel(user),
         ]
           .join(' ')
           .toLowerCase();
@@ -83,8 +89,24 @@ export class UserTableComponent {
       items = items.filter(user => user.role?.name && roles.includes(user.role.name));
     }
 
+    if (emailStatuses.length > 0) {
+      items = items.filter(user => emailStatuses.includes(this.getEmailStatus(user)));
+    }
+
     return items;
   });
+
+  emailStatusLabel(user: UserProfile): string {
+    return user.emailConfirmedAt ? this.labels().emailConfirmed : this.labels().emailPending;
+  }
+
+  emailStatusSeverity(user: UserProfile): 'success' | 'warn' {
+    return user.emailConfirmedAt ? 'success' : 'warn';
+  }
+
+  private getEmailStatus(user: UserProfile): EmailConfirmationFilter {
+    return user.emailConfirmedAt ? 'confirmed' : 'pending';
+  }
 
   roleLabel(roleName?: RoleName): string {
     if (!roleName) {

@@ -75,6 +75,11 @@ export const routes: Routes = [
         canActivate: [adminGuard],
         loadComponent: () => import('./admin/admin-panel/admin-panel.component').then(m => m.AdminPanelComponent),
       },
+      {
+        path: 'social-media',
+        canActivate: [adminGuard],
+        loadComponent: () => import('./admin/social-media/social-media.component').then(m => m.SocialMediaComponent),
+      },
     ],
   },
   {

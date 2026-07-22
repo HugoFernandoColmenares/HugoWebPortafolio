@@ -12,6 +12,7 @@ import {
   AdminUserInput,
   AdminUserTableLabels,
   AdminUserUpdateInput,
+  EmailStatusOption,
   RoleOption,
 } from '../../core/models/admin-user.model';
 import { RoleName } from '../../core/models/role.model';
@@ -52,8 +53,13 @@ export class AdminPanelComponent implements OnInit {
       filterSearch: t.admin_users_filter_search,
       filterRole: t.admin_users_filter_role,
       filterRolePlaceholder: t.admin_users_filter_role_placeholder,
+      filterEmailStatus: t.admin_users_filter_email_status,
+      filterEmailStatusPlaceholder: t.admin_users_filter_email_status_placeholder,
+      emailConfirmed: t.admin_users_email_confirmed,
+      emailPending: t.admin_users_email_pending,
       columnName: t.admin_users_col_name,
       columnEmail: t.admin_users_col_email,
+      columnEmailStatus: t.admin_users_col_email_status,
       columnRole: t.admin_users_col_role,
       columnMemberSince: t.admin_users_col_member_since,
       columnActions: t.admin_users_col_actions,
@@ -82,6 +88,14 @@ export class AdminPanelComponent implements OnInit {
   readonly formMode = computed<Exclude<AdminPanelViewMode, 'list'>>(() =>
     this.viewMode() as Exclude<AdminPanelViewMode, 'list'>,
   );
+
+  readonly emailStatusOptions = computed<EmailStatusOption[]>(() => {
+    const t = this.ts.t();
+    return [
+      { value: 'confirmed', label: t.admin_users_email_confirmed },
+      { value: 'pending', label: t.admin_users_email_pending },
+    ];
+  });
 
   ngOnInit(): void {
     void this.loadData();

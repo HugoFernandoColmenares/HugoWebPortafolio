@@ -1,8 +1,10 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterLink } from '@angular/router';
+import { SocialMediaLink } from '../../core/models/social-media.model';
+import { SocialMediaService } from '../../core/services/social-media.service';
 import { TranslationService } from '../../core/services/translation.service';
-import { AppConfigService } from '../../core/services/app-config.service';
+import { SocialLinksComponent } from '../../shared/components/social-links/social-links.component';
 
 interface HeroChip {
   label: string;
@@ -12,14 +14,16 @@ interface HeroChip {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, SocialLinksComponent],
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   readonly ts = inject(TranslationService);
-  readonly config = inject(AppConfigService);
+  private readonly socialMediaService = inject(SocialMediaService);
+
+  readonly socialLinks = signal<SocialMediaLink[]>([]);
 
   readonly heroChips: HeroChip[] = [
     { label: 'Angular', variant: 'angular' },
@@ -27,4 +31,16 @@ export class HomeComponent {
     { label: 'TypeScript', variant: 'typescript' },
     { label: 'SQL Server', variant: 'sql' },
   ];
+
+  ngOnInit(): void {
+    void this.loadSocialLinks();
+  }
+
+  private async loadSocialLinks(): Promise<void> {
+    try {
+      this.socialLinks.set(await this.socialMediaService.getPublicLinks('hero'));
+    } catch {
+      this.socialLinks.set([]);
+    }
+  }
 }

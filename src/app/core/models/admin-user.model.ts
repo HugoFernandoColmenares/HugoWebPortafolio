@@ -30,9 +30,14 @@ export interface AdminUserTableLabels {
   filterSearch: string;
   filterRole: string;
   filterRolePlaceholder: string;
+  filterEmailStatus: string;
+  filterEmailStatusPlaceholder: string;
+  emailConfirmed: string;
+  emailPending: string;
   columnName: string;
   columnEmail: string;
   columnRole: string;
+  columnEmailStatus: string;
   columnMemberSince: string;
   columnActions: string;
   view: string;
@@ -53,4 +58,9 @@ export interface AdminUserFormLabels {
   cancel: string;
 }
 
-export interface AdminUserRow extends UserProfile {}
+export type EmailConfirmationFilter = 'confirmed' | 'pending';
+
+export interface EmailStatusOption {
+  label: string;
+  value: EmailConfirmationFilter;
+}

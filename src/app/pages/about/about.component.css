@@ -56,30 +56,6 @@
   color: var(--color-text);
 }
 
-.about__links {
-  display: flex;
-  gap: 1.2rem;
-}
-
-.about__link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.8rem 1.6rem;
-  border-radius: var(--radius-md, 1.2rem);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface-2);
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: var(--color-text-muted);
-  text-decoration: none;
-  transition: all 0.15s ease;
-}
-.about__link:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-}
-
 .about__skills {
   margin-bottom: var(--space-xl);
 }
@@ -203,7 +179,6 @@
 
 @media (max-width: 700px) {
   .about__bio-row { flex-direction: column; align-items: center; text-align: center; }
-  .about__links { justify-content: center; }
   .form-row { grid-template-columns: 1fr; }
   .contact-btn { align-self: stretch; justify-content: center; }
 }

@@ -20,6 +20,7 @@ export function mapUserProfile(row: UserProfileWithRoleRow): UserProfile {
     roleId: row.role_id,
     email: row.email,
     fullName: row.full_name,
+    emailConfirmedAt: row.email_confirmed_at,
     role: roleData ? mapRole(roleData) : undefined,
     createdAt: row.created_at,
     updatedAt: row.updated_at,

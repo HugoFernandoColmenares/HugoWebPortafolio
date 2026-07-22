@@ -51,6 +51,9 @@ export class ProfileComponent {
       saveProfile: t.admin_profile_form_save,
       changePassword: t.admin_profile_form_change_password,
       passwordHint: t.admin_profile_form_password_hint,
+      editProfileAction: t.admin_profile_form_edit_action,
+      changePasswordAction: t.admin_profile_form_change_password_action,
+      cancelAction: t.admin_profile_form_cancel,
     };
   });
 
@@ -60,6 +63,7 @@ export class ProfileComponent {
     try {
       this.savingProfile.set(true);
       await this.profileService.updateProfile(input);
+      this.profileForm()?.showSummary();
       void this.notifications.success(t.admin_profile_save_success);
     } catch {
       void this.notifications.error(t.admin_profile_save_error);
@@ -85,6 +89,7 @@ export class ProfileComponent {
       this.savingPassword.set(true);
       await this.profileService.changePassword(input);
       this.profileForm()?.resetPasswordForm();
+      this.profileForm()?.showSummary();
       void this.notifications.success(t.admin_profile_password_success);
     } catch (error) {
       const message =

@@ -6,6 +6,7 @@ export interface UserProfile {
   roleId: string;
   email: string;
   fullName: string;
+  emailConfirmedAt: string | null;
   role?: Role;
   createdAt: string;
   updatedAt: string;
@@ -18,6 +19,7 @@ export interface UserProfileRow {
   role_id: string;
   email: string;
   full_name: string;
+  email_confirmed_at: string | null;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;

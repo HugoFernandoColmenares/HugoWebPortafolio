@@ -5,6 +5,7 @@ import {
   inject,
   input,
   output,
+  signal,
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -14,6 +15,7 @@ import { Password } from 'primeng/password';
 import {
   ChangePasswordInput,
   ProfileFormLabels,
+  ProfilePanelView,
   ProfileUpdateInput,
 } from '../../../core/models/profile-form.model';
 import { UserProfile } from '../../../core/models/user.model';
@@ -37,6 +39,8 @@ export class ProfileFormComponent {
 
   private readonly fb = inject(FormBuilder);
 
+  readonly activeView = signal<ProfilePanelView>('summary');
+
   readonly profileForm = this.fb.nonNullable.group({
     fullName: ['', [Validators.required, Validators.minLength(2)]],
   });
@@ -54,6 +58,18 @@ export class ProfileFormComponent {
         fullName: user.fullName,
       });
     });
+  }
+
+  showSummary(): void {
+    this.activeView.set('summary');
+  }
+
+  showEditProfile(): void {
+    this.activeView.set('edit-profile');
+  }
+
+  showChangePassword(): void {
+    this.activeView.set('change-password');
   }
 
   onProfileSubmit(): void {

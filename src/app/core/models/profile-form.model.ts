@@ -21,4 +21,9 @@ export interface ProfileFormLabels {
   saveProfile: string;
   changePassword: string;
   passwordHint: string;
+  editProfileAction: string;
+  changePasswordAction: string;
+  cancelAction: string;
 }
+
+export type ProfilePanelView = 'summary' | 'edit-profile' | 'change-password';

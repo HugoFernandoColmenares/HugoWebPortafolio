@@ -1,27 +1,31 @@
-import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { SocialMediaLink } from '../../core/models/social-media.model';
 import { TranslationService } from '../../core/services/translation.service';
-import { AppConfigService } from '../../core/services/app-config.service';
 import { ContactService } from '../../core/services/contact.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { SocialMediaService } from '../../core/services/social-media.service';
 import { TechBadgeComponent } from '../../shared/components/tech-badge/tech-badge.component';
+import { SocialLinksComponent } from '../../shared/components/social-links/social-links.component';
 import { Skill } from '../../core/models/skill.model';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [ReactiveFormsModule, TechBadgeComponent],
+  imports: [ReactiveFormsModule, TechBadgeComponent, SocialLinksComponent],
   templateUrl: './about.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './about.component.css'
 })
-export class AboutComponent {
+export class AboutComponent implements OnInit {
   readonly ts = inject(TranslationService);
-  readonly config = inject(AppConfigService);
   private readonly contactService = inject(ContactService);
   private readonly notifications = inject(NotificationService);
+  private readonly socialMediaService = inject(SocialMediaService);
   private readonly fb = inject(FormBuilder);
+
+  readonly socialLinks = signal<SocialMediaLink[]>([]);
 
   readonly skills: Skill[] = [
     { name: 'Angular', level: 90, category: 'frontend' },
@@ -49,6 +53,10 @@ export class AboutComponent {
 
   sending = false;
 
+  ngOnInit(): void {
+    void this.loadSocialLinks();
+  }
+
   get f() { return this.contactForm.controls; }
 
   async onSubmit(): Promise<void> {
@@ -73,6 +81,14 @@ export class AboutComponent {
       void this.notifications.error(this.ts.t()['about_contact_error']);
     } finally {
       this.sending = false;
+    }
+  }
+
+  private async loadSocialLinks(): Promise<void> {
+    try {
+      this.socialLinks.set(await this.socialMediaService.getPublicLinks('about'));
+    } catch {
+      this.socialLinks.set([]);
     }
   }
 }

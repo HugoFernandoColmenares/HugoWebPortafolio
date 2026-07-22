@@ -1,0 +1,25 @@
+<section class="social-media-page">
+  @if (viewMode() === 'list') {
+    <app-social-media-table
+      [links]="links()"
+      [loading]="loading()"
+      [labels]="tableLabels()"
+      [platformOptions]="platformOptions()"
+      [canManage]="isAdmin()"
+      (addLink)="onAddLink()"
+      (viewLink)="onViewLink($event)"
+      (editLink)="onEditLink($event)"
+      (deleteLink)="onDeleteLink($event)"
+    />
+  } @else {
+    <app-social-media-form
+      [mode]="formMode()"
+      [link]="selectedLink()"
+      [loading]="saving()"
+      [labels]="formLabels()"
+      [platformOptions]="platformOptions()"
+      (saveLink)="onSaveLink($event)"
+      (cancelForm)="onCancelForm()"
+    />
+  }
+</section>

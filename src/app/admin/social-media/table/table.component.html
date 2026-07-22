@@ -1,5 +1,5 @@
-<div class="user-table">
-  <div class="user-table__header">
+<div class="social-media-table">
+  <div class="social-media-table__header">
     <div>
       <h2>{{ labels().title }}</h2>
       <p>{{ labels().subtitle }}</p>
@@ -8,13 +8,13 @@
       <p-button
         [label]="labels().add"
         icon="pi pi-plus"
-        (onClick)="addUser.emit()"
+        (onClick)="addLink.emit()"
       />
     }
   </div>
 
-  <div class="user-table__filters">
-    <p-iconfield class="user-table__search">
+  <div class="social-media-table__filters">
+    <p-iconfield class="social-media-table__search">
       <p-inputicon styleClass="pi pi-search" />
       <input
         pInputText
@@ -26,78 +26,71 @@
     </p-iconfield>
 
     <p-multiSelect
-      class="user-table__role-filter"
-      [options]="roleOptions()"
-      [ngModel]="selectedRoles()"
-      (ngModelChange)="selectedRoles.set($event)"
-      optionLabel="label"
-      optionValue="name"
-      [placeholder]="labels().filterRolePlaceholder"
-      display="chip"
-      [showToggleAll]="true"
-      [filter]="false"
-    />
-
-    <p-multiSelect
-      class="user-table__status-filter"
-      [options]="emailStatusOptions()"
-      [ngModel]="selectedEmailStatuses()"
-      (ngModelChange)="selectedEmailStatuses.set($event)"
+      class="social-media-table__platform-filter"
+      [options]="platformOptions()"
+      [ngModel]="selectedPlatforms()"
+      (ngModelChange)="selectedPlatforms.set($event)"
       optionLabel="label"
       optionValue="value"
-      [placeholder]="labels().filterEmailStatusPlaceholder"
+      [placeholder]="labels().filterPlatformPlaceholder"
       display="chip"
       [showToggleAll]="true"
       [filter]="false"
     />
   </div>
 
-  <div class="user-table__wrapper">
+  <div class="social-media-table__wrapper">
     <p-table
-      [value]="filteredUsers()"
+      [value]="filteredLinks()"
       [loading]="loading()"
       [rowHover]="true"
       [showGridlines]="true"
       [paginator]="true"
       [rows]="rowsPerPage"
       [rowsPerPageOptions]="[5, 10, 25, 50]"
-      styleClass="user-table__grid"
+      styleClass="social-media-table__grid"
     >
       <ng-template #header>
         <tr>
           <th>{{ labels().columnName }}</th>
-          <th>{{ labels().columnEmail }}</th>
-          <th>{{ labels().columnEmailStatus }}</th>
-          <th>{{ labels().columnRole }}</th>
-          <th>{{ labels().columnMemberSince }}</th>
-          <th class="user-table__actions-col">{{ labels().columnActions }}</th>
+          <th>{{ labels().columnPlatform }}</th>
+          <th>{{ labels().columnUrl }}</th>
+          <th>{{ labels().columnHero }}</th>
+          <th>{{ labels().columnAbout }}</th>
+          <th>{{ labels().columnActive }}</th>
+          <th class="social-media-table__actions-col">{{ labels().columnActions }}</th>
         </tr>
       </ng-template>
 
-      <ng-template #body let-user>
+      <ng-template #body let-link>
         <tr>
           <td>
-            <span class="user-table__name">{{ user.fullName }}</span>
+            <span class="social-media-table__name">{{ link.name }}</span>
           </td>
-          <td>{{ user.email }}</td>
+          <td>
+            <p-tag [value]="platformLabel(link.platform)" severity="secondary" />
+          </td>
+          <td>
+            <a [href]="link.url" target="_blank" rel="noopener" class="social-media-table__url">
+              {{ link.url }}
+            </a>
+          </td>
+          <td>{{ link.showInHero ? labels().yes : labels().no }}</td>
+          <td>{{ link.showInAbout ? labels().yes : labels().no }}</td>
           <td>
             <p-tag
-              [value]="emailStatusLabel(user)"
-              [severity]="emailStatusSeverity(user)"
+              [value]="link.isActive ? labels().yes : labels().no"
+              [severity]="link.isActive ? 'success' : 'warn'"
             />
           </td>
-          <td>
-            <p-tag [value]="roleLabel(user.role?.name)" severity="secondary" />
-          </td>
-          <td>{{ user.createdAt | date: 'mediumDate' }}</td>
-          <td class="user-table__actions">
+          <td class="social-media-table__actions">
             <p-button
               icon="pi pi-eye"
               [rounded]="true"
               [text]="true"
               severity="info"
               [pTooltip]="labels().view"
-              (onClick)="viewUser.emit(user)"
+              (onClick)="viewLink.emit(link)"
             />
             @if (canManage()) {
               <p-button
@@ -106,7 +99,7 @@
                 [text]="true"
                 severity="secondary"
                 [pTooltip]="labels().edit"
-                (onClick)="editUser.emit(user)"
+                (onClick)="editLink.emit(link)"
               />
               <p-button
                 icon="pi pi-trash"
@@ -114,7 +107,7 @@
                 [text]="true"
                 severity="danger"
                 [pTooltip]="labels().delete"
-                (onClick)="deleteUser.emit(user)"
+                (onClick)="deleteLink.emit(link)"
               />
             }
           </td>
@@ -123,7 +116,7 @@
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="6" class="user-table__empty">
+          <td colspan="7" class="social-media-table__empty">
             {{ labels().empty }}
           </td>
         </tr>
