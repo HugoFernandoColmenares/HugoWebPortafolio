@@ -101,6 +101,15 @@ export interface ProjectFormLabels {
   category: string;
   save: string;
   cancel: string;
+  backToList: string;
+  sectionBasic: string;
+  sectionMedia: string;
+  sectionLinks: string;
+  sectionSettings: string;
+  createSubtitle: string;
+  editSubtitle: string;
+  viewSubtitle: string;
+  requiredField: string;
   statusCompleted: string;
   statusInProgress: string;
   statusPlanned: string;

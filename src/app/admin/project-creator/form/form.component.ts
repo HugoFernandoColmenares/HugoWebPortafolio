@@ -93,6 +93,20 @@ export class ProjectFormComponent {
     }
   });
 
+  readonly subtitle = computed(() => {
+    const labels = this.labels();
+    switch (this.mode()) {
+      case 'edit':
+        return labels.editSubtitle;
+      case 'view':
+        return labels.viewSubtitle;
+      default:
+        return labels.createSubtitle;
+    }
+  });
+
+  readonly isReadOnly = computed(() => this.mode() === 'view');
+
   constructor() {
     effect(() => {
       const project = this.project();

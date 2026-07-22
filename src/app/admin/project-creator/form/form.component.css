@@ -1,5 +1,46 @@
+.project-form {
+  max-width: 84rem;
+  padding-bottom: var(--space-md);
+}
+
+.project-form .admin-form__toolbar-actions {
+  width: 100%;
+}
+
+.project-form .admin-form__toolbar-actions .p-button {
+  flex: 1 1 100%;
+}
+
+.project-form .admin-form__actions--sticky {
+  flex-direction: column-reverse;
+  align-items: stretch;
+}
+
+.project-form .admin-form__actions--sticky .p-button {
+  width: 100%;
+  justify-content: center;
+}
+
 @media (min-width: 641px) {
-  .admin-form__field--checkbox {
+  .project-form .admin-form__field--checkbox {
     padding-top: 2.4rem;
+  }
+
+  .project-form .admin-form__toolbar-actions {
+    width: auto;
+  }
+
+  .project-form .admin-form__toolbar-actions .p-button {
+    flex: 0 0 auto;
+  }
+
+  .project-form .admin-form__actions--sticky {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .project-form .admin-form__actions--sticky .p-button {
+    width: auto;
+    justify-content: center;
   }
 }

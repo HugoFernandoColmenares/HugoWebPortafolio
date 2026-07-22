@@ -1,97 +1,189 @@
-<form class="admin-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <header class="admin-form__header">
-    <h2>{{ heading() }}</h2>
-  </header>
-
-  <div class="admin-form__grid">
-    <div class="admin-form__field admin-form__field--full">
-      <label for="project-title">{{ labels().title }}</label>
-      <input pInputText id="project-title" formControlName="title" />
-    </div>
-
-    <div class="admin-form__field admin-form__field--full">
-      <label for="project-description">{{ labels().description }}</label>
-      <textarea pTextarea id="project-description" formControlName="description" rows="5"></textarea>
-    </div>
-
-    <div class="admin-form__field admin-form__field--full">
-      <label for="project-image">{{ labels().imageUrl }}</label>
-      <div class="admin-form__inline-row">
-        <input pInputText id="project-image" formControlName="imageUrl" />
-        @if (mode() !== 'view') {
-          <input
-            #fileInput
-            type="file"
-            accept="image/*"
-            class="admin-form__file-input"
-            (change)="onImageSelected($event)"
-          />
-          <p-button
-            type="button"
-            icon="pi pi-upload"
-            [label]="uploadingImage() ? labels().uploadingImage : labels().uploadImage"
-            [loading]="uploadingImage()"
-            [disabled]="uploadingImage()"
-            (onClick)="triggerImagePicker()"
-          />
-        }
-      </div>
-    </div>
-
-    <div class="admin-form__field admin-form__field--full">
-      <label for="project-tech">{{ labels().technologies }}</label>
-      <input pInputText id="project-tech" formControlName="technologiesText" />
-      <small>{{ labels().technologiesHint }}</small>
-    </div>
-
-    <div class="admin-form__field">
-      <label for="project-github">{{ labels().githubUrl }}</label>
-      <input pInputText id="project-github" formControlName="githubUrl" />
-    </div>
-
-    <div class="admin-form__field">
-      <label for="project-live">{{ labels().liveUrl }}</label>
-      <input pInputText id="project-live" formControlName="liveUrl" />
-    </div>
-
-    <div class="admin-form__field">
-      <label for="project-category">{{ labels().category }}</label>
-      <p-select
-        inputId="project-category"
-        formControlName="category"
-        [options]="categoryOptions()"
-        optionLabel="label"
-        optionValue="value"
-      />
-    </div>
-
-    <div class="admin-form__field">
-      <label for="project-status">{{ labels().status }}</label>
-      <p-select
-        inputId="project-status"
-        formControlName="status"
-        [options]="statusOptions()"
-        optionLabel="label"
-        optionValue="value"
-      />
-    </div>
-
-    <div class="admin-form__field admin-form__field--checkbox">
-      <p-checkbox inputId="project-featured" formControlName="featured" [binary]="true" />
-      <label for="project-featured">{{ labels().featured }}</label>
-    </div>
-  </div>
-
-  <footer class="admin-form__actions">
+<form class="admin-form project-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <header class="admin-form__toolbar">
     <p-button
       type="button"
-      [label]="labels().cancel"
+      [label]="labels().backToList"
+      icon="pi pi-arrow-left"
       severity="secondary"
       [outlined]="true"
       (onClick)="cancelForm.emit()"
     />
 
-    @if (mode() !== 'view') {
+    <div class="admin-form__toolbar-text">
+      <h2>{{ heading() }}</h2>
+      <p>{{ subtitle() }}</p>
+    </div>
+
+    <div class="admin-form__toolbar-actions">
+      @if (!isReadOnly()) {
+        <p-button
+          type="submit"
+          [label]="labels().save"
+          icon="pi pi-check"
+          [loading]="loading()"
+        />
+      }
+    </div>
+  </header>
+
+  <div class="admin-form__sections">
+    <section class="admin-form__section">
+      <h3 class="admin-form__section-title">
+        <i class="pi pi-file-edit" aria-hidden="true"></i>
+        {{ labels().sectionBasic }}
+      </h3>
+
+      <div class="admin-form__section-grid">
+        <div
+          class="admin-form__field admin-form__field--full"
+          [class.admin-form__field--invalid]="f.title.invalid && f.title.touched"
+        >
+          <label for="project-title">{{ labels().title }}</label>
+          <input pInputText id="project-title" formControlName="title" />
+          @if (f.title.invalid && f.title.touched) {
+            <small class="admin-form__error">{{ labels().requiredField }}</small>
+          }
+        </div>
+
+        <div
+          class="admin-form__field admin-form__field--full"
+          [class.admin-form__field--invalid]="f.description.invalid && f.description.touched"
+        >
+          <label for="project-description">{{ labels().description }}</label>
+          <textarea pTextarea id="project-description" formControlName="description" rows="5"></textarea>
+          @if (f.description.invalid && f.description.touched) {
+            <small class="admin-form__error">{{ labels().requiredField }}</small>
+          }
+        </div>
+
+        <div
+          class="admin-form__field admin-form__field--full"
+          [class.admin-form__field--invalid]="f.technologiesText.invalid && f.technologiesText.touched"
+        >
+          <label for="project-tech">{{ labels().technologies }}</label>
+          <input pInputText id="project-tech" formControlName="technologiesText" />
+          <small>{{ labels().technologiesHint }}</small>
+          @if (f.technologiesText.invalid && f.technologiesText.touched) {
+            <small class="admin-form__error">{{ labels().requiredField }}</small>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-form__section">
+      <h3 class="admin-form__section-title">
+        <i class="pi pi-image" aria-hidden="true"></i>
+        {{ labels().sectionMedia }}
+      </h3>
+
+      <div class="admin-form__section-grid">
+        <div
+          class="admin-form__field admin-form__field--full"
+          [class.admin-form__field--invalid]="f.imageUrl.invalid && f.imageUrl.touched"
+        >
+          <label for="project-image">{{ labels().imageUrl }}</label>
+          <div class="admin-form__inline-row">
+            <input pInputText id="project-image" formControlName="imageUrl" />
+            @if (!isReadOnly()) {
+              <input
+                #fileInput
+                type="file"
+                accept="image/*"
+                class="admin-form__file-input"
+                (change)="onImageSelected($event)"
+              />
+              <p-button
+                type="button"
+                icon="pi pi-upload"
+                [label]="uploadingImage() ? labels().uploadingImage : labels().uploadImage"
+                [loading]="uploadingImage()"
+                [disabled]="uploadingImage()"
+                (onClick)="triggerImagePicker()"
+              />
+            }
+          </div>
+          @if (f.imageUrl.invalid && f.imageUrl.touched) {
+            <small class="admin-form__error">{{ labels().requiredField }}</small>
+          }
+        </div>
+
+        @if (f.imageUrl.value) {
+          <div class="admin-form__field admin-form__field--full admin-form__preview">
+            <div class="admin-form__preview-frame">
+              <img [src]="f.imageUrl.value" [alt]="f.title.value || labels().title" />
+            </div>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="admin-form__section">
+      <h3 class="admin-form__section-title">
+        <i class="pi pi-link" aria-hidden="true"></i>
+        {{ labels().sectionLinks }}
+      </h3>
+
+      <div class="admin-form__section-grid">
+        <div class="admin-form__field">
+          <label for="project-github">{{ labels().githubUrl }}</label>
+          <input pInputText id="project-github" formControlName="githubUrl" />
+        </div>
+
+        <div class="admin-form__field">
+          <label for="project-live">{{ labels().liveUrl }}</label>
+          <input pInputText id="project-live" formControlName="liveUrl" />
+        </div>
+      </div>
+    </section>
+
+    <section class="admin-form__section">
+      <h3 class="admin-form__section-title">
+        <i class="pi pi-sliders-h" aria-hidden="true"></i>
+        {{ labels().sectionSettings }}
+      </h3>
+
+      <div class="admin-form__section-grid">
+        <div class="admin-form__field">
+          <label for="project-category">{{ labels().category }}</label>
+          <p-select
+            inputId="project-category"
+            formControlName="category"
+            [options]="categoryOptions()"
+            optionLabel="label"
+            optionValue="value"
+          />
+        </div>
+
+        <div class="admin-form__field">
+          <label for="project-status">{{ labels().status }}</label>
+          <p-select
+            inputId="project-status"
+            formControlName="status"
+            [options]="statusOptions()"
+            optionLabel="label"
+            optionValue="value"
+          />
+        </div>
+
+        <div class="admin-form__field admin-form__field--checkbox">
+          <p-checkbox inputId="project-featured" formControlName="featured" [binary]="true" />
+          <label for="project-featured">{{ labels().featured }}</label>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="admin-form__actions admin-form__actions--sticky">
+    <p-button
+      type="button"
+      [label]="labels().backToList"
+      icon="pi pi-arrow-left"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="cancelForm.emit()"
+    />
+
+    @if (!isReadOnly()) {
       <p-button
         type="submit"
         [label]="labels().save"
