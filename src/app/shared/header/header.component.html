@@ -27,7 +27,7 @@
 
       <!-- Theme Toggle -->
       <button
-        class="header__theme-btn"
+        class="icon-btn"
         (click)="themeService.toggle()"
         [attr.aria-label]="themeService.currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
       >
@@ -50,7 +50,7 @@
 
       <!-- Hamburger (mobile only) -->
       <button
-        class="header__hamburger"
+        class="icon-btn header__hamburger"
         (click)="toggleSidebar.emit()"
         aria-label="Open navigation menu"
         aria-expanded="false"

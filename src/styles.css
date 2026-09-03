@@ -270,6 +270,30 @@ ul, ol { list-style: none; }
   font-weight: var(--font-weight-normal);
 }
 
+/* Shared icon button — 4.4rem square with border, used by header, footer, sidebar, social links, carousel nav */
+.icon-btn {
+  width: 4.4rem;
+  height: 4.4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .icon-btn:hover {
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1051,23 +1075,7 @@ ul, ol { list-style: none; }
 }
 
 .project-carousel__btn {
-  width: 4.4rem;
-  height: 4.4rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
   background: var(--color-surface);
-  color: var(--color-text-muted);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: color var(--transition-base), border-color var(--transition-base), background-color var(--transition-base);
-}
-
-.project-carousel__btn:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-  background-color: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
 }
 
 .project-carousel__track {
@@ -1119,23 +1127,7 @@ ul, ol { list-style: none; }
 }
 
 .social-links__icon-btn {
-  width: 4.4rem;
-  height: 4.4rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
   background: var(--color-surface);
-  color: var(--color-text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color var(--transition-base), border-color var(--transition-base), background-color var(--transition-base);
-  text-decoration: none;
-}
-
-.social-links__icon-btn:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-  background-color: color-mix(in srgb, var(--color-accent) 8%, var(--color-surface));
 }
 
 .social-links__text-link {
@@ -1250,6 +1242,12 @@ ul, ol { list-style: none; }
   .animate-fade-in-up {
     opacity: 1;
     animation: none;
+  }
+
+  .main-content::before,
+  .auth-layout::before,
+  .admin-layout::before {
+    display: none;
   }
 }
 

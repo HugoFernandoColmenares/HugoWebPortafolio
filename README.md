@@ -17,7 +17,7 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 | Area | Technology |
 |------|------------|
 | Frontend | Angular 22, TypeScript, Standalone Components, Signals |
-| Public UI styling | Custom CSS (62.5% REM scale, CSS custom properties) |
+| Public UI styling | Custom CSS (62.5 percent REM scale, CSS custom properties, film-grain noise overlay) |
 | Admin UI | PrimeNG 21 (MIT, no license key), PrimeIcons, `@primeuix/themes` |
 | Backend | Supabase (Auth, PostgreSQL, RLS) |
 | Environment | `@ngx-env/builder` (`NG_APP_*` variables) |
@@ -29,19 +29,23 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 
 ### Implemented
 
-- Public portfolio pages: Home, Projects, About, with a cyan–magenta visual system aligned to the product mockups
-- Responsive layout with header, mobile sidebar, and footer
-- Internationalization (English / Spanish) with runtime language toggle
-- Dark and light theme support
+- Public portfolio pages: Home, Projects, About with a cyan-to-magenta visual system aligned to the product mockups
+- Responsive, mobile-first layout with fixed header, mobile sidebar drawer, and footer
+- Film-grain static noise overlay applied exclusively to layout backgrounds, preserving image clarity
+- Internationalization (English and Spanish) with runtime language toggle
+- Dark and light theme support via `data-theme` attribute
 - Contact form integration via Supabase
 - Authentication flows: login, register, password recovery, email confirmation
 - Centralized notifications via SweetAlert2 modals (`NotificationService`) styled with design tokens
 - Protected admin area with user profile loaded from Supabase
 - Public `/projects` page loaded from Supabase via `PortfolioProjectService`
-- Admin project creator: CRUD for portfolio projects (PrimeNG table + form, Supabase `portfolio_projects`)
+- Admin project creator: CRUD for portfolio projects (PrimeNG table and form, Supabase `portfolio_projects`)
+- Admin social media manager: CRUD for social media links displayed on public pages
+- Admin panel: user management interface
 - Seed migration for initial portfolio projects
 - Database migrations for contact messages, users, roles, and portfolio projects
 - Lazy-loaded routes and standalone component architecture
+- Shared `.icon-btn` utility class consolidating all square icon-button patterns across the application
 
 ### Planned
 
@@ -56,20 +60,20 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 
 ```text
 src/app/
-├── core/          Services, models, guards, mappers, config
-├── pages/         Public views (home, projects, about, layout)
-├── auth/          Authentication UI (login, register, recovery, confirm)
-├── admin/         Authenticated management (profile, project creator)
-├── shared/        Reusable UI components (header, footer, cards, badges)
-├── app.routes.ts  Lazy-loaded routing
-└── app.config.ts  Global providers
+  core/          Services, models, guards, mappers, config
+  pages/         Public views (home, projects, about, layout)
+  auth/          Authentication UI (login, register, recovery, confirm)
+  admin/         Authenticated management (profile, project creator, social media, admin panel)
+  shared/        Reusable UI components (header, footer, sidebar, cards, badges, social links)
+  app.routes.ts  Lazy-loaded routing
+  app.config.ts  Global providers
 ```
 
 **Routing summary:**
 
-- `/`, `/projects`, `/about` — public pages (no auth required)
-- `/auth/*` — authentication UI (open routes)
-- `/admin/*` — management area (requires authentication)
+- `/`, `/projects`, `/about` -- public pages (no authentication required)
+- `/auth/*` -- authentication UI (open routes)
+- `/admin/*` -- management area (requires authentication)
 
 ---
 
@@ -78,12 +82,14 @@ src/app/
 Full rules: `design_guidelines.md` (local, gitignored).
 
 - Mobile-first responsive design with standard breakpoints (640px, 768px, 900px)
-- All design tokens (color, spacing, typography, shadows, brand gradients) are defined in `src/styles.css`
+- All design tokens (color, spacing, typography, shadows, brand gradients) defined in `src/styles.css`
 - Brand palette: cyan (`--color-accent`) plus magenta (`--color-accent-2`) used through `--gradient-brand` and `--gradient-text`
 - Hex/rgb values live only in `:root` / `[data-theme="dark"]` token declarations; component CSS uses variables
-- Generic/reusable CSS classes belong in `styles.css`; component CSS files contain only component-specific styles and media queries
+- Generic reusable CSS classes belong in `styles.css`; component CSS files contain only component-specific styles and media queries
+- Shared `.icon-btn` class for all 4.4rem square icon buttons (theme toggle, hamburger, social links, carousel navigation, close buttons)
 - BEM-inspired class naming; Inter as primary typeface
-- Light/dark themes via `data-theme` attribute
+- Light and dark themes via `data-theme` attribute
+- Film-grain noise overlay on layout backgrounds, respecting `prefers-reduced-motion`
 - Admin CRUD screens use PrimeNG with Aura preset customized to portfolio accent colors
 
 ---
@@ -92,13 +98,13 @@ Full rules: `design_guidelines.md` (local, gitignored).
 
 Full rules: `architecture_guidelines.md` (local, gitignored).
 
-- Angular 22+ standalone components with OnPush change detection and signals
+- Angular 22 standalone components with OnPush change detection and signals
 - All services and models live under `core/`; no service files elsewhere
-- Interfaces and types are defined in `core/models`, never inside components
+- Interfaces and types defined in `core/models`, never inside components
 - Feature folders: `pages` (public), `auth` (auth UI), `admin` (protected CRUD)
 - Admin `project-creator`: parent orchestrates state; `table` and `form` children use `@Input` / `@Output` only
 - Before creating components, verify no similar component already exists
-- Target 200–250 lines per component; refactor into child or shared components when exceeded
+- Target 200 to 250 lines per component; refactor into child or shared components when exceeded
 - SOLID, DRY, and KISS principles apply to all changes
 - Update this README after significant feature or structural changes
 
@@ -112,7 +118,7 @@ Full rules: `architecture_guidelines.md` (local, gitignored).
 - npm
 - Supabase CLI (for database migrations)
 
-### Install and run
+### Install and Run
 
 ```bash
 npm install
@@ -131,7 +137,7 @@ Output: `dist/web-portafolio/`
 ### Database
 
 ```bash
-npm run db:push        # apply migrations to linked Supabase project
+npm run db:push                      # apply migrations to linked Supabase project
 npm run db:migration:new -- <name>   # create a new migration
 ```
 
@@ -151,27 +157,7 @@ Configure Supabase Auth redirect URLs for hash routing, for example:
 4. Set `NG_APP_SITE_URL` to your production URL (e.g. `https://your-app.vercel.app`).
 5. Deploy. Output directory: `dist/web-portafolio/browser`.
 
-The app uses hash routing (`/#/...`), so no server-side route configuration is required beyond the SPA fallback in `vercel.json`.
-
----
-
-## Preview Screenshots
-
-### Home Page (Light Mode)
-
-![Home page](public/docs/home_page_initial_1773502744588.png)
-
-### Projects Page
-
-![Projects page grid](public/docs/projects_page_grid_1773502760801.png)
-
-### About Page (Dark Mode)
-
-![About page in dark mode](public/docs/about_page_dark_mode_1773502795338.png)
-
-### About Page (Spanish)
-
-![About page in Spanish](public/docs/about_page_spanish_1773502801171.png)
+The application uses hash routing (`/#/...`), so no server-side route configuration is required beyond the SPA fallback in `vercel.json`.
 
 ---
 

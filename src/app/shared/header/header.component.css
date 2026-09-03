@@ -77,28 +77,6 @@
   margin-left: auto;
 }
 
-.header__theme-btn,
-.header__hamburger {
-  width: 4.4rem;
-  height: 4.4rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface-2);
-  color: var(--color-text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-  transition: color var(--transition-fast), border-color var(--transition-fast);
-}
-
-.header__theme-btn:hover,
-.header__hamburger:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-
 .header__hamburger {
   flex-direction: column;
   gap: 0.5rem;
