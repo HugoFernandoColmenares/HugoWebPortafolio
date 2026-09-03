@@ -37,14 +37,14 @@
 }
 
 .auth-form__status--loading .auth-form__spinner {
-  border-color: rgba(56, 189, 248, 0.25);
+  border-color: var(--color-accent-glow);
   border-top-color: var(--color-accent);
 }
 
 .auth-form__status--success h1 {
-  color: #22c55e;
+  color: var(--color-success);
 }
 
 .auth-form__status--error h1 {
-  color: #ef4444;
+  color: var(--color-error);
 }

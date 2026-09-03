@@ -14,7 +14,7 @@
 
 .auth-layout__panel--brand {
   background:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
+    radial-gradient(circle at top left, var(--color-accent-glow), transparent 55%),
     linear-gradient(160deg, var(--color-surface) 0%, var(--color-surface-2) 100%);
   border-right: 1px solid var(--color-border);
 }

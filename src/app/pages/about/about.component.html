@@ -1,32 +1,53 @@
 <section class="about section">
   <div class="container">
 
-    <!-- Heading -->
     <div class="about__heading text-center">
-      <h1>{{ ts.t()['about_heading'] }}</h1>
+      <h1 class="gradient-text">{{ ts.t()['about_heading'] }}</h1>
     </div>
 
-    <!-- Bio + Avatar -->
-    <div class="about__bio-row">
+    <div class="about__bio-row panel">
       <div class="about__avatar">
         <div class="about__avatar-inner">
-          <img src="profile picture.jpeg" alt="About Me Avatar" class="about__avatar-img" />
+          <img
+            src="profile picture.jpeg"
+            alt="Hugo Colmenares"
+            class="about__avatar-img"
+            width="140"
+            height="140"
+            decoding="async"
+          />
         </div>
       </div>
       <div class="about__bio">
         <p>{{ ts.t()['about_bio'] }}</p>
+        <div class="profile-form__summary-actions">
+          @if (cvUrl) {
+            <a class="btn-primary" [href]="cvUrl" target="_blank" rel="noopener">
+              {{ ts.t()['btn_cv'] }}
+            </a>
+          }
+          <a routerLink="/projects" class="btn-outline">
+            {{ ts.t()['hero_cta_projects'] }}
+          </a>
+        </div>
         @if (socialLinks().length > 0) {
           <app-social-links [links]="socialLinks()" context="about" />
         }
       </div>
     </div>
 
-    <!-- Skills -->
     <div class="about__skills">
-      <h2 class="about__section-title">{{ ts.t()['about_skills_heading'] }}</h2>
+      <h2 class="about__section-title gradient-text">{{ ts.t()['about_skills_heading'] }}</h2>
       <div class="about__tech-grid">
-        @for (tech of techNames; track tech) {
-          <app-tech-badge [tech]="tech" />
+        @for (group of skillGroups; track group.category) {
+          <div>
+            <h3>{{ ts.t()[group.titleKey] }}</h3>
+            <div>
+              @for (skill of group.skills; track skill.name) {
+                <app-tech-badge [tech]="skill.name" />
+              }
+            </div>
+          </div>
         }
       </div>
     </div>
@@ -48,7 +69,7 @@
                 [placeholder]="ts.t()['about_contact_name']"
               />
               @if (f['name'].invalid && f['name'].touched) {
-                <span class="form-field__error">Name must be at least 2 characters.</span>
+                <span class="form-field__error">{{ ts.t()['about_contact_name_error'] }}</span>
               }
             </div>
 
@@ -63,7 +84,7 @@
                 [placeholder]="ts.t()['about_contact_email']"
               />
               @if (f['email'].invalid && f['email'].touched) {
-                <span class="form-field__error">Please enter a valid email address.</span>
+                <span class="form-field__error">{{ ts.t()['about_contact_email_error'] }}</span>
               }
             </div>
           </div>
@@ -79,7 +100,7 @@
               rows="5"
             ></textarea>
             @if (f['message'].invalid && f['message'].touched) {
-              <span class="form-field__error">Message must be at least 10 characters.</span>
+              <span class="form-field__error">{{ ts.t()['about_contact_message_error'] }}</span>
             }
           </div>
 

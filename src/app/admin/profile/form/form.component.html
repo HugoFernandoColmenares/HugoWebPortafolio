@@ -5,6 +5,30 @@
         {{ profile().fullName.charAt(0).toUpperCase() }}
       </div>
 
+      <div class="admin-form__toolbar-text">
+        <h2>{{ profile().fullName }}</h2>
+        @if (profile().role?.name) {
+          <span class="badge badge--accent">{{ profile().role!.name }}</span>
+        }
+      </div>
+
+      <div class="profile-form__summary-actions">
+        <p-button
+          type="button"
+          [label]="labels().editProfileAction"
+          icon="pi pi-user-edit"
+          (onClick)="showEditProfile()"
+        />
+        <p-button
+          type="button"
+          [label]="labels().changePasswordAction"
+          icon="pi pi-lock"
+          severity="secondary"
+          [outlined]="true"
+          (onClick)="showChangePassword()"
+        />
+      </div>
+
       <dl class="meta-list">
         <div class="meta-list__item">
           <dt class="meta-list__term">{{ labels().fullName }}</dt>
@@ -29,23 +53,6 @@
           <dd class="meta-list__value">{{ profile().createdAt | date: 'mediumDate' }}</dd>
         </div>
       </dl>
-
-      <div class="profile-form__summary-actions">
-        <p-button
-          type="button"
-          [label]="labels().editProfileAction"
-          icon="pi pi-user-edit"
-          (onClick)="showEditProfile()"
-        />
-        <p-button
-          type="button"
-          [label]="labels().changePasswordAction"
-          icon="pi pi-lock"
-          severity="secondary"
-          [outlined]="true"
-          (onClick)="showChangePassword()"
-        />
-      </div>
     </article>
   } @else if (activeView() === 'edit-profile') {
     <section class="panel">

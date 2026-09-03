@@ -9,7 +9,7 @@ import { FooterComponent } from '../../shared/footer/footer.component';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, SidebarComponent, FooterComponent],
   templateUrl: './layout.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent {

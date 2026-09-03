@@ -29,7 +29,7 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 
 ### Implemented
 
-- Public portfolio pages: Home, Projects, About
+- Public portfolio pages: Home, Projects, About, with a cyan–magenta visual system aligned to the product mockups
 - Responsive layout with header, mobile sidebar, and footer
 - Internationalization (English / Spanish) with runtime language toggle
 - Dark and light theme support
@@ -78,7 +78,9 @@ src/app/
 Full rules: `design_guidelines.md` (local, gitignored).
 
 - Mobile-first responsive design with standard breakpoints (640px, 768px, 900px)
-- All design tokens (color, spacing, typography, shadows) defined in `src/styles.css`
+- All design tokens (color, spacing, typography, shadows, brand gradients) are defined in `src/styles.css`
+- Brand palette: cyan (`--color-accent`) plus magenta (`--color-accent-2`) used through `--gradient-brand` and `--gradient-text`
+- Hex/rgb values live only in `:root` / `[data-theme="dark"]` token declarations; component CSS uses variables
 - Generic/reusable CSS classes belong in `styles.css`; component CSS files contain only component-specific styles and media queries
 - BEM-inspired class naming; Inter as primary typeface
 - Light/dark themes via `data-theme` attribute

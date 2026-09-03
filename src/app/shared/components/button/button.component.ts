@@ -49,43 +49,43 @@ export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
     }
 
     .btn--primary {
-      background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-      color: #fff;
-      box-shadow: 0 4px 15px rgba(56,189,248,0.25);
+      background: var(--gradient-brand);
+      color: var(--color-on-accent);
+      box-shadow: var(--shadow-accent);
     }
     .btn--primary:hover:not(:disabled) {
       transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(56,189,248,0.4);
+      box-shadow: var(--shadow-lg);
     }
     .btn--primary:active:not(:disabled) { transform: translateY(0); }
 
     .btn--secondary {
-      background: var(--color-surface-2, #f1f5f9);
-      color: var(--color-text-heading, #0f172a);
-      border-color: var(--color-border, #e2e8f0);
+      background: var(--color-surface-2);
+      color: var(--color-text-heading);
+      border-color: var(--color-border);
     }
     .btn--secondary:hover:not(:disabled) {
-      background: var(--color-border, #e2e8f0);
+      background: var(--color-border);
       transform: translateY(-1px);
     }
 
     .btn--outline {
       background: transparent;
-      color: var(--color-accent, #38bdf8);
-      border-color: var(--color-accent, #38bdf8);
+      color: var(--color-accent);
+      border-color: var(--color-accent);
     }
     .btn--outline:hover:not(:disabled) {
-      background: color-mix(in srgb, var(--color-accent, #38bdf8) 10%, transparent);
+      background: color-mix(in srgb, var(--color-accent) 10%, transparent);
       transform: translateY(-1px);
     }
 
     .btn--ghost {
       background: transparent;
-      color: var(--color-text, #334155);
+      color: var(--color-text);
       border-color: transparent;
     }
     .btn--ghost:hover:not(:disabled) {
-      background: var(--color-surface-2, #f1f5f9);
+      background: var(--color-surface-2);
     }
   `]
 })

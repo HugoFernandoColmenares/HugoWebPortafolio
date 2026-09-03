@@ -1,5 +1,5 @@
 /* ==========================================================================
-   HOME COMPONENT - Dynamic Clamps & Interactive Gradient Refactor
+   HOME COMPONENT
    ========================================================================== */
 
 :host {
@@ -9,40 +9,39 @@
   overflow: hidden;
 }
 
-/* --- HERO CONTAINER --- */
 .hero {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-height: calc(100dvh - var(--header-height, 4rem));
+  max-height: calc(100dvh - var(--header-height));
   width: 100%;
   overflow: hidden;
   padding: 1rem 0;
   box-sizing: border-box;
 }
 
-/* --- BLOBS DE FONDO --- */
 .hero__bg {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+  contain: paint;
 }
 
 .hero__blob {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.75;
+  filter: blur(4.8rem);
+  opacity: 0.7;
 }
 
 .hero__blob--1 {
   width: clamp(25rem, 50vw, 60rem);
   height: clamp(25rem, 50vw, 60rem);
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%);
   top: -15%;
   right: -10%;
 }
@@ -50,12 +49,11 @@
 .hero__blob--2 {
   width: clamp(22rem, 40vw, 50rem);
   height: clamp(22rem, 40vw, 50rem);
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+  background: radial-gradient(circle, color-mix(in srgb, var(--color-accent-2) 22%, transparent) 0%, transparent 70%);
   bottom: -15%;
   left: -10%;
 }
 
-/* --- GRID PRINCIPAL --- */
 .hero__content {
   position: relative;
   z-index: 1;
@@ -71,7 +69,6 @@
   box-sizing: border-box;
 }
 
-/* --- TEXTO E IMPACTO VISUAL --- */
 .hero__text {
   display: flex;
   flex-direction: column;
@@ -83,19 +80,18 @@
 
 .hero__greeting {
   font-size: clamp(1.2rem, 1.8vw, 1.6rem);
-  font-weight: 600;
-  color: var(--color-text-muted, #94a3b8);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
 }
 
-/* NOMBRE E INFORMACIÓN CON TIPOGRAFÍA IMPONENTE Y CLAMPS DINÁMICOS */
 .hero__name {
-  font-size: clamp(3rem, 7.5vw, 6.8rem); /* Crece con fuerza en pantallas grandes */
-  font-weight: 900;
-  letter-spacing: -0.04em;
+  font-size: clamp(3rem, 7.5vw, 6.8rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
   line-height: 1.05;
 }
 
@@ -105,25 +101,17 @@
   letter-spacing: -0.02em;
 }
 
-/* GRADIENTE INTERACTIVO QUE SIGUE AL CURSOR (Estilo Angular Docs) */
 .gradient-text-interactive {
-  background: radial-gradient(
-    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    #38bdf8 0%,
-    #a855f7 35%,
-    #f8fafc 75%
-  );
-  background-size: 200% 200%;
+  background: var(--gradient-text);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  transition: background-position 0.1s ease-out;
 }
 
 .hero__subtitle {
-  font-size: clamp(1rem, 1.6vw, 1.4rem);
-  color: var(--color-text-muted, #94a3b8);
-  max-width: 48rem;
+  font-size: clamp(1.4rem, 1.8vw, 1.7rem);
+  color: var(--color-text-muted);
+  max-width: 52rem;
   line-height: 1.6;
 }
 
@@ -137,7 +125,6 @@
   margin-top: 0.8rem;
 }
 
-/* --- WRAPPER Y AVATAR CON CLAMP APLICADO RIGUROSAMENTE --- */
 .hero__avatar-wrapper {
   position: relative;
   width: clamp(20rem, 36vw, 42rem);
@@ -146,15 +133,13 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  contain: layout;
 }
 
 .hero__avatar {
   position: relative;
-
-  /* CLAMP DEL AVATAR FOTO: Escala proporcionalmente desde 11.5rem hasta 24rem */
   width: clamp(11.5rem, 20vw, 24rem);
   height: clamp(11.5rem, 20vw, 24rem);
-
   z-index: 2;
 }
 
@@ -162,17 +147,17 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: var(--color-surface, #0f172a);
-  border: clamp(3px, 0.4vw, 5px) solid var(--color-border, #334155);
+  background: var(--color-surface);
+  border: 0.4rem solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: border-color 0.3s ease;
+  transition: border-color var(--transition-base);
 }
 
 .hero__avatar-inner:hover {
-  border-color: #38bdf8;
+  border-color: var(--color-accent);
 }
 
 .hero__avatar-img {
@@ -186,11 +171,10 @@
   position: absolute;
   inset: clamp(-0.8rem, -1.2vw, -1.5rem);
   border-radius: 50%;
-  border: 2px dashed rgba(56, 189, 248, 0.4);
+  border: 2px dashed color-mix(in srgb, var(--color-accent) 40%, transparent);
   pointer-events: none;
 }
 
-/* --- ÓRBITA Y CHIPS ESCALABLES --- */
 .hero__orbit {
   position: absolute;
   inset: clamp(0.5rem, 1.2vw, 2rem);
@@ -215,61 +199,37 @@
 .hero__chip {
   display: inline-flex;
   align-items: center;
-  border-radius: 9999px;
-
-  /* Padding y fuente con Clamp para acoplarse al tamaño gigante del wrapper */
+  border-radius: var(--radius-full);
   padding: clamp(0.45rem, 0.9vw, 0.85rem) clamp(0.9rem, 1.6vw, 1.8rem);
   font-size: clamp(0.9rem, 1.2vw, 1.35rem);
-  font-weight: 700;
-
+  font-weight: var(--font-weight-bold);
   white-space: nowrap;
   border: 1px solid transparent;
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-  cursor: default;
+  transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
 }
 
 .hero__chip--angular {
-  color: #f43f5e;
-  background: rgba(244, 63, 94, 0.16);
-  border-color: rgba(244, 63, 94, 0.45);
-}
-.hero__chip--angular:hover {
-  background: rgba(244, 63, 94, 0.35);
-  border-color: #f43f5e;
-  color: #ffffff;
+  color: var(--color-chip-angular);
+  background: color-mix(in srgb, var(--color-chip-angular) 16%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-chip-angular) 45%, transparent);
 }
 
 .hero__chip--dotnet {
-  color: #a855f7;
-  background: rgba(168, 85, 247, 0.16);
-  border-color: rgba(168, 85, 247, 0.45);
-}
-.hero__chip--dotnet:hover {
-  background: rgba(168, 85, 247, 0.35);
-  border-color: #a855f7;
-  color: #ffffff;
+  color: var(--color-chip-dotnet);
+  background: color-mix(in srgb, var(--color-chip-dotnet) 16%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-chip-dotnet) 45%, transparent);
 }
 
 .hero__chip--typescript {
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.16);
-  border-color: rgba(56, 189, 248, 0.45);
-}
-.hero__chip--typescript:hover {
-  background: rgba(56, 189, 248, 0.35);
-  border-color: #38bdf8;
-  color: #ffffff;
+  color: var(--color-chip-typescript);
+  background: color-mix(in srgb, var(--color-chip-typescript) 16%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-chip-typescript) 45%, transparent);
 }
 
 .hero__chip--sql {
-  color: #f87171;
-  background: rgba(248, 113, 113, 0.16);
-  border-color: rgba(248, 113, 113, 0.45);
-}
-.hero__chip--sql:hover {
-  background: rgba(248, 113, 113, 0.35);
-  border-color: #f87171;
-  color: #ffffff;
+  color: var(--color-chip-sql);
+  background: color-mix(in srgb, var(--color-chip-sql) 16%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-chip-sql) 45%, transparent);
 }
 
 .hero__avatar-wrapper:hover .hero__orbit,
@@ -281,9 +241,6 @@
   display: none;
 }
 
-/* ==========================================================================
-   DESKTOP RESPONSIVE LAYOUT (min-width: 901px)
-   ========================================================================== */
 @media (min-width: 901px) {
   .hero__content {
     grid-template-columns: 1fr 1fr;
@@ -301,9 +258,24 @@
   }
 }
 
-/* ==========================================================================
-   ANIMACIONES DE ÓRBITA
-   ========================================================================== */
+@media (max-width: 640px) {
+  .hero__blob {
+    filter: blur(2.4rem);
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__orbit,
+  .hero__chip-slot {
+    animation: none;
+  }
+
+  .hero__blob {
+    display: none;
+  }
+}
+
 @keyframes spinOrbit {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

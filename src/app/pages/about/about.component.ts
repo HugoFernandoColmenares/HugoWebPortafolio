@@ -1,19 +1,24 @@
 import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
-
+import { RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { SocialMediaLink } from '../../core/models/social-media.model';
-import { TranslationService } from '../../core/services/translation.service';
+import { TranslationKey, TranslationService } from '../../core/services/translation.service';
 import { ContactService } from '../../core/services/contact.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { SocialMediaService } from '../../core/services/social-media.service';
+import { AppConfigService } from '../../core/services/app-config.service';
 import { TechBadgeComponent } from '../../shared/components/tech-badge/tech-badge.component';
 import { SocialLinksComponent } from '../../shared/components/social-links/social-links.component';
 import { Skill } from '../../core/models/skill.model';
+import {
+  SKILL_CATEGORY_ORDER,
+  SKILL_CATEGORY_TRANSLATION_KEYS,
+} from '../../core/constants/skill-categories';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [ReactiveFormsModule, TechBadgeComponent, SocialLinksComponent],
+  imports: [ReactiveFormsModule, RouterLink, TechBadgeComponent, SocialLinksComponent],
   templateUrl: './about.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './about.component.css'
@@ -23,8 +28,10 @@ export class AboutComponent implements OnInit {
   private readonly contactService = inject(ContactService);
   private readonly notifications = inject(NotificationService);
   private readonly socialMediaService = inject(SocialMediaService);
+  private readonly config = inject(AppConfigService);
   private readonly fb = inject(FormBuilder);
 
+  readonly cvUrl = this.config.env.cvUrl;
   readonly socialLinks = signal<SocialMediaLink[]>([]);
 
   readonly skills: Skill[] = [
@@ -43,7 +50,11 @@ export class AboutComponent implements OnInit {
     { name: 'Azure', level: 55, category: 'devops' },
   ];
 
-  readonly techNames = this.skills.map(s => s.name);
+  readonly skillGroups = SKILL_CATEGORY_ORDER.map((category) => ({
+    category,
+    titleKey: SKILL_CATEGORY_TRANSLATION_KEYS[category] as TranslationKey,
+    skills: this.skills.filter((skill) => skill.category === category),
+  }));
 
   contactForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2)]],

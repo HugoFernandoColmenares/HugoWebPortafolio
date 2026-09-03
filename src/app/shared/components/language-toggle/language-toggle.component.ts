@@ -17,30 +17,31 @@ import { TranslationService } from '../../../core/services/translation.service';
       <span [class.lang-active]="ts.currentLang() === 'es'">ES</span>
     </button>
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`
     .lang-toggle {
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      background: var(--color-surface-2, #f1f5f9);
-      border: 1px solid var(--color-border, #e2e8f0);
-      border-radius: 9999px;
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-full);
       padding: 0.6rem 1.2rem;
-      font-family: var(--font-main, 'Inter', sans-serif);
+      font-family: var(--font-main);
       font-size: 1.3rem;
-      font-weight: 600;
-      color: var(--color-text-muted, #64748b);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-muted);
       cursor: pointer;
-      transition: all 0.15s ease;
+      transition: border-color var(--transition-fast), color var(--transition-fast);
       letter-spacing: 0.05em;
+      min-height: 4.4rem;
     }
     .lang-toggle:hover {
-      border-color: var(--color-accent, #38bdf8);
-      color: var(--color-accent, #38bdf8);
+      border-color: var(--color-accent);
+      color: var(--color-accent);
     }
     .lang-divider { opacity: 0.3; }
-    .lang-active { color: var(--color-accent, #38bdf8); }
+    .lang-active { color: var(--color-accent); }
   `]
 })
 export class LanguageToggleComponent {

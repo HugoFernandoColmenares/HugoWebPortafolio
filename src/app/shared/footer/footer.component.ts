@@ -8,7 +8,7 @@ import { AppConfigService } from '../../core/services/app-config.service';
   standalone: true,
   imports: [],
   templateUrl: './footer.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './footer.component.css'
 })
 export class FooterComponent {

@@ -1,25 +1,24 @@
 import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 
-
 const TECH_COLORS: Record<string, string> = {
-  'Angular': '#dd0031',
-  '.NET Core': '#512bd4',
-  'C#': '#9b4f9b',
-  'TypeScript': '#3178c6',
-  'JavaScript': '#f7df1e',
-  'SQL Server': '#cc2927',
-  'PostgreSQL': '#336791',
-  'Docker': '#2496ed',
-  'Git': '#f05032',
-  'HTML': '#e34f26',
-  'CSS': '#1572b6',
-  'Node.js': '#339933',
-  'Python': '#3776ab',
-  'Azure': '#0078d4',
-  'RxJS': '#b7178c',
-  'Entity Framework': '#512bd4',
-  'WPF': '#5c2d91',
-  'DDD': '#38bdf8',
+  'Angular': 'var(--tech-angular)',
+  '.NET Core': 'var(--tech-dotnet)',
+  'C#': 'var(--tech-csharp)',
+  'TypeScript': 'var(--tech-typescript)',
+  'JavaScript': 'var(--tech-javascript)',
+  'SQL Server': 'var(--tech-sql-server)',
+  'PostgreSQL': 'var(--tech-postgresql)',
+  'Docker': 'var(--tech-docker)',
+  'Git': 'var(--tech-git)',
+  'HTML': 'var(--tech-html)',
+  'CSS': 'var(--tech-css)',
+  'Node.js': 'var(--tech-nodejs)',
+  'Python': 'var(--tech-python)',
+  'Azure': 'var(--tech-azure)',
+  'RxJS': 'var(--tech-rxjs)',
+  'Entity Framework': 'var(--tech-ef)',
+  'WPF': 'var(--tech-wpf)',
+  'DDD': 'var(--tech-ddd)',
 };
 
 @Component({
@@ -27,31 +26,30 @@ const TECH_COLORS: Record<string, string> = {
   standalone: true,
   imports: [],
   template: `<span class="tech-badge" [style.--badge-color]="color">{{ tech }}</span>`,
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styles: [`
     .tech-badge {
       display: inline-flex;
       align-items: center;
       padding: 0.4rem 1rem;
-      border-radius: 9999px;
+      border-radius: var(--radius-full);
       font-size: 1.2rem;
-      font-weight: 600;
+      font-weight: var(--font-weight-semibold);
       letter-spacing: 0.03em;
-      background: color-mix(in srgb, var(--badge-color, #38bdf8) 12%, var(--color-surface));
-      color: var(--badge-color, #38bdf8);
-      border: 1px solid color-mix(in srgb, var(--badge-color, #38bdf8) 30%, transparent);
+      background: color-mix(in srgb, var(--badge-color, var(--color-accent)) 12%, var(--color-surface));
+      color: var(--badge-color, var(--color-accent));
+      border: 1px solid color-mix(in srgb, var(--badge-color, var(--color-accent)) 30%, transparent);
       white-space: nowrap;
-      transition: all 0.15s ease;
+      transition: background-color var(--transition-fast);
     }
     .tech-badge:hover {
-      background: color-mix(in srgb, var(--badge-color, #38bdf8) 22%, var(--color-surface));
-      transform: translateY(-1px);
+      background: color-mix(in srgb, var(--badge-color, var(--color-accent)) 22%, var(--color-surface));
     }
   `]
 })
 export class TechBadgeComponent {
   @Input({ required: true }) tech!: string;
   get color(): string {
-    return TECH_COLORS[this.tech] ?? '#38bdf8';
+    return TECH_COLORS[this.tech] ?? 'var(--color-accent)';
   }
 }

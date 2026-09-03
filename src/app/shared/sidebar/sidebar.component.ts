@@ -9,7 +9,7 @@ import { AppConfigService } from '../../core/services/app-config.service';
   standalone: true,
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './sidebar.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {

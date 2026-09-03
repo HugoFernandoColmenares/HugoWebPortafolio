@@ -1,7 +1,6 @@
 /* projects.component.css */
 .projects-page__heading {
   margin-bottom: var(--space-lg);
-  text-align: center;
 }
 
 .projects-page__heading h1 {

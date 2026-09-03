@@ -25,7 +25,7 @@
   left: -8%;
   width: 36rem;
   height: 36rem;
-  background: rgba(56, 189, 248, 0.35);
+  background: var(--color-accent-glow);
 }
 
 .not-found__blob--2 {
@@ -33,7 +33,7 @@
   bottom: 8%;
   width: 42rem;
   height: 42rem;
-  background: rgba(129, 140, 248, 0.28);
+  background: color-mix(in srgb, var(--color-accent-2) 28%, transparent);
 }
 
 .not-found__content {
@@ -87,14 +87,14 @@
 }
 
 .not-found__btn--primary {
-  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
-  color: #fff;
-  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
+  background: var(--gradient-brand);
+  color: var(--color-on-accent);
+  box-shadow: var(--shadow-accent);
 }
 
 .not-found__btn--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(56, 189, 248, 0.4);
+  box-shadow: var(--shadow-lg);
 }
 
 .not-found__btn--outline {

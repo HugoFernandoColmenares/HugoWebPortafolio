@@ -1,7 +1,7 @@
 <div class="admin-layout">
   <aside class="admin-layout__sidebar">
     <a routerLink="/" class="admin-layout__logo">
-      <span>&lt;</span>Hugo<span class="gradient-text">.</span>dev<span>/&gt;</span>
+      <span>&lt;</span><span class="gradient-text">Hugo.dev</span><span>/&gt;</span>
     </a>
 
     <p class="admin-layout__brand">{{ ts.t()['admin_brand_title'] }}</p>
@@ -12,6 +12,7 @@
         routerLink="/admin/profile"
         routerLinkActive="admin-layout__nav-link--active"
       >
+        <i class="pi pi-user" aria-hidden="true"></i>
         {{ ts.t()['admin_nav_profile'] }}
       </a>
       <a
@@ -19,6 +20,7 @@
         routerLink="/admin/project-creator"
         routerLinkActive="admin-layout__nav-link--active"
       >
+        <i class="pi pi-briefcase" aria-hidden="true"></i>
         {{ ts.t()['admin_nav_project_creator'] }}
       </a>
       @if (isAdmin()) {
@@ -27,6 +29,7 @@
           routerLink="/admin/admin-panel"
           routerLinkActive="admin-layout__nav-link--active"
         >
+          <i class="pi pi-users" aria-hidden="true"></i>
           {{ ts.t()['admin_nav_admin_panel'] }}
         </a>
         <a
@@ -34,6 +37,7 @@
           routerLink="/admin/social-media"
           routerLinkActive="admin-layout__nav-link--active"
         >
+          <i class="pi pi-share-alt" aria-hidden="true"></i>
           {{ ts.t()['admin_nav_social_media'] }}
         </a>
       }

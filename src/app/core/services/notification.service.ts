@@ -102,9 +102,9 @@ export class NotificationService {
     const styles = getComputedStyle(document.documentElement);
 
     return {
-      background: styles.getPropertyValue('--color-surface').trim() || '#ffffff',
-      color: styles.getPropertyValue('--color-text').trim() || '#334155',
-      confirmButtonColor: styles.getPropertyValue('--color-accent-dark').trim() || '#0ea5e9',
+      background: styles.getPropertyValue('--color-surface').trim(),
+      color: styles.getPropertyValue('--color-text').trim(),
+      confirmButtonColor: styles.getPropertyValue('--color-accent-dark').trim(),
     };
   }
 

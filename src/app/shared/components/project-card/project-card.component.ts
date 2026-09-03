@@ -11,11 +11,11 @@ import { TranslationService } from '../../../core/services/translation.service';
   template: `
     <article class="card" [class.card--featured]="project.featured">
       @if (project.featured) {
-        <div class="card__featured-badge">⭐ Featured</div>
+        <div class="card__featured-badge">{{ ts.t().projects_featured }}</div>
       }
 
       <div class="card__image-wrapper">
-        <img [src]="project.imageUrl" [alt]="project.title" class="card__image" loading="lazy" />
+        <img [src]="project.imageUrl" [alt]="project.title" class="card__image" width="640" height="360" loading="lazy" decoding="async" />
         <div class="card__image-overlay">
           <div class="card__links">
             @if (project.githubUrl) {

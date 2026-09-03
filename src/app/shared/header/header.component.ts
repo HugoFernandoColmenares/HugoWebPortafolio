@@ -10,7 +10,7 @@ import { LanguageToggleComponent } from '../components/language-toggle/language-
   standalone: true,
   imports: [RouterLink, RouterLinkActive, LanguageToggleComponent],
   templateUrl: './header.component.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
@@ -18,8 +18,4 @@ export class HeaderComponent {
 
   readonly ts = inject(TranslationService);
   readonly themeService = inject(ThemeService);
-
-  get isDark(): boolean {
-    return this.themeService.currentTheme() === 'dark';
-  }
 }

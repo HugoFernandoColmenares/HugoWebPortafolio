@@ -12,7 +12,7 @@
   gap: var(--space-md);
   padding: var(--space-md);
   background:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.12), transparent 55%),
+    radial-gradient(circle at top left, var(--color-accent-glow), transparent 55%),
     linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-2) 100%);
   border-right: 1px solid var(--color-border);
 }
@@ -40,6 +40,9 @@
 }
 
 .admin-layout__nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
   padding: 1.2rem 1.4rem;
   border-radius: var(--radius-md);
   color: var(--color-text);
@@ -91,7 +94,7 @@
 }
 
 .admin-layout__sign-out:hover {
-  color: #ef4444;
+  color: var(--color-error);
 }
 
 .admin-layout__main {

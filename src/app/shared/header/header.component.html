@@ -4,8 +4,7 @@
     <!-- Logo / Name -->
     <a routerLink="/" class="header__logo">
       <span class="header__logo-bracket">&lt;</span>
-      Hugo
-      <span class="header__logo-dot gradient-text">.</span>dev
+      <span class="gradient-text">Hugo.dev</span>
       <span class="header__logo-bracket">/&gt;</span>
     </a>
 
@@ -30,9 +29,9 @@
       <button
         class="header__theme-btn"
         (click)="themeService.toggle()"
-        [attr.aria-label]="isDark ? 'Switch to light mode' : 'Switch to dark mode'"
+        [attr.aria-label]="themeService.currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
       >
-        @if (isDark) {
+        @if (themeService.currentTheme() === 'dark') {
           <!-- Sun icon -->
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="5"/>
