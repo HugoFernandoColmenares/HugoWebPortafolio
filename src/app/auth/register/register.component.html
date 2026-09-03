@@ -5,38 +5,38 @@
   </div>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form__body">
-    <div class="auth-form__group">
-      <label class="auth-form__label" for="register-name">{{ facade.registerLabels().fullName }}</label>
+    <div class="form-field">
+      <label class="form-field__label" for="register-name">{{ facade.registerLabels().fullName }}</label>
       <input
         id="register-name"
         type="text"
-        class="auth-form__input"
-        [class.auth-form__input--error]="f.fullName.invalid && f.fullName.touched"
+        class="form-input"
+        [class.form-input--error]="f.fullName.invalid && f.fullName.touched"
         formControlName="fullName"
         autocomplete="name"
       />
     </div>
 
-    <div class="auth-form__group">
-      <label class="auth-form__label" for="register-email">{{ facade.registerLabels().email }}</label>
+    <div class="form-field">
+      <label class="form-field__label" for="register-email">{{ facade.registerLabels().email }}</label>
       <input
         id="register-email"
         type="email"
-        class="auth-form__input"
-        [class.auth-form__input--error]="f.email.invalid && f.email.touched"
+        class="form-input"
+        [class.form-input--error]="f.email.invalid && f.email.touched"
         formControlName="email"
         autocomplete="email"
       />
     </div>
 
-    <div class="auth-form__group">
-      <label class="auth-form__label" for="register-password">{{ facade.registerLabels().password }}</label>
+    <div class="form-field">
+      <label class="form-field__label" for="register-password">{{ facade.registerLabels().password }}</label>
       <div class="password-field">
         <input
           id="register-password"
           [type]="showPassword() ? 'text' : 'password'"
-          class="auth-form__input"
-          [class.auth-form__input--error]="f.password.invalid && f.password.touched"
+          class="form-input"
+          [class.form-input--error]="f.password.invalid && f.password.touched"
           formControlName="password"
           autocomplete="new-password"
         />
@@ -55,14 +55,14 @@
       </div>
     </div>
 
-    <div class="auth-form__group">
-      <label class="auth-form__label" for="register-confirm">{{ facade.registerLabels().confirmPassword }}</label>
+    <div class="form-field">
+      <label class="form-field__label" for="register-confirm">{{ facade.registerLabels().confirmPassword }}</label>
       <div class="password-field">
         <input
           id="register-confirm"
           [type]="showConfirmPassword() ? 'text' : 'password'"
-          class="auth-form__input"
-          [class.auth-form__input--error]="f.confirmPassword.invalid && f.confirmPassword.touched"
+          class="form-input"
+          [class.form-input--error]="f.confirmPassword.invalid && f.confirmPassword.touched"
           formControlName="confirmPassword"
           autocomplete="new-password"
         />
@@ -81,9 +81,9 @@
       </div>
     </div>
 
-    <button type="submit" class="auth-form__submit" [disabled]="facade.loading()">
+    <button type="submit" class="btn-primary" [disabled]="facade.loading()">
       @if (facade.loading()) {
-        <span class="auth-form__spinner"></span>
+        <span class="spinner spinner--on-accent"></span>
       }
       {{ facade.registerLabels().submit }}
     </button>

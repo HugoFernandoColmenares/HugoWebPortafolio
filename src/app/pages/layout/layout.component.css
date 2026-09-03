@@ -1,21 +1,26 @@
 :host {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    height: 100vh;
-    overflow: hidden;
-    margin: 0;
-    padding: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100dvh;
+  overflow: hidden;
 }
 
 .main-content {
-    overflow-y: auto;
-    margin: 0;
-    padding: 1rem 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background:
-      radial-gradient(circle at top right, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 42%),
-      radial-gradient(circle at bottom left, color-mix(in srgb, var(--color-accent-2) 10%, transparent), transparent 46%),
-      var(--color-background);
+  overflow-y: auto;
+  min-height: 0;
+  width: 100%;
+  padding: var(--space-sm) 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 42%),
+    radial-gradient(circle at bottom left, color-mix(in srgb, var(--color-accent-2) 10%, transparent), transparent 46%),
+    var(--color-background);
+}
+
+@media (min-width: 641px) {
+  .main-content {
+    padding: var(--space-md) 0;
+  }
 }

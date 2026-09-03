@@ -30,13 +30,7 @@
   line-height: 1;
 }
 
-.auth-form__spinner--large {
-  width: 3.2rem;
-  height: 3.2rem;
-  border-width: 3px;
-}
-
-.auth-form__status--loading .auth-form__spinner {
+.auth-form__status--loading .spinner {
   border-color: var(--color-accent-glow);
   border-top-color: var(--color-accent);
 }

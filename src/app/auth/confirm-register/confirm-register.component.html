@@ -2,7 +2,7 @@
   @switch (facade.confirmStatus()) {
     @case ('loading') {
       <div class="auth-form__status auth-form__status--loading">
-        <span class="auth-form__spinner auth-form__spinner--large"></span>
+        <span class="spinner spinner--large"></span>
         <h1>{{ facade.confirmLabels().loadingTitle }}</h1>
         <p>{{ facade.confirmLabels().loadingSubtitle }}</p>
       </div>
@@ -12,7 +12,7 @@
         <div class="auth-form__icon">✅</div>
         <h1>{{ facade.confirmLabels().successTitle }}</h1>
         <p>{{ facade.confirmLabels().successSubtitle }}</p>
-        <button type="button" class="auth-form__submit" (click)="facade.goToLogin()">
+        <button type="button" class="btn-primary" (click)="facade.goToLogin()">
           {{ facade.confirmLabels().goToLogin }}
         </button>
       </div>
@@ -22,7 +22,7 @@
         <div class="auth-form__icon">⚠️</div>
         <h1>{{ facade.confirmLabels().errorTitle }}</h1>
         <p>{{ facade.confirmLabels().errorSubtitle }}</p>
-        <button type="button" class="auth-form__submit" (click)="facade.goToLogin()">
+        <button type="button" class="btn-primary" (click)="facade.goToLogin()">
           {{ facade.confirmLabels().goToLogin }}
         </button>
       </div>
@@ -32,7 +32,7 @@
         <div class="auth-form__icon">❌</div>
         <h1>{{ facade.confirmLabels().invalidTitle }}</h1>
         <p>{{ facade.confirmLabels().invalidSubtitle }}</p>
-        <button type="button" class="auth-form__submit" (click)="facade.goToLogin()">
+        <button type="button" class="btn-primary" (click)="facade.goToLogin()">
           {{ facade.confirmLabels().goToLogin }}
         </button>
       </div>

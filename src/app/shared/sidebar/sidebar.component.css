@@ -1,10 +1,8 @@
-/* sidebar.component.css */
 .sidebar-backdrop {
   position: fixed;
   inset: 0;
   z-index: 199;
   background: var(--color-scrim);
-  backdrop-filter: blur(4px);
   animation: fadeIn 0.2s ease;
 }
 
@@ -15,7 +13,7 @@
   z-index: 200;
   width: var(--sidebar-width);
   max-width: 85vw;
-  height: 100vh;
+  height: 100dvh;
   background: var(--color-surface);
   border-left: 1px solid var(--color-border);
   display: flex;
@@ -45,14 +43,9 @@
   letter-spacing: -0.02em;
 }
 
-.sidebar__logo-bracket {
-  color: var(--color-text-muted);
-  font-weight: var(--font-weight-normal);
-}
-
 .sidebar__close {
-  width: 3.6rem;
-  height: 3.6rem;
+  width: 4.4rem;
+  height: 4.4rem;
   border-radius: var(--radius-md);
   border: 1px solid var(--color-border);
   background: var(--color-surface-2);
@@ -61,8 +54,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: color var(--transition-fast), border-color var(--transition-fast);
 }
+
 .sidebar__close:hover {
   color: var(--color-text-heading);
   border-color: var(--color-accent);
@@ -80,18 +74,21 @@
   display: flex;
   align-items: center;
   gap: 1.2rem;
-  padding: 1.4rem 1.6rem;
+  min-height: 4.4rem;
+  padding: 1.2rem 1.6rem;
   border-radius: var(--radius-md);
   font-size: 1.5rem;
   font-weight: var(--font-weight-medium);
   color: var(--color-text-muted);
   text-decoration: none;
-  transition: all var(--transition-fast);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
 }
+
 .sidebar__link:hover {
   color: var(--color-text-heading);
   background: var(--color-surface-2);
 }
+
 .sidebar__link--active {
   color: var(--color-accent) !important;
   background: color-mix(in srgb, var(--color-accent) 10%, transparent) !important;
@@ -108,14 +105,19 @@
   font-size: 1.4rem;
   color: var(--color-text-muted);
   text-decoration: none;
+  min-height: 4.4rem;
+  display: inline-flex;
+  align-items: center;
   transition: color var(--transition-fast);
 }
+
 .sidebar__social:hover {
   color: var(--color-accent);
 }
 
 @media (min-width: 769px) {
-  .sidebar, .sidebar-backdrop {
+  .sidebar,
+  .sidebar-backdrop {
     display: none;
   }
 }

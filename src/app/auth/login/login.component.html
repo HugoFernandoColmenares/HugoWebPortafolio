@@ -5,26 +5,26 @@
   </div>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form__body">
-    <div class="auth-form__group">
-      <label class="auth-form__label" for="login-email">{{ facade.loginLabels().email }}</label>
+    <div class="form-field">
+      <label class="form-field__label" for="login-email">{{ facade.loginLabels().email }}</label>
       <input
         id="login-email"
         type="email"
-        class="auth-form__input"
-        [class.auth-form__input--error]="f.email.invalid && f.email.touched"
+        class="form-input"
+        [class.form-input--error]="f.email.invalid && f.email.touched"
         formControlName="email"
         autocomplete="email"
       />
     </div>
 
-    <div class="auth-form__group">
-      <label class="auth-form__label" for="login-password">{{ facade.loginLabels().password }}</label>
+    <div class="form-field">
+      <label class="form-field__label" for="login-password">{{ facade.loginLabels().password }}</label>
       <div class="password-field">
         <input
           id="login-password"
           [type]="showPassword() ? 'text' : 'password'"
-          class="auth-form__input"
-          [class.auth-form__input--error]="f.password.invalid && f.password.touched"
+          class="form-input"
+          [class.form-input--error]="f.password.invalid && f.password.touched"
           formControlName="password"
           autocomplete="current-password"
         />
@@ -43,9 +43,9 @@
       </div>
     </div>
 
-    <button type="submit" class="auth-form__submit" [disabled]="facade.loading()">
+    <button type="submit" class="btn-primary" [disabled]="facade.loading()">
       @if (facade.loading()) {
-        <span class="auth-form__spinner"></span>
+        <span class="spinner spinner--on-accent"></span>
       }
       {{ facade.loginLabels().submit }}
     </button>

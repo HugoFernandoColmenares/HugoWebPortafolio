@@ -1,25 +1,19 @@
-/* ==========================================================================
-   HOME COMPONENT
-   ========================================================================== */
-
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
 }
 
 .hero {
   position: relative;
   display: flex;
+  flex: 1;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-height: calc(100dvh - var(--header-height));
   width: 100%;
-  overflow: hidden;
-  padding: 1rem 0;
-  box-sizing: border-box;
+  padding: var(--space-md) 0 var(--space-lg);
 }
 
 .hero__bg {
@@ -62,11 +56,8 @@
   align-items: center;
   justify-items: center;
   text-align: center;
-  gap: clamp(1.5rem, 3vw, 3.5rem);
+  gap: clamp(1.6rem, 3vw, 3.5rem);
   width: 100%;
-  max-width: 1400px;
-  padding: 0 clamp(1.5rem, 4vw, 4rem);
-  box-sizing: border-box;
 }
 
 .hero__text {
@@ -89,7 +80,7 @@
 }
 
 .hero__name {
-  font-size: clamp(3rem, 7.5vw, 6.8rem);
+  font-size: clamp(2.8rem, 8vw, 6.8rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.05;
@@ -99,13 +90,6 @@
   font-size: clamp(1.6rem, 3.8vw, 3.2rem);
   font-weight: 800;
   letter-spacing: -0.02em;
-}
-
-.gradient-text-interactive {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 
 .hero__subtitle {
@@ -127,8 +111,8 @@
 
 .hero__avatar-wrapper {
   position: relative;
-  width: clamp(20rem, 36vw, 42rem);
-  height: clamp(20rem, 36vw, 42rem);
+  width: clamp(18rem, 42vw, 42rem);
+  height: clamp(18rem, 42vw, 42rem);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,8 +122,8 @@
 
 .hero__avatar {
   position: relative;
-  width: clamp(11.5rem, 20vw, 24rem);
-  height: clamp(11.5rem, 20vw, 24rem);
+  width: clamp(11rem, 22vw, 24rem);
+  height: clamp(11rem, 22vw, 24rem);
   z-index: 2;
 }
 
@@ -156,8 +140,10 @@
   transition: border-color var(--transition-base);
 }
 
-.hero__avatar-inner:hover {
-  border-color: var(--color-accent);
+@media (hover: hover) and (pointer: fine) {
+  .hero__avatar-inner:hover {
+    border-color: var(--color-accent);
+  }
 }
 
 .hero__avatar-img {
@@ -204,48 +190,37 @@
   font-size: clamp(0.9rem, 1.2vw, 1.35rem);
   font-weight: var(--font-weight-bold);
   white-space: nowrap;
-  border: 1px solid transparent;
-  transition: background-color var(--transition-base), border-color var(--transition-base), color var(--transition-base);
+  color: var(--chip-color);
+  background: color-mix(in srgb, var(--chip-color) 16%, var(--color-surface));
+  border: 1px solid color-mix(in srgb, var(--chip-color) 45%, transparent);
 }
 
-.hero__chip--angular {
-  color: var(--color-chip-angular);
-  background: color-mix(in srgb, var(--color-chip-angular) 16%, var(--color-surface));
-  border-color: color-mix(in srgb, var(--color-chip-angular) 45%, transparent);
+.hero__chip--angular { --chip-color: var(--color-chip-angular); }
+.hero__chip--dotnet { --chip-color: var(--color-chip-dotnet); }
+.hero__chip--typescript { --chip-color: var(--color-chip-typescript); }
+.hero__chip--sql { --chip-color: var(--color-chip-sql); }
+
+@media (hover: hover) and (pointer: fine) {
+  .hero__avatar-wrapper:hover .hero__orbit,
+  .hero__avatar-wrapper:hover .hero__chip-slot {
+    animation-play-state: paused;
+  }
 }
 
-.hero__chip--dotnet {
-  color: var(--color-chip-dotnet);
-  background: color-mix(in srgb, var(--color-chip-dotnet) 16%, var(--color-surface));
-  border-color: color-mix(in srgb, var(--color-chip-dotnet) 45%, transparent);
-}
-
-.hero__chip--typescript {
-  color: var(--color-chip-typescript);
-  background: color-mix(in srgb, var(--color-chip-typescript) 16%, var(--color-surface));
-  border-color: color-mix(in srgb, var(--color-chip-typescript) 45%, transparent);
-}
-
-.hero__chip--sql {
-  color: var(--color-chip-sql);
-  background: color-mix(in srgb, var(--color-chip-sql) 16%, var(--color-surface));
-  border-color: color-mix(in srgb, var(--color-chip-sql) 45%, transparent);
-}
-
-.hero__avatar-wrapper:hover .hero__orbit,
-.hero__avatar-wrapper:hover .hero__chip-slot {
-  animation-play-state: paused;
-}
-
-.hero__scroll {
-  display: none;
+@media (min-width: 641px) {
+  .hero__content {
+    gap: clamp(2rem, 3vw, 3.5rem);
+  }
 }
 
 @media (min-width: 901px) {
+  .hero {
+    padding: var(--space-sm) 0;
+  }
+
   .hero__content {
     grid-template-columns: 1fr 1fr;
     text-align: left;
-    justify-items: center;
   }
 
   .hero__text {
@@ -259,9 +234,14 @@
 }
 
 @media (max-width: 640px) {
-  .hero__blob {
-    filter: blur(2.4rem);
-    opacity: 0.45;
+  .hero__blob,
+  .hero__orbit {
+    display: none;
+  }
+
+  .hero__avatar-wrapper {
+    width: clamp(14rem, 48vw, 20rem);
+    height: clamp(14rem, 48vw, 20rem);
   }
 }
 
