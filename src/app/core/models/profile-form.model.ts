@@ -11,6 +11,8 @@ export interface ChangePasswordInput {
 export interface ProfileFormLabels {
   profileSectionTitle: string;
   passwordSectionTitle: string;
+  editTitle: string;
+  editSubtitle: string;
   fullName: string;
   email: string;
   role: string;

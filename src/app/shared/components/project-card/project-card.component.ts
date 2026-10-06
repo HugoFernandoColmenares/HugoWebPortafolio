@@ -15,7 +15,9 @@ import { TranslationService } from '../../../core/services/translation.service';
       }
 
       <div class="card__image-wrapper">
-        <img [src]="project.imageUrl" [alt]="project.title" class="card__image" width="640" height="360" loading="lazy" decoding="async" />
+        @if (hasRemoteCover()) {
+          <img [src]="project.imageUrl" [alt]="project.title" class="card__image" width="640" height="360" loading="lazy" decoding="async" />
+        }
         <div class="card__image-overlay">
           <div class="card__links">
             @if (project.githubUrl) {
@@ -68,5 +70,9 @@ export class ProjectCardComponent {
   categoryLabel(): string {
     const key = PROJECT_CATEGORY_TRANSLATION_KEYS[this.project.category];
     return this.ts.t()[key];
+  }
+
+  hasRemoteCover(): boolean {
+    return /^https:\/\//i.test(this.project.imageUrl);
   }
 }

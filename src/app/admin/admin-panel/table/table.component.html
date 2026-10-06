@@ -87,7 +87,7 @@
             />
           </td>
           <td>
-            <p-tag [value]="roleLabel(user.role?.name)" severity="secondary" />
+            <p-tag [value]="roleLabel(user.role?.name)" [severity]="user.role?.name === 'ADMIN' ? 'info' : 'secondary'" />
           </td>
           <td>{{ user.createdAt | date: 'mediumDate' }}</td>
           <td class="admin-table__actions">
@@ -97,6 +97,7 @@
               [text]="true"
               severity="info"
               [pTooltip]="labels().view"
+              [attr.aria-label]="labels().view"
               (onClick)="viewUser.emit(user)"
             />
             @if (canManage()) {
@@ -106,6 +107,7 @@
                 [text]="true"
                 severity="secondary"
                 [pTooltip]="labels().edit"
+                [attr.aria-label]="labels().edit"
                 (onClick)="editUser.emit(user)"
               />
               <p-button
@@ -113,8 +115,10 @@
                 [rounded]="true"
                 [text]="true"
                 severity="danger"
-                [pTooltip]="labels().delete"
-                (onClick)="deleteUser.emit(user)"
+                [pTooltip]="deleteTooltip(user)"
+                [attr.aria-label]="deleteTooltip(user)"
+                [disabled]="!canDelete(user)"
+                (onClick)="canDelete(user) && deleteUser.emit(user)"
               />
             }
           </td>

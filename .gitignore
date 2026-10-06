@@ -62,3 +62,7 @@ supabase/.env.*
 
 # zcode
 .zcode
+
+# Local review and source screenshots (not shipped)
+docs/auditoria/
+docs/post/

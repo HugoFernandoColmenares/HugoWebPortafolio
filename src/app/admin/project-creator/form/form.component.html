@@ -13,17 +13,6 @@
       <h2>{{ heading() }}</h2>
       <p>{{ subtitle() }}</p>
     </div>
-
-    <div class="admin-form__toolbar-actions">
-      @if (!isReadOnly()) {
-        <p-button
-          type="submit"
-          [label]="labels().save"
-          icon="pi pi-check"
-          [loading]="loading()"
-        />
-      }
-    </div>
   </header>
 
   <div class="admin-form__sections">
@@ -35,7 +24,7 @@
 
       <div class="admin-form__section-grid">
         <div
-          class="admin-form__field admin-form__field--full"
+          class="admin-form__field admin-form__field--full admin-form__field--required"
           [class.admin-form__field--invalid]="f.title.invalid && f.title.touched"
         >
           <label for="project-title">{{ labels().title }}</label>
@@ -46,7 +35,7 @@
         </div>
 
         <div
-          class="admin-form__field admin-form__field--full"
+          class="admin-form__field admin-form__field--full admin-form__field--required"
           [class.admin-form__field--invalid]="f.description.invalid && f.description.touched"
         >
           <label for="project-description">{{ labels().description }}</label>
@@ -57,7 +46,7 @@
         </div>
 
         <div
-          class="admin-form__field admin-form__field--full"
+          class="admin-form__field admin-form__field--full admin-form__field--required"
           [class.admin-form__field--invalid]="f.technologiesText.invalid && f.technologiesText.touched"
         >
           <label for="project-tech">{{ labels().technologies }}</label>
@@ -78,7 +67,7 @@
 
       <div class="admin-form__section-grid">
         <div
-          class="admin-form__field admin-form__field--full"
+          class="admin-form__field admin-form__field--full admin-form__field--required"
           [class.admin-form__field--invalid]="f.imageUrl.invalid && f.imageUrl.touched"
         >
           <label for="project-image">{{ labels().imageUrl }}</label>
@@ -102,6 +91,7 @@
               />
             }
           </div>
+          <small>{{ labels().imageHint }}</small>
           @if (f.imageUrl.invalid && f.imageUrl.touched) {
             <small class="admin-form__error">{{ labels().requiredField }}</small>
           }
@@ -126,12 +116,14 @@
       <div class="admin-form__section-grid">
         <div class="admin-form__field">
           <label for="project-github">{{ labels().githubUrl }}</label>
-          <input pInputText id="project-github" formControlName="githubUrl" />
+          <input pInputText id="project-github" formControlName="githubUrl" placeholder="https://" />
+          <small>{{ labels().optionalUrlHint }}</small>
         </div>
 
         <div class="admin-form__field">
           <label for="project-live">{{ labels().liveUrl }}</label>
-          <input pInputText id="project-live" formControlName="liveUrl" />
+          <input pInputText id="project-live" formControlName="liveUrl" placeholder="https://" />
+          <small>{{ labels().optionalUrlHint }}</small>
         </div>
       </div>
     </section>
@@ -143,7 +135,7 @@
       </h3>
 
       <div class="admin-form__section-grid">
-        <div class="admin-form__field">
+        <div class="admin-form__field admin-form__field--required">
           <label for="project-category">{{ labels().category }}</label>
           <p-select
             inputId="project-category"
@@ -154,7 +146,7 @@
           />
         </div>
 
-        <div class="admin-form__field">
+        <div class="admin-form__field admin-form__field--required">
           <label for="project-status">{{ labels().status }}</label>
           <p-select
             inputId="project-status"

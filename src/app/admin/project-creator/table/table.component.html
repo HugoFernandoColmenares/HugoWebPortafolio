@@ -37,6 +37,32 @@
       [showToggleAll]="true"
       [filter]="false"
     />
+
+    <p-multiSelect
+      class="admin-table__status-filter"
+      [options]="statusFilterOptions()"
+      [ngModel]="selectedStatuses()"
+      (ngModelChange)="selectedStatuses.set($event)"
+      optionLabel="label"
+      optionValue="value"
+      [placeholder]="labels().filterStatusPlaceholder"
+      display="chip"
+      [showToggleAll]="true"
+      [filter]="false"
+    />
+
+    <p-multiSelect
+      class="admin-table__featured-filter"
+      [options]="featuredFilterOptions()"
+      [ngModel]="selectedFeatured()"
+      (ngModelChange)="selectedFeatured.set($event)"
+      optionLabel="label"
+      optionValue="value"
+      [placeholder]="labels().filterFeaturedPlaceholder"
+      display="chip"
+      [showToggleAll]="true"
+      [filter]="false"
+    />
   </div>
 
   <div class="admin-table__wrapper">
@@ -76,10 +102,20 @@
             />
           </td>
           <td>
-            <span class="admin-table__tech">{{ project.technologies.join(', ') }}</span>
+            <div class="admin-chip-row">
+              @for (tech of visibleTechnologies(project.technologies); track tech) {
+                <span class="admin-chip">{{ tech }}</span>
+              }
+              @if (extraTechnologyCount(project.technologies) > 0) {
+                <span class="admin-chip">+{{ extraTechnologyCount(project.technologies) }}</span>
+              }
+            </div>
           </td>
           <td>
-            {{ project.featured ? labels().featuredYes : labels().featuredNo }}
+            <p-tag
+              [value]="project.featured ? labels().featuredYes : labels().featuredNo"
+              [severity]="project.featured ? 'success' : 'secondary'"
+            />
           </td>
           <td class="admin-table__actions">
             <p-button
@@ -88,6 +124,7 @@
               [text]="true"
               severity="info"
               [pTooltip]="labels().view"
+              [attr.aria-label]="labels().view"
               (onClick)="viewProject.emit(project)"
             />
             @if (canManage()) {
@@ -97,6 +134,7 @@
                 [text]="true"
                 severity="secondary"
                 [pTooltip]="labels().edit"
+                [attr.aria-label]="labels().edit"
                 (onClick)="editProject.emit(project)"
               />
               <p-button
@@ -105,6 +143,7 @@
                 [text]="true"
                 severity="danger"
                 [pTooltip]="labels().delete"
+                [attr.aria-label]="labels().delete"
                 (onClick)="deleteProject.emit(project)"
               />
             }

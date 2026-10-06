@@ -67,6 +67,10 @@ export interface ProjectTableLabels {
   filterSearch: string;
   filterCategory: string;
   filterCategoryPlaceholder: string;
+  filterStatus: string;
+  filterStatusPlaceholder: string;
+  filterFeatured: string;
+  filterFeaturedPlaceholder: string;
   columnTitle: string;
   columnCategory: string;
   columnStatus: string;
@@ -110,6 +114,8 @@ export interface ProjectFormLabels {
   editSubtitle: string;
   viewSubtitle: string;
   requiredField: string;
+  imageHint: string;
+  optionalUrlHint: string;
   statusCompleted: string;
   statusInProgress: string;
   statusPlanned: string;

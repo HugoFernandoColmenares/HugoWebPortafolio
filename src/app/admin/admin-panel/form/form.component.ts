@@ -60,7 +60,24 @@ export class UserFormComponent {
     }
   });
 
+  readonly subtitle = computed(() => {
+    const labels = this.labels();
+    switch (this.mode()) {
+      case 'edit':
+        return labels.editSubtitle;
+      case 'view':
+        return labels.viewSubtitle;
+      default:
+        return labels.createSubtitle;
+    }
+  });
+
   readonly isCreateMode = computed(() => this.mode() === 'create');
+
+  private defaultRoleId(): string {
+    const options = this.roleOptions();
+    return options.find(option => option.name === 'USER')?.value ?? options.at(-1)?.value ?? '';
+  }
 
   constructor() {
     effect(() => {
@@ -81,13 +98,13 @@ export class UserFormComponent {
           fullName: '',
           email: '',
           password: '',
-          roleId: this.roleOptions()[0]?.value ?? '',
+          roleId: this.defaultRoleId(),
         });
       }
 
       const passwordControl = this.form.controls.password;
       if (isCreate) {
-        passwordControl.setValidators([Validators.required, Validators.minLength(6)]);
+        passwordControl.setValidators([Validators.required, Validators.minLength(8)]);
       } else {
         passwordControl.clearValidators();
       }

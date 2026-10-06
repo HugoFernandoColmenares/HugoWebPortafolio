@@ -48,7 +48,7 @@
 
 .admin-layout__brand {
   display: none;
-  color: var(--color-text-muted);
+  color: var(--color-text);
   font-size: 1.4rem;
   line-height: 1.6;
 }
@@ -60,6 +60,11 @@
   gap: 0.8rem;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+}
+
+.admin-layout__nav-link i {
+  font-size: 1.6rem;
+  line-height: 1;
 }
 
 .admin-layout__nav-link {
@@ -117,7 +122,7 @@
   padding: 0;
   border: none;
   background: none;
-  color: var(--color-text-muted);
+  color: var(--color-text);
   cursor: pointer;
 }
 

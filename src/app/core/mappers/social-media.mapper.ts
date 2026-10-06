@@ -3,6 +3,7 @@ import {
   SocialMediaLinkInput,
   SocialMediaLinkRow,
 } from '../models/social-media.model';
+import { resolveSocialIcon } from '../constants/social-platforms';
 
 export function mapSocialMediaLink(row: SocialMediaLinkRow): SocialMediaLink {
   return {
@@ -10,7 +11,7 @@ export function mapSocialMediaLink(row: SocialMediaLinkRow): SocialMediaLink {
     name: row.name,
     platform: row.platform,
     url: row.url,
-    icon: row.icon ?? undefined,
+    icon: resolveSocialIcon(row.platform, row.icon),
     displayOrder: row.display_order,
     showInHero: row.show_in_hero,
     showInAbout: row.show_in_about,
@@ -26,7 +27,7 @@ export function mapSocialMediaLinkInputToRow(input: SocialMediaLinkInput) {
     name: input.name.trim(),
     platform: input.platform,
     url: input.url.trim(),
-    icon: input.icon?.trim() || null,
+    icon: resolveSocialIcon(input.platform, input.icon),
     display_order: input.displayOrder,
     show_in_hero: input.showInHero,
     show_in_about: input.showInAbout,

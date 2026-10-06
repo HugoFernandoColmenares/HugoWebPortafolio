@@ -12,6 +12,22 @@ export const SOCIAL_PLATFORMS: SocialPlatform[] = [
   'other',
 ];
 
+export const SOCIAL_PLATFORM_ICONS: Record<SocialPlatform, string> = {
+  github: 'pi pi-github',
+  linkedin: 'pi pi-linkedin',
+  twitter: 'pi pi-twitter',
+  instagram: 'pi pi-instagram',
+  facebook: 'pi pi-facebook',
+  youtube: 'pi pi-youtube',
+  website: 'pi pi-globe',
+  other: 'pi pi-share-alt',
+};
+
+export function resolveSocialIcon(platform: SocialPlatform, icon?: string | null): string {
+  const trimmed = icon?.trim();
+  return trimmed || SOCIAL_PLATFORM_ICONS[platform];
+}
+
 export const SOCIAL_PLATFORM_TRANSLATION_KEYS = {
   github: 'social_platform_github',
   linkedin: 'social_platform_linkedin',

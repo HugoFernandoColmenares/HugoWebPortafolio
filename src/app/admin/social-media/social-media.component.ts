@@ -63,6 +63,7 @@ export class SocialMediaComponent implements OnInit {
       columnHero: t.admin_social_col_hero,
       columnAbout: t.admin_social_col_about,
       columnActive: t.admin_social_col_active,
+      columnOrder: t.admin_social_col_order,
       columnActions: t.admin_social_col_actions,
       yes: t.admin_social_yes,
       no: t.admin_social_no,
@@ -89,6 +90,13 @@ export class SocialMediaComponent implements OnInit {
       isActive: t.admin_social_field_is_active,
       save: t.admin_social_save,
       cancel: t.admin_social_cancel,
+      createSubtitle: t.admin_social_form_create_subtitle,
+      editSubtitle: t.admin_social_form_edit_subtitle,
+      viewSubtitle: t.admin_social_form_view_subtitle,
+      backToList: t.admin_social_back_to_list,
+      visibilitySection: t.admin_social_section_visibility,
+      platformPlaceholder: t.admin_social_platform_placeholder,
+      iconHint: t.admin_social_field_icon_hint,
     };
   });
 

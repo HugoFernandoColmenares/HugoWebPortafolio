@@ -63,10 +63,10 @@ export class ProjectFormComponent {
   readonly form = this.fb.nonNullable.group({
     title: ['', [Validators.required, Validators.minLength(3)]],
     description: ['', [Validators.required, Validators.minLength(10)]],
-    imageUrl: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+/i)]],
+    imageUrl: ['', [Validators.required, Validators.pattern(/^https:\/\/.+/i)]],
     technologiesText: ['', [Validators.required]],
-    githubUrl: [''],
-    liveUrl: [''],
+    githubUrl: ['', [Validators.pattern(/^$|^https:\/\/.+/i)]],
+    liveUrl: ['', [Validators.pattern(/^$|^https:\/\/.+/i)]],
     featured: [false],
     status: ['planned' as PortfolioProjectStatus, [Validators.required]],
     category: ['web-fullstack' as ProjectCategory, [Validators.required]],

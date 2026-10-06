@@ -1,32 +1,44 @@
 <form class="admin-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <header class="admin-form__header">
-    <h2>{{ heading() }}</h2>
+  <header class="admin-form__toolbar">
+    <p-button
+      type="button"
+      [label]="labels().backToList"
+      icon="pi pi-arrow-left"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="cancelForm.emit()"
+    />
+    <div class="admin-form__toolbar-text">
+      <h2>{{ heading() }}</h2>
+      <p>{{ subtitle() }}</p>
+    </div>
   </header>
 
   <div class="admin-form__grid">
-    <div class="admin-form__field">
+    <div class="admin-form__field admin-form__field--required">
       <label for="user-full-name">{{ labels().fullName }}</label>
-      <input pInputText id="user-full-name" formControlName="fullName" />
+      <input pInputText id="user-full-name" formControlName="fullName" autocomplete="name" />
     </div>
 
-    <div class="admin-form__field">
+    <div class="admin-form__field admin-form__field--required">
       <label for="user-email">{{ labels().email }}</label>
-      <input pInputText id="user-email" type="email" formControlName="email" />
+      <input pInputText id="user-email" type="email" formControlName="email" autocomplete="email" />
     </div>
 
     @if (isCreateMode()) {
-      <div class="admin-form__field admin-form__field--full">
+      <div class="admin-form__field admin-form__field--full admin-form__field--required">
         <label for="user-password">{{ labels().password }}</label>
         <p-password
           inputId="user-password"
           formControlName="password"
           [toggleMask]="true"
+          autocomplete="new-password"
         />
         <small>{{ labels().passwordHint }}</small>
       </div>
     }
 
-    <div class="admin-form__field">
+    <div class="admin-form__field admin-form__field--required">
       <label for="user-role">{{ labels().role }}</label>
       <p-select
         inputId="user-role"
@@ -35,10 +47,11 @@
         optionLabel="label"
         optionValue="value"
       />
+      <small>{{ labels().roleHint }}</small>
     </div>
   </div>
 
-  <footer class="admin-form__actions">
+  <footer class="admin-form__actions admin-form__actions--sticky">
     <p-button
       type="button"
       [label]="labels().cancel"

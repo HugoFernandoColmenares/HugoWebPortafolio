@@ -41,6 +41,8 @@ export class ProfileComponent {
     return {
       profileSectionTitle: t.admin_profile_form_profile_section,
       passwordSectionTitle: t.admin_profile_form_password_section,
+      editTitle: t.admin_profile_edit_title,
+      editSubtitle: t.admin_profile_edit_subtitle,
       fullName: t.admin_profile_full_name,
       email: t.admin_profile_email,
       role: t.admin_profile_role,

@@ -7,9 +7,6 @@
 
       <div class="admin-form__toolbar-text">
         <h2>{{ profile().fullName }}</h2>
-        @if (profile().role?.name) {
-          <span class="badge badge--accent">{{ profile().role!.name }}</span>
-        }
       </div>
 
       <div class="profile-form__summary-actions">
@@ -31,10 +28,6 @@
 
       <dl class="meta-list">
         <div class="meta-list__item">
-          <dt class="meta-list__term">{{ labels().fullName }}</dt>
-          <dd class="meta-list__value">{{ profile().fullName }}</dd>
-        </div>
-        <div class="meta-list__item">
           <dt class="meta-list__term">{{ labels().email }}</dt>
           <dd class="meta-list__value">{{ profile().email }}</dd>
         </div>
@@ -49,6 +42,10 @@
           </dd>
         </div>
         <div class="meta-list__item">
+          <dt class="meta-list__term">{{ labels().fullName }}</dt>
+          <dd class="meta-list__value">{{ profile().fullName }}</dd>
+        </div>
+        <div class="meta-list__item">
           <dt class="meta-list__term">{{ labels().memberSince }}</dt>
           <dd class="meta-list__value">{{ profile().createdAt | date: 'mediumDate' }}</dd>
         </div>
@@ -57,14 +54,19 @@
   } @else if (activeView() === 'edit-profile') {
     <section class="panel">
       <header class="page-header">
-        <h2>{{ labels().profileSectionTitle }}</h2>
+        <h2>{{ labels().editTitle }}</h2>
+        <p>{{ labels().editSubtitle }}</p>
       </header>
 
       <form class="admin-form" [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()">
         <div class="admin-form__grid">
-          <div class="admin-form__field admin-form__field--full">
+          <div class="admin-form__field admin-form__field--full admin-form__field--required">
             <label for="profile-full-name">{{ labels().fullName }}</label>
-            <input pInputText id="profile-full-name" formControlName="fullName" />
+            <input pInputText id="profile-full-name" formControlName="fullName" autocomplete="name" />
+          </div>
+          <div class="admin-form__field admin-form__field--full">
+            <label for="profile-email">{{ labels().email }}</label>
+            <input pInputText id="profile-email" [value]="profile().email" readonly />
           </div>
         </div>
 
@@ -94,32 +96,35 @@
 
       <form class="admin-form" [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
         <div class="admin-form__grid">
-          <div class="admin-form__field admin-form__field--full">
+          <div class="admin-form__field admin-form__field--full admin-form__field--required">
             <label for="profile-current-password">{{ labels().currentPassword }}</label>
             <p-password
               inputId="profile-current-password"
               formControlName="currentPassword"
               [feedback]="false"
               [toggleMask]="true"
+              autocomplete="current-password"
             />
           </div>
 
-          <div class="admin-form__field">
+          <div class="admin-form__field admin-form__field--required">
             <label for="profile-new-password">{{ labels().newPassword }}</label>
             <p-password
               inputId="profile-new-password"
               formControlName="newPassword"
               [toggleMask]="true"
+              autocomplete="new-password"
             />
           </div>
 
-          <div class="admin-form__field">
+          <div class="admin-form__field admin-form__field--required">
             <label for="profile-confirm-password">{{ labels().confirmPassword }}</label>
             <p-password
               inputId="profile-confirm-password"
               formControlName="confirmPassword"
               [feedback]="false"
               [toggleMask]="true"
+              autocomplete="new-password"
             />
           </div>
         </div>

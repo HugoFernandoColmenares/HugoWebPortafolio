@@ -52,6 +52,7 @@ export class UserTableComponent {
   readonly roleOptions = input<RoleOption[]>([]);
   readonly emailStatusOptions = input<EmailStatusOption[]>([]);
   readonly canManage = input(true);
+  readonly currentUserId = input<string | null>(null);
 
   readonly addUser = output<void>();
   readonly viewUser = output<UserProfile>();
@@ -95,6 +96,30 @@ export class UserTableComponent {
 
     return items;
   });
+
+  private readonly adminCount = computed(
+    () => this.users().filter(user => user.role?.name === 'ADMIN').length,
+  );
+
+  canDelete(user: UserProfile): boolean {
+    return !this.deleteBlockReason(user);
+  }
+
+  deleteTooltip(user: UserProfile): string {
+    return this.deleteBlockReason(user) ?? this.labels().delete;
+  }
+
+  private deleteBlockReason(user: UserProfile): string | null {
+    if (user.id === this.currentUserId()) {
+      return this.labels().cannotDeleteSelf;
+    }
+
+    if (user.role?.name === 'ADMIN' && this.adminCount() <= 1) {
+      return this.labels().cannotDeleteLastAdmin;
+    }
+
+    return null;
+  }
 
   emailStatusLabel(user: UserProfile): string {
     return user.emailConfirmedAt ? this.labels().emailConfirmed : this.labels().emailPending;

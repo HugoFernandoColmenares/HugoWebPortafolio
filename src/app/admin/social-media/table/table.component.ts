@@ -15,6 +15,7 @@ import { MultiSelect } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
 import { Tag } from 'primeng/tag';
 import { Tooltip } from 'primeng/tooltip';
+import { SOCIAL_PLATFORM_ICONS } from '../../../core/constants/social-platforms';
 import {
   PlatformOption,
   SocialMediaLink,
@@ -82,5 +83,17 @@ export class SocialMediaTableComponent {
   onSearchInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.searchTerm.set(value);
+  }
+
+  iconIsUrl(icon?: string): boolean {
+    return !!icon?.startsWith('http');
+  }
+
+  iconClass(link: SocialMediaLink): string {
+    if (link.icon && !this.iconIsUrl(link.icon)) {
+      return link.icon;
+    }
+
+    return SOCIAL_PLATFORM_ICONS[link.platform];
   }
 }

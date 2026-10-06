@@ -1,15 +1,26 @@
 <form class="admin-form" [formGroup]="form" (ngSubmit)="onSubmit()">
-  <header class="admin-form__header">
-    <h2>{{ heading() }}</h2>
+  <header class="admin-form__toolbar">
+    <p-button
+      type="button"
+      [label]="labels().backToList"
+      icon="pi pi-arrow-left"
+      severity="secondary"
+      [outlined]="true"
+      (onClick)="cancelForm.emit()"
+    />
+    <div class="admin-form__toolbar-text">
+      <h2>{{ heading() }}</h2>
+      <p>{{ subtitle() }}</p>
+    </div>
   </header>
 
   <div class="admin-form__grid">
-    <div class="admin-form__field">
+    <div class="admin-form__field admin-form__field--required">
       <label for="social-name">{{ labels().name }}</label>
       <input pInputText id="social-name" formControlName="name" />
     </div>
 
-    <div class="admin-form__field">
+    <div class="admin-form__field admin-form__field--required">
       <label for="social-platform">{{ labels().platform }}</label>
       <p-select
         inputId="social-platform"
@@ -17,46 +28,47 @@
         [options]="platformOptions()"
         optionLabel="label"
         optionValue="value"
+        [placeholder]="labels().platformPlaceholder"
+        (onChange)="onPlatformChange()"
       />
     </div>
 
-    <div class="admin-form__field admin-form__field--full">
+    <div class="admin-form__field admin-form__field--full admin-form__field--required">
       <label for="social-url">{{ labels().url }}</label>
-      <input pInputText id="social-url" formControlName="url" />
+      <input pInputText id="social-url" formControlName="url" placeholder="https://" />
     </div>
 
     <div class="admin-form__field admin-form__field--full">
       <label for="social-icon">{{ labels().icon }}</label>
-      <input
-        pInputText
-        id="social-icon"
-        formControlName="icon"
-        [placeholder]="labels().iconPlaceholder"
-      />
+      <input pInputText id="social-icon" formControlName="icon" />
+      <small>{{ labels().iconHint }}</small>
     </div>
 
     <div class="admin-form__field">
       <label for="social-order">{{ labels().displayOrder }}</label>
-      <p-inputNumber inputId="social-order" formControlName="displayOrder" [min]="0" />
+      <p-inputNumber inputId="social-order" formControlName="displayOrder" [min]="0" [showButtons]="true" />
     </div>
 
-    <div class="admin-form__field admin-form__field--checkbox">
-      <p-checkbox inputId="social-hero" formControlName="showInHero" [binary]="true" />
-      <label for="social-hero">{{ labels().showInHero }}</label>
-    </div>
-
-    <div class="admin-form__field admin-form__field--checkbox">
-      <p-checkbox inputId="social-about" formControlName="showInAbout" [binary]="true" />
-      <label for="social-about">{{ labels().showInAbout }}</label>
-    </div>
-
-    <div class="admin-form__field admin-form__field--checkbox">
-      <p-checkbox inputId="social-active" formControlName="isActive" [binary]="true" />
-      <label for="social-active">{{ labels().isActive }}</label>
+    <div class="admin-form__field admin-form__field--full">
+      <p class="admin-form__section-title">{{ labels().visibilitySection }}</p>
+      <div class="admin-form__visibility">
+        <div class="admin-form__field admin-form__field--checkbox">
+          <p-checkbox inputId="social-hero" formControlName="showInHero" [binary]="true" />
+          <label for="social-hero">{{ labels().showInHero }}</label>
+        </div>
+        <div class="admin-form__field admin-form__field--checkbox">
+          <p-checkbox inputId="social-about" formControlName="showInAbout" [binary]="true" />
+          <label for="social-about">{{ labels().showInAbout }}</label>
+        </div>
+        <div class="admin-form__field admin-form__field--checkbox">
+          <p-checkbox inputId="social-active" formControlName="isActive" [binary]="true" />
+          <label for="social-active">{{ labels().isActive }}</label>
+        </div>
+      </div>
     </div>
   </div>
 
-  <footer class="admin-form__actions">
+  <footer class="admin-form__actions admin-form__actions--sticky">
     <p-button
       type="button"
       [label]="labels().cancel"

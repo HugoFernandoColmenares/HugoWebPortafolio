@@ -73,6 +73,7 @@ export interface SocialMediaTableLabels {
   columnHero: string;
   columnAbout: string;
   columnActive: string;
+  columnOrder: string;
   columnActions: string;
   yes: string;
   no: string;
@@ -96,4 +97,11 @@ export interface SocialMediaFormLabels {
   isActive: string;
   save: string;
   cancel: string;
+  createSubtitle: string;
+  editSubtitle: string;
+  viewSubtitle: string;
+  backToList: string;
+  visibilitySection: string;
+  platformPlaceholder: string;
+  iconHint: string;
 }

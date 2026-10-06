@@ -55,11 +55,32 @@ export class ProjectTableComponent {
 
   readonly searchTerm = signal('');
   readonly selectedCategories = signal<ProjectCategory[]>([]);
+  readonly selectedStatuses = signal<PortfolioProjectStatus[]>([]);
+  readonly selectedFeatured = signal<boolean[]>([]);
   readonly rowsPerPage = 10;
+
+  readonly statusFilterOptions = computed(() => {
+    const labels = this.labels();
+    return [
+      { label: labels.statusCompleted, value: 'completed' as const },
+      { label: labels.statusInProgress, value: 'in-progress' as const },
+      { label: labels.statusPlanned, value: 'planned' as const },
+    ];
+  });
+
+  readonly featuredFilterOptions = computed(() => {
+    const labels = this.labels();
+    return [
+      { label: labels.featuredYes, value: true },
+      { label: labels.featuredNo, value: false },
+    ];
+  });
 
   readonly filteredProjects = computed(() => {
     const query = this.searchTerm().trim().toLowerCase();
     const categories = this.selectedCategories();
+    const statuses = this.selectedStatuses();
+    const featured = this.selectedFeatured();
     let items = this.projects();
 
     if (query) {
@@ -79,6 +100,14 @@ export class ProjectTableComponent {
 
     if (categories.length > 0) {
       items = items.filter(project => categories.includes(project.category));
+    }
+
+    if (statuses.length > 0) {
+      items = items.filter(project => statuses.includes(project.status));
+    }
+
+    if (featured.length > 0) {
+      items = items.filter(project => featured.includes(project.featured));
     }
 
     return items;
@@ -117,5 +146,13 @@ export class ProjectTableComponent {
   onSearchInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.searchTerm.set(value);
+  }
+
+  visibleTechnologies(technologies: string[]): string[] {
+    return technologies.slice(0, 3);
+  }
+
+  extraTechnologyCount(technologies: string[]): number {
+    return Math.max(0, technologies.length - 3);
   }
 }

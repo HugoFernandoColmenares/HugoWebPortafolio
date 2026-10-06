@@ -56,6 +56,7 @@
           <th>{{ labels().columnPlatform }}</th>
           <th>{{ labels().columnUrl }}</th>
           <th>{{ labels().columnIcon }}</th>
+          <th>{{ labels().columnOrder }}</th>
           <th>{{ labels().columnHero }}</th>
           <th>{{ labels().columnAbout }}</th>
           <th>{{ labels().columnActive }}</th>
@@ -72,30 +73,36 @@
             <p-tag [value]="platformLabel(link.platform)" severity="secondary" />
           </td>
           <td>
-            <a [href]="link.url" target="_blank" rel="noopener" class="admin-table__link">
+            <a [href]="link.url" target="_blank" rel="noopener noreferrer" class="admin-table__link">
               {{ link.url }}
             </a>
           </td>
           <td>
-            @if (link.icon) {
-              <span class="admin-table__icon">
-                @if (link.icon.startsWith('http')) {
-                  <img [src]="link.icon" alt="" class="admin-table__icon-img" />
-                } @else {
-                  <i [class]="link.icon" aria-hidden="true"></i>
-                }
-                <span class="admin-table__muted">{{ link.icon }}</span>
-              </span>
-            } @else {
-              <span class="admin-table__muted">—</span>
-            }
+            <span class="admin-table__icon">
+              @if (iconIsUrl(link.icon)) {
+                <img [src]="link.icon" alt="" class="admin-table__icon-img" />
+              } @else {
+                <i [class]="iconClass(link)" aria-hidden="true"></i>
+              }
+            </span>
           </td>
-          <td>{{ link.showInHero ? labels().yes : labels().no }}</td>
-          <td>{{ link.showInAbout ? labels().yes : labels().no }}</td>
+          <td>{{ link.displayOrder }}</td>
+          <td>
+            <p-tag
+              [value]="link.showInHero ? labels().yes : labels().no"
+              [severity]="link.showInHero ? 'success' : 'secondary'"
+            />
+          </td>
+          <td>
+            <p-tag
+              [value]="link.showInAbout ? labels().yes : labels().no"
+              [severity]="link.showInAbout ? 'success' : 'secondary'"
+            />
+          </td>
           <td>
             <p-tag
               [value]="link.isActive ? labels().yes : labels().no"
-              [severity]="link.isActive ? 'success' : 'warn'"
+              [severity]="link.isActive ? 'success' : 'secondary'"
             />
           </td>
           <td class="admin-table__actions">
@@ -131,7 +138,7 @@
 
       <ng-template #emptymessage>
         <tr>
-          <td colspan="8" class="admin-table__empty">
+          <td colspan="9" class="admin-table__empty">
             {{ labels().empty }}
           </td>
         </tr>

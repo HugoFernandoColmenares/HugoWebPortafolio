@@ -115,6 +115,27 @@ export class AdminUserService {
       throw new Error('CANNOT_DELETE_SELF');
     }
 
+    const { data: users, error: listError } = await this.supabase.client
+      .from('users')
+      .select('id, role:roles(name)')
+      .is('deleted_at', null);
+
+    if (listError) {
+      throw listError;
+    }
+
+    const adminIds = (users ?? [])
+      .filter(user => {
+        const role = user.role as { name?: string } | { name?: string }[] | null;
+        const name = Array.isArray(role) ? role[0]?.name : role?.name;
+        return name === 'ADMIN';
+      })
+      .map(user => user.id);
+
+    if (adminIds.length <= 1 && adminIds.includes(userId)) {
+      throw new Error('CANNOT_DELETE_LAST_ADMIN');
+    }
+
     const { error } = await this.supabase.client
       .from('users')
       .update({ deleted_at: new Date().toISOString() })

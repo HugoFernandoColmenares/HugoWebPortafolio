@@ -43,6 +43,8 @@ export interface AdminUserTableLabels {
   view: string;
   edit: string;
   delete: string;
+  cannotDeleteSelf: string;
+  cannotDeleteLastAdmin: string;
 }
 
 export interface AdminUserFormLabels {
@@ -54,8 +56,13 @@ export interface AdminUserFormLabels {
   password: string;
   passwordHint: string;
   role: string;
+  roleHint: string;
   save: string;
   cancel: string;
+  createSubtitle: string;
+  editSubtitle: string;
+  viewSubtitle: string;
+  backToList: string;
 }
 
 export type EmailConfirmationFilter = 'confirmed' | 'pending';

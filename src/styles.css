@@ -24,7 +24,11 @@
   --color-text-muted: #64748b;
   --color-text-heading: #0f172a;
   --color-border: #d7e2ee;
+  --color-border-control: #64748b;
   --color-divider: rgba(15, 23, 42, 0.08);
+  --admin-control-h: 3.6rem;
+  --admin-icon-btn: 3.2rem;
+  --admin-form-max: 84rem;
   --color-success: #22c55e;
   --color-error: #ef4444;
   --color-warning: #f59e0b;
@@ -107,7 +111,8 @@
   --color-text: #cbd5e1;
   --color-text-muted: #94a3b8;
   --color-text-heading: #f8fbff;
-  --color-border: #1a3354;
+  --color-border: #2a4a6e;
+  --color-border-control: #6b8cb0;
   --color-divider: rgba(148, 163, 184, 0.16);
   --color-accent-glow: rgba(56, 189, 248, 0.32);
   --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.35);
@@ -391,6 +396,8 @@ ul, ol { list-style: none; }
 .meta-list__value {
   font-size: 1.6rem;
   color: var(--color-text-heading);
+  overflow-wrap: anywhere;
+  min-width: 0;
 }
 
 .alert {
@@ -562,7 +569,8 @@ ul, ol { list-style: none; }
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  max-width: 72rem;
+  max-width: var(--admin-form-max);
+  padding-bottom: 8rem;
 }
 
 .admin-form__grid {
@@ -589,6 +597,11 @@ ul, ol { list-style: none; }
   flex-direction: row;
   align-items: center;
   gap: 0.8rem;
+}
+
+.admin-form__field--required label::after {
+  content: ' *';
+  color: var(--color-error);
 }
 
 .admin-form__field label {
@@ -735,10 +748,18 @@ ul, ol { list-style: none; }
   bottom: 0;
   z-index: 2;
   padding: var(--space-sm);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-background);
+}
+
+.admin-form__visibility {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--color-background) 92%, transparent);
-  backdrop-filter: blur(0.8rem);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
 }
 
 .admin-form .p-inputtext,
@@ -746,8 +767,23 @@ ul, ol { list-style: none; }
 .admin-form .p-select,
 .admin-form .p-textarea,
 .admin-form .p-password,
-.admin-form .p-password-input {
+.admin-form .p-password-input,
+.admin-table .p-inputtext,
+.admin-table .p-select,
+.admin-table .p-multiselect {
   width: 100%;
+  min-height: var(--admin-control-h);
+  font-size: 1.4rem;
+}
+
+.admin-form .p-inputtext,
+.admin-table .p-inputtext {
+  border-color: var(--color-border-control);
+}
+
+.admin-form .p-textarea {
+  resize: vertical;
+  min-height: 12rem;
 }
 
 @media (min-width: 641px) {
@@ -785,9 +821,20 @@ ul, ol { list-style: none; }
 }
 
 .admin-table__search,
-.admin-table__filter {
-  flex: 1 1 100%;
-  min-width: 0;
+.admin-table__filter,
+.admin-table__category-filter,
+.admin-table__platform-filter,
+.admin-table__role-filter,
+.admin-table__status-filter,
+.admin-table__featured-filter {
+  flex: 1 1 18rem;
+  min-width: 16rem;
+  max-width: 32rem;
+}
+
+.admin-table .p-tag {
+  font-size: 1.2rem;
+  padding: 0.2rem 0.8rem;
 }
 
 .admin-table__wrapper {
@@ -810,9 +857,14 @@ ul, ol { list-style: none; }
 }
 
 .admin-table__link {
+  display: inline-block;
+  max-width: 28rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
   color: var(--color-accent);
   font-size: 1.3rem;
-  word-break: break-all;
 }
 
 .admin-table__actions-col,
@@ -824,6 +876,30 @@ ul, ol { list-style: none; }
 .admin-table__actions {
   display: flex;
   gap: 0.4rem;
+}
+
+.admin-table__actions .p-button {
+  width: var(--admin-icon-btn);
+  height: var(--admin-icon-btn);
+  min-width: var(--admin-icon-btn);
+}
+
+.admin-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.admin-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.6rem;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  font-size: 1.2rem;
+  color: var(--color-text);
 }
 
 .admin-table__empty {
@@ -844,9 +920,11 @@ ul, ol { list-style: none; }
   .admin-table__category-filter,
   .admin-table__platform-filter,
   .admin-table__role-filter,
-  .admin-table__status-filter {
-    flex: 1 1 24rem;
-    min-width: 20rem;
+  .admin-table__status-filter,
+  .admin-table__featured-filter {
+    flex: 1 1 18rem;
+    min-width: 16rem;
+    max-width: 32rem;
   }
 }
 
@@ -1161,28 +1239,62 @@ ul, ol { list-style: none; }
    Profile admin
    ========================================================================== */
 
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: var(--admin-form-max);
+}
+
+.profile__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.profile__header h1,
+.admin-layout h1 {
+  font-size: clamp(2.8rem, 4vw, 4rem);
+}
+
+.profile__header p {
+  font-size: 1.5rem;
+  color: var(--color-text-muted);
+}
+
 .profile-form {
   display: flex;
   flex-direction: column;
   gap: var(--space-md);
-  max-width: 72rem;
+  max-width: var(--admin-form-max);
 }
 
 .profile-form__summary.panel {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--space-md);
 }
 
 .profile-form__summary .admin-form__toolbar-text {
   flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.profile-form__summary .badge {
+  width: fit-content;
+  max-width: 100%;
 }
 
 .profile-form__summary-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+.profile-form__summary-actions .p-button {
+  min-height: var(--admin-control-h);
+  font-size: 1.4rem;
 }
 
 .profile-form__avatar {
@@ -1198,12 +1310,12 @@ ul, ol { list-style: none; }
 @media (min-width: 641px) {
   .profile-form__summary.panel {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .profile-form__summary .meta-list {
     flex: 1 1 100%;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1252,6 +1364,11 @@ ul, ol { list-style: none; }
 }
 
 /* Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) var(--color-surface-2);
+}
+
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--color-surface-2); }
 ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }

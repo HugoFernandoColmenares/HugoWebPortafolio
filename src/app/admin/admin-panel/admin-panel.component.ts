@@ -20,6 +20,7 @@ import { UserProfile } from '../../core/models/user.model';
 import { AdminUserService } from '../../core/services/admin-user.service';
 import { NotificationService } from '../../core/services/notification.service';
 import { TranslationService } from '../../core/services/translation.service';
+import { AuthService } from '../../core/services/auth.service';
 import { UserFormComponent } from './form/form.component';
 import { UserTableComponent } from './table/table.component';
 
@@ -34,6 +35,7 @@ import { UserTableComponent } from './table/table.component';
 export class AdminPanelComponent implements OnInit {
   private readonly userService = inject(AdminUserService);
   private readonly notifications = inject(NotificationService);
+    auth = inject(AuthService);
   readonly ts = inject(TranslationService);
 
   readonly viewMode = signal<AdminPanelViewMode>('list');
@@ -66,6 +68,8 @@ export class AdminPanelComponent implements OnInit {
       view: t.admin_users_action_view,
       edit: t.admin_users_action_edit,
       delete: t.admin_users_action_delete,
+      cannotDeleteSelf: t.admin_users_cannot_delete_self,
+      cannotDeleteLastAdmin: t.admin_users_cannot_delete_last_admin,
     };
   });
 
@@ -80,8 +84,13 @@ export class AdminPanelComponent implements OnInit {
       password: t.admin_users_field_password,
       passwordHint: t.admin_users_field_password_hint,
       role: t.admin_users_field_role,
+      roleHint: t.admin_users_field_role_hint,
       save: t.admin_users_save,
       cancel: t.admin_users_cancel,
+      createSubtitle: t.admin_users_form_create_subtitle,
+      editSubtitle: t.admin_users_form_edit_subtitle,
+      viewSubtitle: t.admin_users_form_view_subtitle,
+      backToList: t.admin_users_back_to_list,
     };
   });
 
@@ -139,7 +148,9 @@ export class AdminPanelComponent implements OnInit {
       const message =
         error instanceof Error && error.message === 'CANNOT_DELETE_SELF'
           ? t.admin_users_cannot_delete_self
-          : t.admin_users_delete_error;
+          : error instanceof Error && error.message === 'CANNOT_DELETE_LAST_ADMIN'
+            ? t.admin_users_cannot_delete_last_admin
+            : t.admin_users_delete_error;
       void this.notifications.error(message);
     } finally {
       this.loading.set(false);
