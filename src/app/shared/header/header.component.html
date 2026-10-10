@@ -9,7 +9,7 @@
     </a>
 
     <!-- Desktop Navigation -->
-    <nav class="header__nav" aria-label="Main navigation">
+    <nav class="header__nav" [attr.aria-label]="ts.t().nav_main">
       <a class="header__nav-link" routerLink="/" routerLinkActive="header__nav-link--active" [routerLinkActiveOptions]="{exact: true}">
         {{ ts.t()['nav_home'] }}
       </a>
@@ -29,7 +29,7 @@
       <button
         class="icon-btn"
         (click)="themeService.toggle()"
-        [attr.aria-label]="themeService.currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+        [attr.aria-label]="themeService.currentTheme() === 'dark' ? ts.t().theme_to_light : ts.t().theme_to_dark"
       >
         @if (themeService.currentTheme() === 'dark') {
           <!-- Sun icon -->
@@ -52,8 +52,9 @@
       <button
         class="icon-btn header__hamburger"
         (click)="toggleSidebar.emit()"
-        aria-label="Open navigation menu"
-        aria-expanded="false"
+        [attr.aria-label]="sidebarOpen() ? ts.t().nav_close : ts.t().nav_open"
+        [attr.aria-expanded]="sidebarOpen()"
+        aria-controls="mobile-sidebar"
         id="hamburger-btn"
       >
         <span class="header__hamburger-line"></span>

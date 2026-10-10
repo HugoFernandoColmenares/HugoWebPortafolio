@@ -1,6 +1,7 @@
-<app-header (toggleSidebar)="sidebarOpen.set(!sidebarOpen())" />
+<a class="skip-link" href="#main-content" (click)="skipToContent($event)">{{ ts.t().skip_to_content }}</a>
+<app-header [sidebarOpen]="sidebarOpen()" (toggleSidebar)="sidebarOpen.set(!sidebarOpen())" />
 <app-sidebar [isOpen]="sidebarOpen()" (close)="sidebarOpen.set(false)" />
-<main class="main-content">
+<main id="main-content" class="main-content" tabindex="-1">
     <router-outlet />
 </main>
 <app-footer />

@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, EventEmitter, Output, inject, input, ChangeDetectionStrategy } from '@angular/core';
 
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslationService } from '../../core/services/translation.service';
@@ -14,6 +14,7 @@ import { LanguageToggleComponent } from '../components/language-toggle/language-
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  readonly sidebarOpen = input(false);
   @Output() toggleSidebar = new EventEmitter<void>();
 
   readonly ts = inject(TranslationService);

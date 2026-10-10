@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://freelance-portafolio-beta.vercel.app/sitemap.xml

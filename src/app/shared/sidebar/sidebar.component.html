@@ -4,12 +4,19 @@
 }
 
 <!-- Drawer -->
-<aside class="sidebar" [class.sidebar--open]="isOpen" aria-label="Mobile navigation" [attr.aria-hidden]="!isOpen">
+<aside
+  id="mobile-sidebar"
+  class="sidebar"
+  [class.sidebar--open]="isOpen"
+  [attr.aria-label]="ts.t().nav_mobile"
+  [attr.aria-hidden]="!isOpen"
+  [attr.inert]="isOpen ? null : ''"
+>
   <div class="sidebar__header">
     <span class="sidebar__logo">
       <span class="logo-bracket">&lt;</span><span class="gradient-text">Hugo.dev</span><span class="logo-bracket">/&gt;</span>
     </span>
-    <button class="icon-btn" (click)="close.emit()" aria-label="Close menu">
+    <button class="icon-btn" (click)="close.emit()" [attr.aria-label]="ts.t().nav_close">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
       </svg>
@@ -54,7 +61,7 @@
   </nav>
 
   <div class="sidebar__footer">
-    <a [href]="config.env.githubUrl" target="_blank" rel="noopener" class="sidebar__social">GitHub</a>
-    <a [href]="config.env.linkedinUrl" target="_blank" rel="noopener" class="sidebar__social">LinkedIn</a>
+    <a [href]="config.env.githubUrl" target="_blank" rel="noopener noreferrer" class="sidebar__social">GitHub</a>
+    <a [href]="config.env.linkedinUrl" target="_blank" rel="noopener noreferrer" class="sidebar__social">LinkedIn</a>
   </div>
 </aside>

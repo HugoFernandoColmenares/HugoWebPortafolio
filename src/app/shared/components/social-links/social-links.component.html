@@ -4,7 +4,7 @@
       <a
         [href]="link.url"
         target="_blank"
-        rel="noopener"
+        rel="noopener noreferrer"
         class="icon-btn social-links__icon-btn"
         [attr.aria-label]="link.name"
       >
@@ -37,7 +37,7 @@
 } @else {
   <div class="social-links--about">
     @for (link of links(); track link.id) {
-      <a [href]="link.url" target="_blank" rel="noopener" class="social-links__text-link">
+      <a [href]="link.url" target="_blank" rel="noopener noreferrer" class="social-links__text-link">
         @if (isImageIcon(link.icon)) {
           <img [src]="link.icon" alt="" class="social-links__icon-img" />
         } @else if (isClassIcon(link.icon)) {

@@ -22,3 +22,16 @@
   flex-direction: column;
   gap: var(--space-md);
 }
+
+.projects-page__skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.projects-page__skeleton-row {
+  display: flex;
+  gap: 2.4rem;
+  overflow: hidden;
+}

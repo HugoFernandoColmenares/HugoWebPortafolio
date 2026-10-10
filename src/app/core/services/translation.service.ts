@@ -1,4 +1,5 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 
 export type Language = 'en' | 'es';
 
@@ -8,6 +9,16 @@ const EN_TRANSLATIONS = {
   nav_projects: 'Projects',
   nav_about: 'About',
   nav_contact: 'Contact',
+  skip_to_content: 'Skip to content',
+  nav_main: 'Main navigation',
+  nav_mobile: 'Mobile navigation',
+  nav_open: 'Open navigation menu',
+  nav_close: 'Close navigation menu',
+  theme_to_light: 'Switch to light mode',
+  theme_to_dark: 'Switch to dark mode',
+  carousel_prev: 'Previous projects',
+  carousel_next: 'Next projects',
+  carousel_track: 'Project list. Use arrow keys to scroll.',
   // Hero
   hero_greeting: "Hi, I'm",
   hero_name: 'Hugo Colmenares',
@@ -27,6 +38,7 @@ const EN_TRANSLATIONS = {
   projects_empty: 'No projects available yet.',
   projects_empty_filter: 'No projects match this filter.',
   projects_featured: 'Featured',
+  projects_cover_placeholder: 'No cover image',
   project_category_web_frontend: 'Web — Frontend',
   project_category_web_backend: 'Web — Backend',
   project_category_web_fullstack: 'Web — Full Stack',
@@ -334,6 +346,16 @@ const TRANSLATIONS: Record<Language, Translations> = {
     nav_projects: 'Proyectos',
     nav_about: 'Acerca de',
     nav_contact: 'Contacto',
+    skip_to_content: 'Saltar al contenido',
+    nav_main: 'Navegación principal',
+    nav_mobile: 'Navegación móvil',
+    nav_open: 'Abrir menú de navegación',
+    nav_close: 'Cerrar menú de navegación',
+    theme_to_light: 'Cambiar a modo claro',
+    theme_to_dark: 'Cambiar a modo oscuro',
+    carousel_prev: 'Proyectos anteriores',
+    carousel_next: 'Proyectos siguientes',
+    carousel_track: 'Lista de proyectos. Usa las flechas para desplazarte.',
     // Hero
     hero_greeting: 'Hola, soy',
     hero_name: 'Hugo Colmenares',
@@ -353,6 +375,7 @@ const TRANSLATIONS: Record<Language, Translations> = {
     projects_empty: 'Aún no hay proyectos disponibles.',
     projects_empty_filter: 'Ningún proyecto coincide con este filtro.',
     projects_featured: 'Destacado',
+    projects_cover_placeholder: 'Sin imagen de portada',
     project_category_web_frontend: 'Web — Frontend',
     project_category_web_backend: 'Web — Backend',
     project_category_web_fullstack: 'Web — Full Stack',
@@ -653,10 +676,17 @@ const TRANSLATIONS: Record<Language, Translations> = {
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
   private readonly STORAGE_KEY = 'portfolio_lang';
+  private readonly document = inject(DOCUMENT);
 
   readonly currentLang = signal<Language>(this.getStoredLang());
 
   readonly t = computed<Translations>(() => TRANSLATIONS[this.currentLang()]);
+
+  constructor() {
+    effect(() => {
+      this.document.documentElement.lang = this.currentLang();
+    });
+  }
 
   setLanguage(lang: Language): void {
     this.currentLang.set(lang);

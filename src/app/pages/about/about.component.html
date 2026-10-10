@@ -22,7 +22,7 @@
         <p>{{ ts.t()['about_bio'] }}</p>
         <div class="about__actions">
           @if (cvUrl) {
-            <a class="btn-primary" [href]="cvUrl" target="_blank" rel="noopener">
+            <a class="btn-primary" [href]="cvUrl" target="_blank" rel="noopener noreferrer">
               {{ ts.t()['btn_cv'] }}
             </a>
           }

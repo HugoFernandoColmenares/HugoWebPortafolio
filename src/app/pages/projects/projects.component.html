@@ -7,9 +7,19 @@
     </div>
 
     @if (loading()) {
-      <p class="projects-page__status text-muted">{{ ts.t().projects_loading }}</p>
+      <div class="projects-page__status" role="status" aria-live="polite">
+        <p class="text-muted">{{ ts.t().projects_loading }}</p>
+        <div class="projects-page__skeletons" aria-hidden="true">
+          <div class="skeleton skeleton--title"></div>
+          <div class="projects-page__skeleton-row">
+            <div class="skeleton skeleton--card"></div>
+            <div class="skeleton skeleton--card"></div>
+            <div class="skeleton skeleton--card"></div>
+          </div>
+        </div>
+      </div>
     } @else if (loadError()) {
-      <p class="projects-page__status text-muted">{{ ts.t().projects_load_error }}</p>
+      <p class="projects-page__status text-muted" role="alert">{{ ts.t().projects_load_error }}</p>
     } @else if (projects().length === 0) {
       <p class="projects-page__status text-muted">{{ ts.t().projects_empty }}</p>
     } @else {
