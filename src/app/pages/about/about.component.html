@@ -36,6 +36,25 @@
       </div>
     </div>
 
+    <aside class="about__studio panel" aria-labelledby="about-studio-heading">
+      <h2 id="about-studio-heading" class="about__section-title">{{ ts.t()['about_studio_heading'] }}</h2>
+      <p>{{ ts.t()['about_studio_body'] }}</p>
+      <div class="about__studio-actions">
+        @if (nexoUrl) {
+          <a class="btn-primary" [href]="nexoUrl" target="_blank" rel="noopener noreferrer">
+            {{ ts.t()['about_studio_nexo'] }}
+          </a>
+        }
+        <a class="btn-outline" [href]="artistGithubUrl" target="_blank" rel="noopener noreferrer">
+          {{ ts.t()['about_studio_github'] }}
+        </a>
+      </div>
+      <div class="about__studio-warning" role="note">
+        <p class="about__studio-warning-title">{{ ts.t()['about_studio_warning_title'] }}</p>
+        <p>{{ ts.t()['about_studio_warning'] }}</p>
+      </div>
+    </aside>
+
     <div class="about__skills">
       <h2 class="about__section-title gradient-text">{{ ts.t()['about_skills_heading'] }}</h2>
       <div class="about__tech-grid">

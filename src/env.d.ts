@@ -7,6 +7,8 @@ declare interface Env {
   readonly NG_APP_AUTHOR_EMAIL: string;
   readonly NG_APP_GITHUB_URL: string;
   readonly NG_APP_LINKEDIN_URL: string;
+  readonly NG_APP_ARTIST_GITHUB_URL: string;
+  readonly NG_APP_NEXO_URL: string;
   readonly NG_APP_CV_URL: string;
   readonly NG_APP_CONTACT_API_URL: string;
   readonly NG_APP_SUPABASE_URL: string;

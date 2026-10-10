@@ -258,6 +258,8 @@ ul, ol { list-style: none; }
   .hero__actions .btn-outline,
   .about__actions .btn-primary,
   .about__actions .btn-outline,
+  .about__studio-actions .btn-primary,
+  .about__studio-actions .btn-outline,
   .not-found__actions .btn-primary,
   .not-found__actions .btn-outline,
   .public-form .btn-primary,

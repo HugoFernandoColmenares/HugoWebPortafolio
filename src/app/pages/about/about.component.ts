@@ -32,6 +32,8 @@ export class AboutComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
 
   readonly cvUrl = this.config.env.cvUrl;
+  readonly nexoUrl = this.config.env.nexoUrl;
+  readonly artistGithubUrl = this.config.env.artistGithubUrl;
   readonly socialLinks = signal<SocialMediaLink[]>([]);
 
   readonly skills: Skill[] = [
