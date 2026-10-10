@@ -59,14 +59,19 @@ export class PortfolioProjectService {
   }
 
   async softDelete(id: string): Promise<void> {
-    const { error } = await this.supabase.client
+    const { data, error } = await this.supabase.client
       .from('portfolio_projects')
       .update({ deleted_at: new Date().toISOString() })
       .eq('id', id)
-      .is('deleted_at', null);
+      .is('deleted_at', null)
+      .select('id');
 
     if (error) {
       throw error;
+    }
+
+    if (!data?.length) {
+      throw new Error('PROJECT_DELETE_FORBIDDEN');
     }
   }
 }
