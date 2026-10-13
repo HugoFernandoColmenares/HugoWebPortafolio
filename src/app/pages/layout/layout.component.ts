@@ -17,8 +17,7 @@ export class LayoutComponent {
   readonly ts = inject(TranslationService);
   readonly sidebarOpen = signal(false);
 
-  skipToContent(event: Event): void {
-    event.preventDefault();
+  skipToContent(): void {
     const main = document.getElementById('main-content');
     main?.focus();
     main?.scrollIntoView({ block: 'start' });

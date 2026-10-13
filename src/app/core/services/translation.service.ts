@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 
 export type Language = 'en' | 'es';
 
@@ -676,17 +675,10 @@ const TRANSLATIONS: Record<Language, Translations> = {
 @Injectable({ providedIn: 'root' })
 export class TranslationService {
   private readonly STORAGE_KEY = 'portfolio_lang';
-  private readonly document = inject(DOCUMENT);
 
   readonly currentLang = signal<Language>(this.getStoredLang());
 
   readonly t = computed<Translations>(() => TRANSLATIONS[this.currentLang()]);
-
-  constructor() {
-    effect(() => {
-      this.document.documentElement.lang = this.currentLang();
-    });
-  }
 
   setLanguage(lang: Language): void {
     this.currentLang.set(lang);
