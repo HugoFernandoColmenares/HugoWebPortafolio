@@ -63,6 +63,9 @@ supabase/.env.*
 # zcode
 .zcode
 
+# Local upload scratch (never ship covers in the Angular app)
+.tmp-covers/
+
 # Local review and source screenshots (not shipped)
 docs/auditoria/
 docs/post/
