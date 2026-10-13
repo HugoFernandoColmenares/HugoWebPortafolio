@@ -1,11 +1,17 @@
-.contact {
-  width: min(100%, 90rem);
+:host {
+  display: block;
+  width: 100%;
 }
 
 .contact .container {
   display: flex;
   flex-direction: column;
   gap: var(--space-lg);
+}
+
+.contact__heading,
+.contact__panel {
+  width: 100%;
 }
 
 .contact__heading p {
