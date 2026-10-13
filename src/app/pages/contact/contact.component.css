@@ -1,0 +1,30 @@
+.contact {
+  width: min(100%, 90rem);
+}
+
+.contact .container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.contact__heading p {
+  font-size: 1.6rem;
+  padding-top: var(--space-sm);
+}
+
+.contact__panel.panel {
+  padding: var(--space-md);
+}
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+@media (min-width: 901px) {
+  .contact__panel.panel {
+    padding: var(--space-lg);
+  }
+}

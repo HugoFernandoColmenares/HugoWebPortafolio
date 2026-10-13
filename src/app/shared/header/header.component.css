@@ -10,7 +10,8 @@
 
 .header__inner {
   height: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: var(--space-sm);
 }
@@ -33,8 +34,8 @@
 .header__nav {
   display: none;
   align-items: center;
+  justify-self: end;
   gap: 0.4rem;
-  margin-left: auto;
 }
 
 .header__nav-link {
@@ -72,9 +73,9 @@
 .header__actions {
   display: flex;
   align-items: center;
+  justify-self: end;
   gap: 0.8rem;
   flex-shrink: 0;
-  margin-left: auto;
 }
 
 .header__hamburger {
@@ -102,7 +103,7 @@
   }
 
   .header__actions {
-    margin-left: 0;
+    justify-self: end;
   }
 
   .header__hamburger {

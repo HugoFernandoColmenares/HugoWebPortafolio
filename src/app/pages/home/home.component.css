@@ -106,7 +106,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-top: 0.8rem;
+  padding-top: 0.8rem;
 }
 
 .hero__avatar-wrapper {
@@ -116,7 +116,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+  justify-self: center;
   contain: layout;
 }
 
@@ -137,13 +137,6 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: border-color var(--transition-base);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .hero__avatar-inner:hover {
-    border-color: var(--color-accent);
-  }
 }
 
 .hero__avatar-img {
@@ -201,8 +194,8 @@
 .hero__chip--sql { --chip-color: var(--color-chip-sql); }
 
 @media (hover: hover) and (pointer: fine) {
-  .hero__avatar-wrapper:hover .hero__orbit,
-  .hero__avatar-wrapper:hover .hero__chip-slot {
+  .hero__avatar:hover ~ .hero__orbit,
+  .hero__avatar:hover ~ .hero__orbit .hero__chip-slot {
     animation-play-state: paused;
   }
 }

@@ -200,11 +200,14 @@ ul, ol { list-style: none; }
 .container {
   width: 100%;
   max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 max(1.6rem, env(safe-area-inset-left)) 0 max(1.6rem, env(safe-area-inset-right));
+  padding-left: max(1.6rem, env(safe-area-inset-left));
+  padding-right: max(1.6rem, env(safe-area-inset-right));
 }
 
 .section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: var(--space-lg) 0;
 }
 
@@ -264,6 +267,8 @@ ul, ol { list-style: none; }
   .about__actions .btn-outline,
   .about__studio-actions .btn-primary,
   .about__studio-actions .btn-outline,
+  .contact__actions .btn-primary,
+  .contact__actions .btn-outline,
   .not-found__actions .btn-primary,
   .not-found__actions .btn-outline,
   .public-form .btn-primary,
@@ -503,7 +508,7 @@ ul, ol { list-style: none; }
 }
 
 /* ==========================================================================
-   Public forms (about contact, auth)
+   Public forms (contact, auth)
    ========================================================================== */
 
 .public-form {
@@ -1079,7 +1084,7 @@ ul, ol { list-style: none; }
   display: flex;
   flex-wrap: wrap;
   gap: 1.2rem;
-  margin-top: auto;
+  padding-top: var(--space-sm);
 }
 
 .card__link {
@@ -1180,6 +1185,8 @@ ul, ol { list-style: none; }
 .card__techs {
   display: flex;
   flex-wrap: wrap;
+  flex: 1;
+  align-content: flex-start;
   gap: 0.6rem;
   padding-top: 0.8rem;
   border-top: 1px solid var(--color-divider);
@@ -1212,47 +1219,80 @@ ul, ol { list-style: none; }
   gap: var(--space-sm);
 }
 
-.project-carousel__btn {
+.project-carousel__hit {
+  display: flex;
+  align-items: center;
   align-self: center;
+  overflow: hidden;
+  min-width: 4.4rem;
+  min-height: 4.4rem;
+  padding: 0.4rem;
+}
+
+.project-carousel__btn {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   background: var(--color-surface);
   flex-shrink: 0;
+  opacity: 0;
+  transform: translate3d(0, 1.4rem, 0);
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.project-carousel__hit:hover .project-carousel__btn,
+.project-carousel__btn:focus-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.project-carousel__btn::before {
+  content: '';
+  position: absolute;
+  inset: -60%;
+  z-index: -2;
+  background: conic-gradient(
+    from 0deg,
+    var(--color-accent),
+    var(--color-accent-2),
+    var(--color-accent-dark),
+    var(--color-accent)
+  );
+  opacity: 0;
+}
+
+.project-carousel__btn::after {
+  content: '';
+  position: absolute;
+  inset: 0.2rem;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--color-surface);
+}
+
+.project-carousel__hit:hover .project-carousel__btn::before,
+.project-carousel__btn:focus-visible::before {
+  opacity: 1;
+  animation: carousel-border-spin 2.4s linear infinite;
+}
+
+.project-carousel__window {
+  min-width: 0;
+  overflow: hidden;
+  padding: 0.4rem 0 1.6rem;
 }
 
 .project-carousel__track {
   display: flex;
   align-items: stretch;
   gap: var(--space-md);
-  min-width: 0;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding: 0.4rem 0.2rem 1.6rem;
-  touch-action: pan-x;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: auto;
-  scrollbar-color: var(--color-accent) var(--color-surface-2);
-}
-
-.project-carousel__track::-webkit-scrollbar {
-  height: 1.2rem;
-}
-
-.project-carousel__track::-webkit-scrollbar-track {
-  background: var(--color-surface-2);
-  border-radius: var(--radius-full);
-}
-
-.project-carousel__track::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--color-accent) 70%, var(--color-border));
-  border-radius: var(--radius-full);
-  border: 0.2rem solid var(--color-surface-2);
+  width: max-content;
+  will-change: transform;
 }
 
 .project-carousel__slide {
   display: flex;
   flex: 0 0 min(100%, 34rem);
-  scroll-snap-align: start;
   min-height: 100%;
 }
 
@@ -1260,6 +1300,37 @@ ul, ol { list-style: none; }
   .project-carousel__slide {
     flex-basis: 36rem;
   }
+}
+
+@media (hover: none) {
+  .project-carousel__btn {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-carousel__btn {
+    opacity: 1;
+    transform: none;
+  }
+
+  .project-carousel__btn::before {
+    animation: none;
+    opacity: 0;
+  }
+
+  .project-carousel__window {
+    overflow-x: auto;
+  }
+
+  .project-carousel__track {
+    will-change: auto;
+  }
+}
+
+@keyframes carousel-border-spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ==========================================================================

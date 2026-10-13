@@ -159,6 +159,7 @@
 
   .admin-layout__nav {
     flex-direction: column;
+    flex: 1;
     overflow: visible;
   }
 
@@ -170,7 +171,6 @@
   .admin-layout__footer {
     flex-direction: column;
     align-items: flex-start;
-    margin-top: auto;
   }
 
   .admin-layout__sign-out {

@@ -41,14 +41,14 @@
 .auth-layout__panel--form {
   max-width: 52rem;
   width: 100%;
-  margin: 0 auto;
+  justify-self: center;
 }
 
 .auth-layout__logo {
   display: inline-flex;
   align-items: center;
   gap: 0.2rem;
-  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
   font-size: 2rem;
   font-weight: 700;
   color: var(--color-text-heading);
@@ -57,7 +57,7 @@
 
 .auth-layout__headline {
   font-size: clamp(2.8rem, 4vw, 4rem);
-  margin-bottom: 1.2rem;
+  padding-bottom: 1.2rem;
 }
 
 .auth-layout__copy {

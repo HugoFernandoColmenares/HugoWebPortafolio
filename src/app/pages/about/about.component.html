@@ -29,6 +29,9 @@
           <a routerLink="/projects" class="btn-outline">
             {{ ts.t()['hero_cta_projects'] }}
           </a>
+          <a routerLink="/contact" class="btn-outline">
+            {{ ts.t()['about_contact_cta'] }}
+          </a>
         </div>
         @if (socialLinks().length > 0) {
           <app-social-links [links]="socialLinks()" context="about" />
@@ -69,71 +72,6 @@
           </div>
         }
       </div>
-    </div>
-
-    <!-- Contact Form -->
-    <div class="about__contact panel">
-      <h2 class="about__section-title">{{ ts.t()['about_contact_heading'] }}</h2>
-
-      <form class="public-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-          <div class="public-form__row">
-            <div class="form-field">
-              <label class="form-field__label" for="name">{{ ts.t()['about_contact_name'] }}</label>
-              <input
-                id="name"
-                class="form-input form-input--surface-2"
-                [class.form-input--error]="f['name'].invalid && f['name'].touched"
-                type="text"
-                formControlName="name"
-                [placeholder]="ts.t()['about_contact_name']"
-              />
-              @if (f['name'].invalid && f['name'].touched) {
-                <span class="form-field__error">{{ ts.t()['about_contact_name_error'] }}</span>
-              }
-            </div>
-
-            <div class="form-field">
-              <label class="form-field__label" for="email">{{ ts.t()['about_contact_email'] }}</label>
-              <input
-                id="email"
-                class="form-input form-input--surface-2"
-                [class.form-input--error]="f['email'].invalid && f['email'].touched"
-                type="email"
-                formControlName="email"
-                [placeholder]="ts.t()['about_contact_email']"
-              />
-              @if (f['email'].invalid && f['email'].touched) {
-                <span class="form-field__error">{{ ts.t()['about_contact_email_error'] }}</span>
-              }
-            </div>
-          </div>
-
-          <div class="form-field">
-            <label class="form-field__label" for="message">{{ ts.t()['about_contact_message'] }}</label>
-            <textarea
-              id="message"
-              class="form-input form-input--surface-2 form-input--textarea"
-              [class.form-input--error]="f['message'].invalid && f['message'].touched"
-              formControlName="message"
-              [placeholder]="ts.t()['about_contact_message']"
-              rows="5"
-            ></textarea>
-            @if (f['message'].invalid && f['message'].touched) {
-              <span class="form-field__error">{{ ts.t()['about_contact_message_error'] }}</span>
-            }
-          </div>
-
-          <button type="submit" class="btn-primary" [disabled]="sending">
-            @if (sending) {
-              <span class="spinner spinner--on-accent"></span> {{ ts.t()['about_contact_sending'] }}
-            } @else {
-              {{ ts.t()['about_contact_submit'] }}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-              </svg>
-            }
-          </button>
-      </form>
     </div>
 
   </div>

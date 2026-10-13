@@ -1,6 +1,5 @@
 .about {
-  max-width: 90rem;
-  margin-inline: auto;
+  width: min(100%, 90rem);
 }
 
 .about .container {
@@ -13,8 +12,7 @@
   font-size: clamp(2rem, 4vw, 2.4rem);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-heading);
-  padding-bottom: 1.2rem;
-  margin-bottom: var(--space-sm);
+  padding-bottom: calc(1.2rem + var(--space-sm));
   border-bottom: 0.2rem solid var(--color-border);
 }
 
@@ -73,7 +71,7 @@
   font-size: 1.6rem;
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-heading);
-  margin-bottom: 0.8rem;
+  padding-bottom: 0.8rem;
 }
 
 .about__tech-list {
@@ -87,10 +85,6 @@
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-}
-
-.about__contact.panel {
-  padding: var(--space-md);
 }
 
 .about__studio.panel {
@@ -156,7 +150,6 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .about__contact.panel,
   .about__studio.panel {
     padding: var(--space-lg);
   }
