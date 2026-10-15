@@ -28,6 +28,21 @@ export class PortfolioProjectService {
     return (data as PortfolioProjectRow[]).map(mapPortfolioProject);
   }
 
+  async getById(id: string): Promise<PortfolioProject | null> {
+    const { data, error } = await this.supabase.client
+      .from('portfolio_projects')
+      .select('*')
+      .eq('id', id)
+      .is('deleted_at', null)
+      .maybeSingle();
+
+    if (error) {
+      throw error;
+    }
+
+    return data ? mapPortfolioProject(data as PortfolioProjectRow) : null;
+  }
+
   async create(input: PortfolioProjectInput): Promise<PortfolioProject> {
     const { data, error } = await this.supabase.client
       .from('portfolio_projects')

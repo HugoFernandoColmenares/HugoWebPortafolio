@@ -29,7 +29,7 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 
 ### Implemented
 
-- Public portfolio pages: Home, Projects, About with a cyan-to-magenta visual system aligned to the product mockups
+- Public portfolio pages: Home, Projects (carousel, table, and catalog views), project article detail, About, and Contact, with a cyan-to-magenta visual system aligned to the product mockups
 - Responsive, mobile-first layout with fixed header, mobile sidebar drawer, and footer
 - Film-grain static noise overlay applied exclusively to layout backgrounds, preserving image clarity
 - Internationalization (English and Spanish) with runtime language toggle
@@ -39,10 +39,11 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 - Centralized notifications via SweetAlert2 modals (`NotificationService`) styled with design tokens
 - Protected admin area with user profile loaded from Supabase
 - Public `/projects` page loaded from Supabase via `PortfolioProjectService`
-- Admin project creator: CRUD for portfolio projects (PrimeNG table and form, Supabase `portfolio_projects`)
+- Shared generic data table with parent-supplied filters, comboboxes, pagination, and row actions
+- Admin project creator: CRUD for portfolio projects (shared data table plus PrimeNG form, Supabase `portfolio_projects`)
 - Admin social media manager: CRUD for social media links displayed on public pages
 - Admin panel: user management interface
-- Seed migration for initial portfolio projects
+- Seed migrations for portfolio projects, including PurrPy
 - Database migrations for contact messages, users, roles, and portfolio projects
 - Lazy-loaded routes and standalone component architecture
 - Shared `.icon-btn` utility class consolidating all square icon-button patterns across the application
@@ -61,17 +62,17 @@ A standalone Angular 22 application with signal-based reactivity, hash-based rou
 ```text
 src/app/
   core/          Services, models, guards, mappers, config
-  pages/         Public views (home, projects, about, layout)
+  pages/         Public views (home, projects, article, about, contact, layout)
   auth/          Authentication UI (login, register, recovery, confirm)
   admin/         Authenticated management (profile, project creator, social media, admin panel)
-  shared/        Reusable UI components (header, footer, sidebar, cards, badges, social links)
+  shared/        Reusable UI components (header, footer, sidebar, cards, data table, badges, social links)
   app.routes.ts  Lazy-loaded routing
   app.config.ts  Global providers
 ```
 
 **Routing summary:**
 
-- `/`, `/projects`, `/about` -- public pages (no authentication required)
+- `/`, `/projects`, `/projects/:id`, `/about`, `/contact` -- public pages (no authentication required)
 - `/auth/*` -- authentication UI (open routes)
 - `/admin/*` -- management area (requires authentication)
 
@@ -102,7 +103,7 @@ Full rules: `architecture_guidelines.md` (local, gitignored).
 - All services and models live under `core/`; no service files elsewhere
 - Interfaces and types defined in `core/models`, never inside components
 - Feature folders: `pages` (public), `auth` (auth UI), `admin` (protected CRUD)
-- Admin `project-creator`: parent orchestrates state; `table` and `form` children use `@Input` / `@Output` only
+- Admin `project-creator`: parent orchestrates state; `table` and `form` children use `@Input` / `@Output` only; the table is a thin adapter over the shared data table
 - Before creating components, verify no similar component already exists
 - Target 200 to 250 lines per component; refactor into child or shared components when exceeded
 - SOLID, DRY, and KISS principles apply to all changes

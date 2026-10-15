@@ -7,7 +7,7 @@
   </div>
 
   <div class="container hero__content">
-    <div class="hero__text">
+    <div class="hero__intro">
       <p class="hero__greeting animate-fade-in-up">
         {{ ts.t()['hero_greeting'] }}
         <span class="text-accent">👋</span>
@@ -21,30 +21,6 @@
       <p class="hero__subtitle animate-fade-in-up">
         {{ ts.t()['hero_subtitle'] }}
       </p>
-
-      <div class="hero__actions animate-fade-in-up">
-        <a routerLink="/projects" class="btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-          </svg>
-          {{ ts.t()['hero_cta_projects'] }}
-        </a>
-        <a routerLink="/about" class="btn-outline">
-          {{ ts.t()['hero_cta_about'] }}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
-      </div>
-
-      <!-- Social Links -->
-      @if (socialLinks().length > 0) {
-        <app-social-links
-          class="animate-fade-in-up"
-          [links]="socialLinks()"
-          context="hero"
-        />
-      }
     </div>
 
     <!-- Hero Avatar & Orbital Tech Chips -->
@@ -76,5 +52,29 @@
       </div>
     </div>
 
+    <div class="hero__cta">
+      <div class="hero__actions animate-fade-in-up">
+        <a routerLink="/projects" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          {{ ts.t()['hero_cta_projects'] }}
+        </a>
+        <a routerLink="/about" class="btn-outline">
+          {{ ts.t()['hero_cta_about'] }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      @if (socialLinks().length > 0) {
+        <app-social-links
+          class="animate-fade-in-up"
+          [links]="socialLinks()"
+          context="hero"
+        />
+      }
+    </div>
   </div>
 </section>

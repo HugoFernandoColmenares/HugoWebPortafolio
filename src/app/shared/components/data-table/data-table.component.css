@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.data-table__icon-btn {
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+.data-table__icon-btn svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}

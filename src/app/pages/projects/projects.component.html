@@ -23,14 +23,72 @@
     } @else if (projects().length === 0) {
       <p class="projects-page__status text-muted">{{ ts.t().projects_empty }}</p>
     } @else {
-      <div class="projects-page__carousels">
-        @for (section of categorySections(); track section.category) {
-          <app-project-carousel
-            [title]="section.label"
-            [projects]="section.projects"
-          />
-        }
+      <div class="projects-page__views" role="tablist" [attr.aria-label]="ts.t().projects_views_label">
+        <button
+          type="button"
+          role="tab"
+          class="btn-outline"
+          [class.projects-page__view--active]="view() === 'carousel'"
+          [attr.aria-selected]="view() === 'carousel'"
+          (click)="setView('carousel')"
+        >
+          {{ ts.t().projects_view_carousel }}
+        </button>
+        <button
+          type="button"
+          role="tab"
+          class="btn-outline"
+          [class.projects-page__view--active]="view() === 'table'"
+          [attr.aria-selected]="view() === 'table'"
+          (click)="setView('table')"
+        >
+          {{ ts.t().projects_view_table }}
+        </button>
+        <button
+          type="button"
+          role="tab"
+          class="btn-outline"
+          [class.projects-page__view--active]="view() === 'grid'"
+          [attr.aria-selected]="view() === 'grid'"
+          (click)="setView('grid')"
+        >
+          {{ ts.t().projects_view_grid }}
+        </button>
       </div>
+
+      @if (view() === 'carousel') {
+        <div class="projects-page__carousels">
+          @for (section of categorySections(); track section.category) {
+            <app-project-carousel
+              [title]="section.label"
+              [projects]="section.projects"
+            />
+          }
+        </div>
+      } @else if (view() === 'table') {
+        <app-data-table
+          [rows]="projects()"
+          [columns]="columns()"
+          [filters]="filters()"
+          [actions]="actions()"
+          [title]="tableLabels().title"
+          [subtitle]="tableLabels().subtitle"
+          [emptyLabel]="tableLabels().empty"
+          [loadingLabel]="ts.t().data_table_loading"
+          [pageSizeLabel]="ts.t().data_table_rows"
+          [prevLabel]="ts.t().data_table_prev"
+          [nextLabel]="ts.t().data_table_next"
+          [pageLabel]="ts.t().data_table_page"
+          [actionsLabel]="tableLabels().columnActions"
+          (action)="onTableAction($event)"
+        />
+      } @else {
+        <div class="projects-page__grid">
+          @for (project of projects(); track project.id) {
+            <app-project-card [project]="project" />
+          }
+        </div>
+      }
     }
 
   </div>

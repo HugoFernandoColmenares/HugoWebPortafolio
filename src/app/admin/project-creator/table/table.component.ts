@@ -1,42 +1,22 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  signal,
-} from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Button } from 'primeng/button';
-import { IconField } from 'primeng/iconfield';
-import { InputIcon } from 'primeng/inputicon';
-import { InputText } from 'primeng/inputtext';
-import { MultiSelect } from 'primeng/multiselect';
-import { TableModule } from 'primeng/table';
-import { Tag } from 'primeng/tag';
-import { Tooltip } from 'primeng/tooltip';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import {
   CategoryOption,
   PortfolioProject,
-  PortfolioProjectStatus,
-  ProjectCategory,
   ProjectTableLabels,
 } from '../../../core/models/portfolio-project.model';
+import { DataTableActionEvent } from '../../../core/models/data-table.model';
+import { TranslationService } from '../../../core/services/translation.service';
+import {
+  buildPortfolioTableColumns,
+  buildPortfolioTableFilters,
+  portfolioTableCopyFromLabels,
+} from '../../../core/utils/portfolio-table.util';
+import { DataTableComponent } from '../../../shared/components/data-table/data-table.component';
 
 @Component({
   selector: 'app-project-table',
   standalone: true,
-  imports: [
-    FormsModule,
-    TableModule,
-    Button,
-    Tag,
-    Tooltip,
-    InputText,
-    IconField,
-    InputIcon,
-    MultiSelect,
-  ],
+  imports: [DataTableComponent],
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,106 +33,37 @@ export class ProjectTableComponent {
   readonly editProject = output<PortfolioProject>();
   readonly deleteProject = output<PortfolioProject>();
 
-  readonly searchTerm = signal('');
-  readonly selectedCategories = signal<ProjectCategory[]>([]);
-  readonly selectedStatuses = signal<PortfolioProjectStatus[]>([]);
-  readonly selectedFeatured = signal<boolean[]>([]);
-  readonly rowsPerPage = 10;
+  readonly ts = inject(TranslationService);
 
-  readonly statusFilterOptions = computed(() => {
+  readonly columns = computed(() =>
+    buildPortfolioTableColumns(portfolioTableCopyFromLabels(this.labels()), this.categoryOptions(), true),
+  );
+
+  readonly filters = computed(() =>
+    buildPortfolioTableFilters(portfolioTableCopyFromLabels(this.labels()), this.categoryOptions(), true),
+  );
+
+  readonly rowActions = computed(() => {
     const labels = this.labels();
+    const manage = this.canManage();
     return [
-      { label: labels.statusCompleted, value: 'completed' as const },
-      { label: labels.statusInProgress, value: 'in-progress' as const },
-      { label: labels.statusPlanned, value: 'planned' as const },
+      { id: 'view', label: labels.view, icon: 'view' as const },
+      { id: 'edit', label: labels.edit, icon: 'edit' as const, visible: () => manage },
+      { id: 'delete', label: labels.delete, icon: 'delete' as const, visible: () => manage },
     ];
   });
 
-  readonly featuredFilterOptions = computed(() => {
-    const labels = this.labels();
-    return [
-      { label: labels.featuredYes, value: true },
-      { label: labels.featuredNo, value: false },
-    ];
-  });
-
-  readonly filteredProjects = computed(() => {
-    const query = this.searchTerm().trim().toLowerCase();
-    const categories = this.selectedCategories();
-    const statuses = this.selectedStatuses();
-    const featured = this.selectedFeatured();
-    let items = this.projects();
-
-    if (query) {
-      items = items.filter(project => {
-        const haystack = [
-          project.title,
-          project.description,
-          project.technologies.join(' '),
-          this.categoryLabel(project.category),
-        ]
-          .join(' ')
-          .toLowerCase();
-
-        return haystack.includes(query);
-      });
+  onAction(event: DataTableActionEvent<PortfolioProject>): void {
+    switch (event.id) {
+      case 'view':
+        this.viewProject.emit(event.row);
+        break;
+      case 'edit':
+        this.editProject.emit(event.row);
+        break;
+      case 'delete':
+        this.deleteProject.emit(event.row);
+        break;
     }
-
-    if (categories.length > 0) {
-      items = items.filter(project => categories.includes(project.category));
-    }
-
-    if (statuses.length > 0) {
-      items = items.filter(project => statuses.includes(project.status));
-    }
-
-    if (featured.length > 0) {
-      items = items.filter(project => featured.includes(project.featured));
-    }
-
-    return items;
-  });
-
-  categoryLabel(category: ProjectCategory): string {
-    return (
-      this.categoryOptions().find(option => option.value === category)?.label ??
-      category
-    );
-  }
-
-  statusLabel(status: PortfolioProjectStatus): string {
-    const labels = this.labels();
-    switch (status) {
-      case 'completed':
-        return labels.statusCompleted;
-      case 'in-progress':
-        return labels.statusInProgress;
-      default:
-        return labels.statusPlanned;
-    }
-  }
-
-  statusSeverity(status: PortfolioProjectStatus): 'success' | 'warn' | 'info' {
-    switch (status) {
-      case 'completed':
-        return 'success';
-      case 'in-progress':
-        return 'warn';
-      default:
-        return 'info';
-    }
-  }
-
-  onSearchInput(event: Event): void {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchTerm.set(value);
-  }
-
-  visibleTechnologies(technologies: string[]): string[] {
-    return technologies.slice(0, 3);
-  }
-
-  extraTechnologyCount(technologies: string[]): number {
-    return Math.max(0, technologies.length - 3);
   }
 }

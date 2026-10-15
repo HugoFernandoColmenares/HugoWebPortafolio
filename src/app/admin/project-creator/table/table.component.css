@@ -1,1 +1,7 @@
-/* Table layout uses global .admin-table--projects in styles.css */
+:host {
+  display: block;
+}
+
+button[dataTableActions] {
+  min-height: 4.4rem;
+}

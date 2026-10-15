@@ -1,0 +1,68 @@
+<section class="article section section--narrow">
+  <div class="container">
+    <p class="article__back">
+      <a routerLink="/projects" class="btn-outline">{{ ts.t().article_back }}</a>
+    </p>
+
+    @if (loading()) {
+      <p class="article__status text-muted" role="status">{{ ts.t().article_loading }}</p>
+    } @else if (loadError() || !project()) {
+      <p class="article__status text-muted" role="alert">{{ ts.t().article_not_found }}</p>
+    } @else if (project(); as item) {
+      <article class="article__body panel">
+        @if (hasRemoteCover(item)) {
+          <img
+            class="article__cover"
+            [src]="item.imageUrl"
+            [alt]="item.title"
+            width="960"
+            height="540"
+            decoding="async"
+          />
+        }
+
+        <header class="article__header">
+          <div class="article__meta">
+            <span [class]="'card__status card__status--' + item.status">
+              {{ statusLabel(item) }}
+            </span>
+            <span class="article__category">{{ categoryLabel(item) }}</span>
+            <time [attr.datetime]="item.updatedAt">{{ publishedOn(item) }}</time>
+          </div>
+          <h1 class="gradient-text">{{ item.title }}</h1>
+        </header>
+
+        <p class="article__description">{{ item.description }}</p>
+
+        <div class="article__techs">
+          @for (tech of item.technologies; track tech) {
+            <app-tech-badge [tech]="tech" />
+          }
+        </div>
+
+        <div class="article__links">
+          @if (item.githubUrl) {
+            <a
+              [href]="item.githubUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="card__link card__link--github"
+            >
+              {{ ts.t().btn_github }}
+            </a>
+          }
+          @if (item.liveUrl) {
+            <a
+              [href]="item.liveUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="card__link card__link--live"
+            >
+              {{ ts.t().btn_live }}
+            </a>
+          }
+        </div>
+      </article>
+    }
+  </div>
+</section>

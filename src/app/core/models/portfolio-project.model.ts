@@ -10,6 +10,8 @@ export type ProjectCategory =
 
 export type ProjectCreatorViewMode = 'list' | 'create' | 'edit' | 'view';
 
+export type ProjectsPageView = 'carousel' | 'table' | 'grid';
+
 export interface CategoryOption {
   label: string;
   value: ProjectCategory;

@@ -53,6 +53,10 @@
   z-index: 1;
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-areas:
+    "intro"
+    "avatar"
+    "cta";
   align-items: center;
   justify-items: center;
   text-align: center;
@@ -60,13 +64,22 @@
   width: 100%;
 }
 
-.hero__text {
+.hero__intro,
+.hero__cta {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: clamp(0.8rem, 1.6vw, 1.6rem);
   width: 100%;
   min-width: 0;
+}
+
+.hero__intro {
+  grid-area: intro;
+}
+
+.hero__cta {
+  grid-area: cta;
 }
 
 .hero__greeting {
@@ -111,6 +124,7 @@
 
 .hero__avatar-wrapper {
   position: relative;
+  grid-area: avatar;
   width: clamp(18rem, 42vw, 42rem);
   height: clamp(18rem, 42vw, 42rem);
   display: flex;
@@ -213,10 +227,14 @@
 
   .hero__content {
     grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "intro avatar"
+      "cta avatar";
     text-align: left;
   }
 
-  .hero__text {
+  .hero__intro,
+  .hero__cta {
     align-items: flex-start;
   }
 
