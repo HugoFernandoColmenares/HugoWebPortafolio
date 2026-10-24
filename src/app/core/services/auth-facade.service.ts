@@ -137,10 +137,6 @@ export class AuthFacadeService {
     void this.router.navigate(['/auth/login']);
   }
 
-  goToRegister(): void {
-    void this.router.navigate(['/auth/register']);
-  }
-
   goToRecovery(): void {
     void this.router.navigate(['/auth/recovery-password']);
   }

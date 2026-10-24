@@ -46,9 +46,12 @@ export const routes: Routes = [
         path: 'login',
         loadComponent: () => import('./auth/login/login.component').then(m => m.LoginComponent),
       },
+      // Public self-registration was removed: accounts are created by an admin
+      // from #/admin/admin-panel. `confirm-register` stays for those invites.
       {
         path: 'register',
-        loadComponent: () => import('./auth/register/register.component').then(m => m.RegisterComponent),
+        redirectTo: 'login',
+        pathMatch: 'full',
       },
       {
         path: 'confirm-register',
