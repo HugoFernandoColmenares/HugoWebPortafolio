@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { distinctUntilChanged, map } from 'rxjs';
 import { PortfolioProject } from '../../core/models/portfolio-project.model';
 import { PROJECT_CATEGORY_TRANSLATION_KEYS } from '../../core/constants/project-categories';
 import { PortfolioProjectService } from '../../core/services/portfolio-project.service';
@@ -18,13 +20,23 @@ export class ArticleComponent implements OnInit {
   readonly ts = inject(TranslationService);
   private readonly route = inject(ActivatedRoute);
   private readonly projectService = inject(PortfolioProjectService);
+  private readonly destroyRef = inject(DestroyRef);
+  private requestId = 0;
 
   readonly project = signal<PortfolioProject | null>(null);
   readonly loading = signal(true);
   readonly loadError = signal(false);
 
   ngOnInit(): void {
-    void this.loadProject();
+    // The router reuses this component when only :id changes (back/forward,
+    // editing the hash, prev/next links), so the param must be read reactively.
+    this.route.paramMap
+      .pipe(
+        map(params => params.get('id')),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe(id => void this.loadProject(id));
   }
 
   categoryLabel(project: PortfolioProject): string {
@@ -49,8 +61,8 @@ export class ArticleComponent implements OnInit {
     return /^https:\/\//i.test(project.imageUrl);
   }
 
-  private async loadProject(): Promise<void> {
-    const id = this.route.snapshot.paramMap.get('id');
+  private async loadProject(id: string | null): Promise<void> {
+    const request = ++this.requestId;
 
     if (!id) {
       this.loadError.set(true);
@@ -58,15 +70,26 @@ export class ArticleComponent implements OnInit {
       return;
     }
 
+    this.loading.set(true);
+    this.loadError.set(false);
+
     try {
-      this.loading.set(true);
-      this.project.set(await this.projectService.getById(id));
-      this.loadError.set(this.project() === null);
+      const project = await this.projectService.getById(id);
+      if (request !== this.requestId) {
+        return;
+      }
+      this.project.set(project);
+      this.loadError.set(project === null);
     } catch {
+      if (request !== this.requestId) {
+        return;
+      }
       this.loadError.set(true);
       this.project.set(null);
     } finally {
-      this.loading.set(false);
+      if (request === this.requestId) {
+        this.loading.set(false);
+      }
     }
   }
 }
