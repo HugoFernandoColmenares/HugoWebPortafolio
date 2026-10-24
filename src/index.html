@@ -2,17 +2,73 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="utf-8">
-  <title>Hugo Colmenares — Full-Stack Software Engineer</title>
-  <meta name="description" content="Portfolio of Hugo Fernando Colmenares, Full-Stack Software Engineer specializing in Angular, .NET Core, and modern web technologies.">
+  <title>Hugo Colmenares · Full-stack developer (Angular & .NET)</title>
+  <meta name="description" content="Hugo Colmenares, full-stack developer in Colombia. Angular front-ends and .NET / SQL Server back-ends for business web apps, admin panels and APIs. Available for freelance work.">
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <!-- Google Fonts — Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0c0d0f">
+  <meta name="author" content="Hugo Fernando Colmenares">
+  <link rel="canonical" href="https://freelance-portafolio-beta.vercel.app/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Hugo Colmenares">
+  <meta property="og:url" content="https://freelance-portafolio-beta.vercel.app/">
+  <meta property="og:title" content="Hugo Colmenares · Full-stack developer (Angular & .NET)">
+  <meta property="og:description" content="Angular front-ends and .NET / SQL Server back-ends for business web apps, admin panels and APIs. Based in Colombia, available for freelance work.">
+  <meta property="og:image" content="https://freelance-portafolio-beta.vercel.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Hugo Colmenares — full-stack developer, Angular and .NET">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="es_CO">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hugo Colmenares · Full-stack developer (Angular & .NET)">
+  <meta name="twitter:description" content="Angular front-ends and .NET / SQL Server back-ends for business web apps, admin panels and APIs. Based in Colombia, available for freelance work.">
+  <meta name="twitter:image" content="https://freelance-portafolio-beta.vercel.app/og-image.png">
+  <meta name="twitter:image:alt" content="Hugo Colmenares — full-stack developer, Angular and .NET">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preload" href="fonts/schibsted-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Hugo Fernando Colmenares",
+    "alternateName": "Hugo Colmenares",
+    "jobTitle": "Full-stack developer",
+    "url": "https://freelance-portafolio-beta.vercel.app/",
+    "image": "https://freelance-portafolio-beta.vercel.app/img/hugo-640.webp",
+    "address": { "@type": "PostalAddress", "addressCountry": "CO" },
+    "knowsAbout": ["Angular", "TypeScript", ".NET", "C#", "SQL Server", "Supabase"],
+    "sameAs": [
+      "https://github.com/HugoFernandoColmenares",
+      "https://www.linkedin.com/in/hugofcolmenaresc/",
+      "https://www.deviantart.com/feithnoir"
+    ]
+  }
+  </script>
+  <script>
+    // Apply saved theme/language before Angular boots to avoid a flash.
+    (function () {
+      try {
+        var d = document.documentElement;
+        var t = localStorage.getItem('portfolio_theme');
+        if (t === 'light') { d.setAttribute('data-theme', 'light'); d.style.colorScheme = 'light'; }
+        var l = localStorage.getItem('portfolio_lang') || ((navigator.language || '').toLowerCase().indexOf('es') === 0 ? 'es' : 'en');
+        d.lang = l === 'es' ? 'es' : 'en';
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
+  <noscript>
+    <p style="padding:2rem;font-family:sans-serif">Hugo Colmenares — full-stack developer (Angular &amp; .NET). This site needs JavaScript. Email: <a href="mailto:hugofcolmenaresc@gmail.com">hugofcolmenaresc@gmail.com</a></p>
+  </noscript>
   <app-root></app-root>
 </body>
 </html>
