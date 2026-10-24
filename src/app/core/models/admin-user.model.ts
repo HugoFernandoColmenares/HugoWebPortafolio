@@ -1,5 +1,4 @@
 import { RoleName } from './role.model';
-import { UserProfile } from './user.model';
 
 export type AdminPanelViewMode = 'list' | 'create' | 'edit' | 'view';
 

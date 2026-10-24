@@ -32,5 +32,6 @@ declare const _NGX_ENV_: Env;
 
 // 3. Use process.env.YOUR_ENV_VAR in your code. (deprecated)
 declare namespace NodeJS {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   export interface ProcessEnv extends Env {}
 }
