@@ -1,68 +1,166 @@
-<section class="article section section--narrow">
+<article class="article section">
   <div class="container">
-    <p class="article__back">
-      <a routerLink="/projects" class="btn-outline">{{ ts.t().article_back }}</a>
-    </p>
+    <nav class="crumbs mono" aria-label="Breadcrumb">
+      <a routerLink="/projects"><app-icon name="arrow-left" /> {{ ts.t().article_back }}</a>
+      @if (project(); as item) {
+        <span class="crumbs__path" aria-hidden="true">~/projects/{{ item.slug }}</span>
+      }
+    </nav>
 
-    @if (loading()) {
-      <p class="article__status text-muted" role="status">{{ ts.t().article_loading }}</p>
-    } @else if (loadError() || !project()) {
-      <p class="article__status text-muted" role="alert">{{ ts.t().article_not_found }}</p>
+    @if (loading() && !project()) {
+      <div role="status" class="article__status">
+        <p class="text-muted">{{ ts.t().article_loading }}</p>
+        <div class="skeleton skeleton--title" aria-hidden="true"></div>
+      </div>
+    } @else if (loadError()) {
+      <div class="article__status" role="alert">
+        <h1>{{ ts.t().article_not_found }}</h1>
+        <p class="lead">{{ ts.t().article_not_found_hint }}</p>
+        <p><a class="btn-primary" routerLink="/projects">{{ ts.t().article_back }}</a></p>
+      </div>
     } @else if (project(); as item) {
-      <article class="article__body panel">
-        @if (hasRemoteCover(item)) {
-          <img
-            class="article__cover"
-            [src]="item.imageUrl"
-            [alt]="item.title"
-            width="960"
-            height="540"
-            decoding="async"
-          />
-        }
-
-        <header class="article__header">
-          <div class="article__meta">
-            <span [class]="'card__status card__status--' + item.status">
-              {{ statusLabel(item) }}
-            </span>
-            <span class="article__category">{{ categoryLabel(item) }}</span>
-            <time [attr.datetime]="item.updatedAt">{{ publishedOn(item) }}</time>
-          </div>
-          <h1 class="gradient-text">{{ item.title }}</h1>
-        </header>
-
-        <p class="article__description">{{ item.description }}</p>
-
-        <div class="article__techs">
-          @for (tech of item.technologies; track tech) {
-            <app-tech-badge [tech]="tech" />
+      <header class="article__head">
+        <div class="article__meta mono">
+          <span class="article__status-tag" [class]="'status--' + item.status">
+            <span class="status-dot" aria-hidden="true"></span><span class="article__status-text">{{ statusLabel(item) }}</span>
+          </span>
+          <span>{{ categoryLabel(item) }}</span>
+          @if (item.contentWarning) {
+            <span class="tag tag--warn">{{ ts.t().content_warning }}</span>
           }
         </div>
+        <h1>{{ item.title }}</h1>
+        <p class="lead">{{ item.summary }}</p>
 
-        <div class="article__links">
+        <div class="article__actions">
+          @if (item.liveUrl && !item.contentWarning) {
+            <a class="btn-primary" [href]="item.liveUrl" target="_blank" rel="noopener noreferrer">{{ ts.t().btn_live }} <app-icon name="external" /></a>
+          }
           @if (item.githubUrl) {
-            <a
-              [href]="item.githubUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="card__link card__link--github"
-            >
-              {{ ts.t().btn_github }}
-            </a>
-          }
-          @if (item.liveUrl) {
-            <a
-              [href]="item.liveUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="card__link card__link--live"
-            >
-              {{ ts.t().btn_live }}
-            </a>
+            <a class="btn-outline" [href]="item.githubUrl" target="_blank" rel="noopener noreferrer"><app-icon name="github" /> {{ ts.t().btn_github }}</a>
           }
         </div>
-      </article>
+
+        @if (item.contentWarning) {
+          <div class="warning" role="note">
+            <app-icon name="warning" />
+            <div>
+              <p>{{ ts.t().content_warning_long }}</p>
+              @if (item.liveUrl) {
+                <a class="link" [href]="item.liveUrl" target="_blank" rel="noopener noreferrer">{{ ts.t().btn_live_mature }}</a>
+              }
+            </div>
+          </div>
+        }
+      </header>
+
+      <figure class="article__cover">
+        <app-project-cover [project]="item" [priority]="true" sizes="(max-width: 1200px) 100vw, 1200px" />
+      </figure>
+
+      <div class="article__layout">
+        <div class="article__content">
+          @if (item.caseStudy; as cs) {
+            <section>
+              <h2><span class="mono h-num" aria-hidden="true">01</span>{{ ts.t().article_context }}</h2>
+              <p>{{ cs.context[ts.currentLang()] }}</p>
+            </section>
+            <section>
+              <h2><span class="mono h-num" aria-hidden="true">02</span>{{ ts.t().article_built }}</h2>
+              <ul class="bullets">
+                @for (line of cs.built[ts.currentLang()]; track line) {
+                  <li>{{ line }}</li>
+                }
+              </ul>
+            </section>
+            <section>
+              <h2><span class="mono h-num" aria-hidden="true">03</span>{{ ts.t().article_decisions }}</h2>
+              <ul class="bullets">
+                @for (line of cs.decisions[ts.currentLang()]; track line) {
+                  <li>{{ line }}</li>
+                }
+              </ul>
+            </section>
+            <section>
+              <h2><span class="mono h-num" aria-hidden="true">04</span>{{ ts.t().article_status }}</h2>
+              <p>{{ cs.status[ts.currentLang()] }}</p>
+            </section>
+          } @else {
+            <section>
+              <h2>{{ ts.t().article_overview }}</h2>
+              <p>{{ item.description }}</p>
+            </section>
+          }
+
+          @if (item.gallery.length) {
+            <section>
+              <h2>{{ ts.t().article_gallery }}</h2>
+              <div class="gallery">
+                @for (shot of item.gallery; track shot.src) {
+                  <figure>
+                    <img [ngSrc]="shot.src" ngSrcset="480w, 800w, 1200w" sizes="(max-width: 900px) 100vw, 700px" width="1200" height="750" [alt]="shot.alt[ts.currentLang()]" />
+                    <figcaption class="mono">{{ shot.alt[ts.currentLang()] }}</figcaption>
+                  </figure>
+                }
+              </div>
+            </section>
+          }
+        </div>
+
+        <aside class="article__aside">
+          <dl class="facts mono">
+            <div>
+              <dt>{{ ts.t().article_stack }}</dt>
+              <dd>
+                <ul class="facts__stack">
+                  @for (tech of item.technologies; track tech) {
+                    <li class="tag">{{ tech }}</li>
+                  }
+                </ul>
+              </dd>
+            </div>
+            <div>
+              <dt>{{ ts.t().projects_col_status }}</dt>
+              <dd>{{ statusLabel(item) }}</dd>
+            </div>
+            @if (item.githubUrl || item.related.length) {
+              <div>
+                <dt>{{ ts.t().article_links }}</dt>
+                <dd>
+                  <ul class="facts__links">
+                    @if (item.githubUrl) {
+                      <li><a [href]="item.githubUrl" target="_blank" rel="noopener noreferrer">{{ item.githubUrl.replace('https://github.com/', '') }}</a></li>
+                    }
+                    @for (link of item.related; track link.url) {
+                      <li><a [href]="link.url" target="_blank" rel="noopener noreferrer">{{ link.label }}</a></li>
+                    }
+                  </ul>
+                </dd>
+              </div>
+            }
+          </dl>
+        </aside>
+      </div>
+
+      <div class="article__cta">
+        <p class="h3">{{ ts.t().article_cta }}</p>
+        <a routerLink="/contact" class="btn-primary">{{ ts.t().article_cta_button }} <app-icon name="arrow-right" /></a>
+      </div>
+
+      @if (neighbours().prev; as prev) {
+        <nav class="pager" [attr.aria-label]="ts.t().nav_projects">
+          <a class="pager__link" [routerLink]="['/projects', prev.slug]">
+            <span class="mono pager__dir"><app-icon name="arrow-left" /> {{ ts.t().article_prev }}</span>
+            <span class="pager__title">{{ prev.title }}</span>
+          </a>
+          @if (neighbours().next; as next) {
+            <a class="pager__link pager__link--next" [routerLink]="['/projects', next.slug]">
+              <span class="mono pager__dir">{{ ts.t().article_next }} <app-icon name="arrow-right" /></span>
+              <span class="pager__title">{{ next.title }}</span>
+            </a>
+          }
+        </nav>
+      }
     }
   </div>
-</section>
+</article>

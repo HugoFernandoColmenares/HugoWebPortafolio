@@ -1,21 +1,14 @@
-<section class="not-found section">
-  <div class="not-found__bg">
-    <div class="not-found__blob not-found__blob--1"></div>
-    <div class="not-found__blob not-found__blob--2"></div>
-  </div>
-
-  <div class="container not-found__content">
-    <p class="not-found__code gradient-text">404</p>
-    <h1 class="not-found__title">{{ ts.t()['not_found_title'] }}</h1>
-    <p class="not-found__subtitle">{{ ts.t()['not_found_subtitle'] }}</p>
-
+<section class="nf section grid-bg">
+  <div class="container nf__inner">
+    <pre class="nf__ascii mono" aria-hidden="true">$ cd {{ path }}
+bash: cd: {{ path }}: No such file or directory
+$ _</pre>
+    <p class="eyebrow"><span class="eyebrow__mark">//</span> 404</p>
+    <h1>{{ ts.t().not_found_title }}</h1>
+    <p class="lead">{{ ts.t().not_found_subtitle }}</p>
     <div class="not-found__actions">
-      <a routerLink="/" class="btn-primary">
-        {{ ts.t()['not_found_home'] }}
-      </a>
-      <a routerLink="/projects" class="btn-outline">
-        {{ ts.t()['not_found_projects'] }}
-      </a>
+      <a routerLink="/home" class="btn-primary">{{ ts.t().not_found_home }}</a>
+      <a routerLink="/projects" class="btn-outline">{{ ts.t().not_found_projects }}</a>
     </div>
   </div>
 </section>

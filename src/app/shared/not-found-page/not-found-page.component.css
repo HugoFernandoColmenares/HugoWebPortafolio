@@ -1,86 +1,21 @@
-.not-found {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100dvh - var(--header-height) - 12rem);
-  overflow: hidden;
-}
+:host { display: flex; flex: 1; }
 
-.not-found__bg {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
+.nf { flex: 1; display: flex; align-items: center; padding: clamp(5.6rem, 10vw, 12rem) 0; border-bottom: 1px solid var(--color-border); }
 
-.not-found__blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.35;
-}
+.nf__inner { display: flex; flex-direction: column; gap: 1.6rem; }
 
-.not-found__blob--1 {
-  top: 10%;
-  left: -8%;
-  width: 36rem;
-  height: 36rem;
-  background: var(--color-accent-glow);
-}
-
-.not-found__blob--2 {
-  right: -10%;
-  bottom: 8%;
-  width: 42rem;
-  height: 42rem;
-  background: color-mix(in srgb, var(--color-accent-2) 28%, transparent);
-}
-
-.not-found__content {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: var(--space-sm);
-  padding: var(--space-md) 0;
-}
-
-.not-found__code {
-  font-size: clamp(6.4rem, 18vw, 14rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: -0.04em;
-}
-
-.not-found__title {
-  font-size: clamp(2.2rem, 5vw, 4rem);
-  max-width: 60rem;
-}
-
-.not-found__subtitle {
-  max-width: 52rem;
-  color: var(--color-text-muted);
-  font-size: 1.6rem;
+.nf__ascii {
+  font-size: 1.3rem;
   line-height: 1.7;
+  color: var(--color-text-muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 1.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  max-width: 60rem;
+  margin-bottom: 1.6rem;
 }
 
-.not-found__actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.2rem;
-  width: 100%;
-  padding-top: var(--space-sm);
-}
-
-@media (max-width: 640px) {
-  .not-found__blob {
-    display: none;
-  }
-
-  .not-found__actions {
-    flex-direction: column;
-  }
-}
+.not-found__actions { display: flex; flex-wrap: wrap; gap: 1.2rem; padding-top: 0.8rem; }

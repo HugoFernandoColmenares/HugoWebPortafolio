@@ -1,95 +1,47 @@
-<section class="projects-page section">
+<section class="section">
   <div class="container">
+    <header class="page-head">
+      <p class="eyebrow"><span class="prompt">$</span> {{ ts.t().projects_eyebrow }}</p>
+      <h1>{{ ts.t().projects_heading }}</h1>
+      <p class="lead">{{ ts.t().projects_lead }}</p>
+    </header>
 
-    <div class="projects-page__heading">
-      <h1 class="gradient-text">{{ ts.t()['projects_heading'] }}</h1>
-      <p class="text-muted">{{ ts.t()['projects_subheading'] }}</p>
-    </div>
+    @if (catalog.loading() && catalog.projects().length === 0) {
+      <div role="status" aria-live="polite">
+        <p class="sr-only">{{ ts.t().projects_loading }}</p>
+        <div class="skeletons" aria-hidden="true">
+          <div class="skeleton skeleton--card"></div>
+          <div class="skeleton skeleton--card"></div>
+        </div>
+      </div>
+    } @else if (catalog.error()) {
+      <p class="text-muted" role="alert">{{ ts.t().projects_load_error }}</p>
+    } @else if (catalog.projects().length === 0) {
+      <p class="text-muted">{{ ts.t().projects_empty }}</p>
+    } @else {
+      <section aria-labelledby="case-studies-heading" class="block">
+        <div class="section-head">
+          <p class="eyebrow"><span class="eyebrow__mark">//</span> {{ ts.t().projects_featured_eyebrow }}</p>
+          <h2 id="case-studies-heading">{{ ts.t().featured_heading }}</h2>
+        </div>
+        <ul class="cases">
+          @for (project of catalog.featured(); track project.id; let i = $index) {
+            <li [class.cases__wide]="i === 0">
+              <app-project-case-card [project]="project" [position]="i" [wide]="i === 0" [priority]="i === 0" />
+            </li>
+          }
+        </ul>
+      </section>
 
-    @if (loading()) {
-      <div class="projects-page__status" role="status" aria-live="polite">
-        <p class="text-muted">{{ ts.t().projects_loading }}</p>
-        <div class="projects-page__skeletons" aria-hidden="true">
-          <div class="skeleton skeleton--title"></div>
-          <div class="projects-page__skeleton-row">
-            <div class="skeleton skeleton--card"></div>
-            <div class="skeleton skeleton--card"></div>
-            <div class="skeleton skeleton--card"></div>
+      <section aria-labelledby="index-heading" class="block">
+        <div class="section-head section-head--row">
+          <div>
+            <p class="eyebrow"><span class="eyebrow__mark">//</span> {{ count() }}</p>
+            <h2 id="index-heading">{{ ts.t().projects_index_heading }}</h2>
           </div>
         </div>
-      </div>
-    } @else if (loadError()) {
-      <p class="projects-page__status text-muted" role="alert">{{ ts.t().projects_load_error }}</p>
-    } @else if (projects().length === 0) {
-      <p class="projects-page__status text-muted">{{ ts.t().projects_empty }}</p>
-    } @else {
-      <div class="projects-page__views" role="tablist" [attr.aria-label]="ts.t().projects_views_label">
-        <button
-          type="button"
-          role="tab"
-          class="btn-outline"
-          [class.projects-page__view--active]="view() === 'carousel'"
-          [attr.aria-selected]="view() === 'carousel'"
-          (click)="setView('carousel')"
-        >
-          {{ ts.t().projects_view_carousel }}
-        </button>
-        <button
-          type="button"
-          role="tab"
-          class="btn-outline"
-          [class.projects-page__view--active]="view() === 'table'"
-          [attr.aria-selected]="view() === 'table'"
-          (click)="setView('table')"
-        >
-          {{ ts.t().projects_view_table }}
-        </button>
-        <button
-          type="button"
-          role="tab"
-          class="btn-outline"
-          [class.projects-page__view--active]="view() === 'grid'"
-          [attr.aria-selected]="view() === 'grid'"
-          (click)="setView('grid')"
-        >
-          {{ ts.t().projects_view_grid }}
-        </button>
-      </div>
-
-      @if (view() === 'carousel') {
-        <div class="projects-page__carousels">
-          @for (section of categorySections(); track section.category) {
-            <app-project-carousel
-              [title]="section.label"
-              [projects]="section.projects"
-            />
-          }
-        </div>
-      } @else if (view() === 'table') {
-        <app-data-table
-          [rows]="projects()"
-          [columns]="columns()"
-          [filters]="filters()"
-          [actions]="actions()"
-          [title]="tableLabels().title"
-          [subtitle]="tableLabels().subtitle"
-          [emptyLabel]="tableLabels().empty"
-          [loadingLabel]="ts.t().data_table_loading"
-          [pageSizeLabel]="ts.t().data_table_rows"
-          [prevLabel]="ts.t().data_table_prev"
-          [nextLabel]="ts.t().data_table_next"
-          [pageLabel]="ts.t().data_table_page"
-          [actionsLabel]="tableLabels().columnActions"
-          (action)="onTableAction($event)"
-        />
-      } @else {
-        <div class="projects-page__grid">
-          @for (project of projects(); track project.id) {
-            <app-project-card [project]="project" />
-          }
-        </div>
-      }
+        <app-project-index [projects]="catalog.projects()" [filter]="filter()" (filterChange)="setFilter($event)" />
+      </section>
     }
-
   </div>
 </section>

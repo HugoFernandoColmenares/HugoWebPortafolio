@@ -1,7 +1,7 @@
 <button type="button" class="skip-link" (click)="skipToContent()">{{ ts.t().skip_to_content }}</button>
-<app-header [sidebarOpen]="sidebarOpen()" (toggleSidebar)="sidebarOpen.set(!sidebarOpen())" />
-<app-sidebar [isOpen]="sidebarOpen()" (close)="sidebarOpen.set(false)" />
-<main id="main-content" class="main-content" tabindex="-1">
-    <router-outlet />
+<app-header #header [menuOpen]="menuOpen()" (toggleMenu)="setMenu(!menuOpen())" />
+<app-sidebar [isOpen]="menuOpen()" (dismiss)="setMenu(false)" />
+<main id="main-content" class="main-content" tabindex="-1" [attr.inert]="menuOpen() ? '' : null">
+  <router-outlet />
 </main>
-<app-footer />
+<app-footer [attr.inert]="menuOpen() ? '' : null" />

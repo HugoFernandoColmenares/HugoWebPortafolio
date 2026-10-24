@@ -1,73 +1,113 @@
-<section class="contact section section--narrow">
+<section class="section">
   <div class="container">
-    <div class="contact__heading text-center">
-      <h1 class="gradient-text">{{ ts.t().about_contact_heading }}</h1>
-      <p class="text-muted">{{ ts.t().contact_subheading }}</p>
-    </div>
+    <header class="page-head">
+      <p class="eyebrow"><span class="prompt">$</span> {{ ts.t().contact_eyebrow }}</p>
+      <h1>{{ ts.t().contact_heading }}</h1>
+      <p class="lead">{{ ts.t().contact_lead }}</p>
+    </header>
 
-    <div class="contact__panel panel">
-      <form class="public-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-        <div class="public-form__row">
-          <div class="form-field">
-            <label class="form-field__label" for="contact-name">{{ ts.t().about_contact_name }}</label>
-            <input
-              id="contact-name"
-              class="form-input form-input--surface-2"
-              [class.form-input--error]="f.name.invalid && f.name.touched"
-              type="text"
-              formControlName="name"
-              [placeholder]="ts.t().about_contact_name"
-            />
-            @if (f.name.invalid && f.name.touched) {
-              <span class="form-field__error">{{ ts.t().about_contact_name_error }}</span>
-            }
-          </div>
+    <div class="contact__grid">
+      <aside class="direct" aria-labelledby="direct-heading">
+        <h2 id="direct-heading" class="contact__h2"><span class="eyebrow__mark mono">//</span> {{ ts.t().contact_direct }}</h2>
 
-          <div class="form-field">
-            <label class="form-field__label" for="contact-email">{{ ts.t().about_contact_email }}</label>
-            <input
-              id="contact-email"
-              class="form-input form-input--surface-2"
-              [class.form-input--error]="f.email.invalid && f.email.touched"
-              type="email"
-              formControlName="email"
-              [placeholder]="ts.t().about_contact_email"
-            />
-            @if (f.email.invalid && f.email.touched) {
-              <span class="form-field__error">{{ ts.t().about_contact_email_error }}</span>
-            }
-          </div>
-        </div>
-
-        <div class="form-field">
-          <label class="form-field__label" for="contact-message">{{ ts.t().about_contact_message }}</label>
-          <textarea
-            id="contact-message"
-            class="form-input form-input--surface-2 form-input--textarea"
-            [class.form-input--error]="f.message.invalid && f.message.touched"
-            formControlName="message"
-            [placeholder]="ts.t().about_contact_message"
-            rows="5"
-          ></textarea>
-          @if (f.message.invalid && f.message.touched) {
-            <span class="form-field__error">{{ ts.t().about_contact_message_error }}</span>
-          }
-        </div>
-
-        <div class="contact__actions">
-          <button type="submit" class="btn-primary" [disabled]="sending()">
-            @if (sending()) {
-              <span class="spinner spinner--on-accent"></span> {{ ts.t().about_contact_sending }}
-            } @else {
-              {{ ts.t().about_contact_submit }}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-                <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-              </svg>
-            }
+        <div class="direct__mail">
+          <p class="direct__label mono">{{ ts.t().email_label }}</p>
+          <a class="direct__address" [href]="'mailto:' + site.email">{{ site.email }}</a>
+          <button type="button" class="btn-outline direct__copy" (click)="copyEmail()">
+            <app-icon [name]="copied() ? 'check' : 'copy'" />
+            {{ copied() ? ts.t().copied_email : ts.t().copy_email }}
           </button>
-          <a routerLink="/about" class="btn-outline">{{ ts.t().contact_back_about }}</a>
+          <p class="sr-only" aria-live="polite">{{ copied() ? ts.t().copied_email : '' }}</p>
         </div>
-      </form>
+
+        <ul class="direct__links">
+          @for (link of links(); track link.url) {
+            <li><a [href]="link.url" target="_blank" rel="noopener noreferrer"><app-icon [name]="iconFor(link.platform)" /> {{ link.name }}</a></li>
+          }
+        </ul>
+
+        <dl class="direct__facts mono">
+          <div><dt>{{ ts.t().availability_key_status }}</dt><dd><span class="status-dot status--completed" aria-hidden="true"></span>&nbsp;{{ ts.t().availability_status }}</dd></div>
+          <div><dt>{{ ts.t().availability_key_timezone }}</dt><dd>{{ ts.t().availability_timezone }}</dd></div>
+          <div><dt>{{ ts.t().availability_key_languages }}</dt><dd>{{ ts.t().availability_languages }}</dd></div>
+        </dl>
+      </aside>
+
+      <div class="form-card">
+        <h2 class="contact__h2"><span class="eyebrow__mark mono">//</span> {{ ts.t().contact_form_heading }}</h2>
+        <form class="public-form" [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="public-form__row">
+            <div class="form-field">
+              <label class="form-field__label" for="contact-name">{{ ts.t().about_contact_name }}</label>
+              <input
+                id="contact-name"
+                name="name"
+                autocomplete="name"
+                class="form-input"
+                [class.form-input--error]="f.name.invalid && f.name.touched"
+                type="text"
+                formControlName="name"
+                [attr.aria-invalid]="f.name.invalid && f.name.touched"
+                [attr.aria-describedby]="f.name.invalid && f.name.touched ? 'contact-name-error' : null"
+              />
+              @if (f.name.invalid && f.name.touched) {
+                <span class="form-field__error" id="contact-name-error">{{ ts.t().about_contact_name_error }}</span>
+              }
+            </div>
+
+            <div class="form-field">
+              <label class="form-field__label" for="contact-email">{{ ts.t().about_contact_email }}</label>
+              <input
+                id="contact-email"
+                name="email"
+                autocomplete="email"
+                class="form-input"
+                [class.form-input--error]="f.email.invalid && f.email.touched"
+                type="email"
+                formControlName="email"
+                [attr.aria-invalid]="f.email.invalid && f.email.touched"
+                [attr.aria-describedby]="f.email.invalid && f.email.touched ? 'contact-email-error' : null"
+              />
+              @if (f.email.invalid && f.email.touched) {
+                <span class="form-field__error" id="contact-email-error">{{ ts.t().about_contact_email_error }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="contact-message">{{ ts.t().about_contact_message }}</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              class="form-input form-input--textarea"
+              [class.form-input--error]="f.message.invalid && f.message.touched"
+              formControlName="message"
+              rows="6"
+              aria-describedby="contact-message-hint"
+              [attr.aria-invalid]="f.message.invalid && f.message.touched"
+            ></textarea>
+            <span class="form-field__hint" id="contact-message-hint">{{ ts.t().about_contact_message_hint }}</span>
+            @if (f.message.invalid && f.message.touched) {
+              <span class="form-field__error">{{ ts.t().about_contact_message_error }}</span>
+            }
+          </div>
+
+          <div class="hp" aria-hidden="true">
+            <label for="contact-website">{{ ts.t().contact_honeypot }}</label>
+            <input id="contact-website" name="website" type="text" tabindex="-1" autocomplete="off" formControlName="website" />
+          </div>
+
+          <div class="contact__actions">
+            <button type="submit" class="btn-primary" [disabled]="sending()">
+              @if (sending()) {
+                <span class="spinner spinner--on-accent" aria-hidden="true"></span> {{ ts.t().about_contact_sending }}
+              } @else {
+                {{ ts.t().about_contact_submit }} <app-icon name="arrow-right" />
+              }
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </section>

@@ -1,78 +1,77 @@
-<section class="about section section--narrow">
+<section class="section">
   <div class="container">
-
-    <div class="about__heading text-center">
-      <h1 class="gradient-text">{{ ts.t()['about_heading'] }}</h1>
-    </div>
-
-    <div class="about__bio-row panel">
-      <div class="about__avatar">
-        <div class="about__avatar-inner">
-          <img
-            src="profile picture.jpeg"
-            alt="Hugo Colmenares"
-            class="about__avatar-img"
-            width="140"
-            height="140"
-            decoding="async"
-          />
-        </div>
+    <header class="page-head about__head">
+      <div class="about__intro">
+        <p class="eyebrow"><span class="prompt">$</span> {{ ts.t().about_eyebrow }}</p>
+        <h1>{{ ts.t().about_heading }}</h1>
+        <p class="lead">{{ ts.t().about_lead }}</p>
       </div>
-      <div class="about__bio">
-        <p>{{ ts.t()['about_bio'] }}</p>
+      <figure class="about__photo">
+        <img ngSrc="/img/hugo" ngSrcset="320w, 640w" sizes="(max-width: 760px) 50vw, 280px" width="640" height="640" priority [alt]="ts.t().hero_photo_alt" />
+        <figcaption class="mono">fig.01 — hugo.webp</figcaption>
+      </figure>
+    </header>
+
+    <div class="about__grid">
+      <div class="about__text">
+        <p>{{ ts.t().about_p1 }}</p>
+        <p>{{ ts.t().about_p2 }}</p>
+        <p>{{ ts.t().about_p3 }}</p>
         <div class="about__actions">
-          @if (cvUrl) {
-            <a class="btn-primary" [href]="cvUrl" target="_blank" rel="noopener noreferrer">
-              {{ ts.t()['btn_cv'] }}
-            </a>
-          }
-          <a routerLink="/projects" class="btn-outline">
-            {{ ts.t()['hero_cta_projects'] }}
-          </a>
-          <a routerLink="/contact" class="btn-outline">
-            {{ ts.t()['about_contact_cta'] }}
-          </a>
+          <a routerLink="/contact" class="btn-primary">{{ ts.t().about_contact_cta }} <app-icon name="arrow-right" /></a>
+          <a routerLink="/projects" class="btn-outline">{{ ts.t().hero_cta_projects }}</a>
         </div>
-        @if (socialLinks().length > 0) {
-          <app-social-links [links]="socialLinks()" context="about" />
-        }
       </div>
+
+      <aside class="about__aside">
+        <h2 class="about__h2"><span class="eyebrow__mark mono">//</span> {{ ts.t().about_timeline_heading }}</h2>
+        <ol class="timeline">
+          @for (item of timeline; track item.title) {
+            <li>
+              <p class="timeline__when mono">{{ item.when }} @if (item.whenKey) { {{ ts.t()[item.whenKey] }} }</p>
+              <p class="timeline__title">{{ ts.t()[item.title] }}</p>
+              @if (item.org) {
+                <p class="timeline__org">{{ ts.t()[item.org] }}</p>
+              }
+            </li>
+          }
+        </ol>
+      </aside>
     </div>
 
-    <aside class="about__studio panel" aria-labelledby="about-studio-heading">
-      <h2 id="about-studio-heading" class="about__section-title">{{ ts.t()['about_studio_heading'] }}</h2>
-      <p>{{ ts.t()['about_studio_body'] }}</p>
-      <div class="about__studio-actions">
-        @if (nexoUrl) {
-          <a class="btn-primary" [href]="nexoUrl" target="_blank" rel="noopener noreferrer">
-            {{ ts.t()['about_studio_nexo'] }}
-          </a>
-        }
-        <a class="btn-outline" [href]="artistGithubUrl" target="_blank" rel="noopener noreferrer">
-          {{ ts.t()['about_studio_github'] }}
-        </a>
-      </div>
-      <div class="about__studio-warning" role="note">
-        <p class="about__studio-warning-title">{{ ts.t()['about_studio_warning_title'] }}</p>
-        <p>{{ ts.t()['about_studio_warning'] }}</p>
-      </div>
-    </aside>
-
-    <div class="about__skills">
-      <h2 class="about__section-title gradient-text">{{ ts.t()['about_skills_heading'] }}</h2>
-      <div class="about__tech-grid">
-        @for (group of skillGroups; track group.category) {
-          <div class="about__tech-group">
-            <h3>{{ ts.t()[group.titleKey] }}</h3>
-            <div class="about__tech-list">
-              @for (skill of group.skills; track skill.name) {
-                <app-tech-badge [tech]="skill.name" />
+    <section class="about__block" aria-labelledby="stack-heading">
+      <h2 id="stack-heading" class="about__h2"><span class="eyebrow__mark mono">//</span> {{ ts.t().about_skills_heading }}</h2>
+      <div class="stack">
+        @for (group of stack; track group.title) {
+          <div class="stack__group">
+            <h3 class="stack__title mono">{{ ts.t()[group.title] }}</h3>
+            <ul>
+              @for (item of group.items; track item) {
+                <li>{{ item }}</li>
               }
-            </div>
+            </ul>
           </div>
         }
+        <div class="stack__group">
+          <h3 class="stack__title mono">{{ ts.t().about_languages_heading }}</h3>
+          <ul>
+            <li>{{ ts.t().availability_languages }}</li>
+          </ul>
+        </div>
       </div>
-    </div>
+    </section>
 
+    <section class="about__block art" aria-labelledby="art-heading">
+      <div class="art__text">
+        <h2 id="art-heading" class="about__h2"><span class="eyebrow__mark mono">//</span> {{ ts.t().about_art_heading }}</h2>
+        <p>{{ ts.t().about_art_body }}</p>
+        <ul class="art__links">
+          <li><a class="link" [href]="site.deviantArtUrl" target="_blank" rel="noopener noreferrer">{{ ts.t().about_art_deviantart }} <app-icon name="external" /></a></li>
+          <li><a class="link" [href]="site.nexoUrl" target="_blank" rel="noopener noreferrer">{{ ts.t().about_art_nexo }} <app-icon name="external" /></a></li>
+          <li><a class="link" [href]="site.artistGithubUrl" target="_blank" rel="noopener noreferrer">{{ ts.t().about_art_github }} <app-icon name="external" /></a></li>
+        </ul>
+        <p class="art__note" role="note"><span class="tag tag--warn">{{ ts.t().content_warning }}</span> {{ ts.t().about_art_note }}</p>
+      </div>
+    </section>
   </div>
 </section>

@@ -1,41 +1,11 @@
 import { Routes } from '@angular/router';
-import { authGuard, adminGuard } from './core/guards/auth.guard';
+import { LayoutComponent } from './pages/layout/layout.component';
 
 export const routes: Routes = [
   {
-    path: '',
-    loadComponent: () => import('./pages/layout/layout.component').then(m => m.LayoutComponent),
-    children: [
-      {
-        path: 'home',
-        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
-      },
-      {
-        path: 'projects',
-        loadComponent: () => import('./pages/projects/projects.component').then(m => m.ProjectsComponent),
-      },
-      {
-        path: 'projects/:id',
-        loadComponent: () => import('./pages/article/article.component').then(m => m.ArticleComponent),
-      },
-      {
-        path: 'about',
-        loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent),
-      },
-      {
-        path: 'contact',
-        loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent),
-      },
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full',
-      },
-    ],
-  },
-  {
     path: 'auth',
     loadComponent: () => import('./auth/auth.component').then(m => m.AuthComponent),
+    data: { seo: 'private' },
     children: [
       {
         path: '',
@@ -65,36 +35,50 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
-    canActivate: [authGuard],
+    // authGuard lives in ADMIN_ROUTES so Supabase auth stays out of the main bundle.
+    data: { seo: 'private' },
+    loadChildren: () => import('./admin/admin.routes').then(m => m.ADMIN_ROUTES),
+  },
+  {
+    path: '',
+    // Eager: the public shell is needed on every public page (saves a request hop).
+    component: LayoutComponent,
     children: [
       {
+        path: 'home',
+        data: { seo: 'home' },
+        loadComponent: () => import('./pages/home/home.component').then(m => m.HomeComponent),
+      },
+      {
+        path: 'projects',
+        data: { seo: 'projects' },
+        loadComponent: () => import('./pages/projects/projects.component').then(m => m.ProjectsComponent),
+      },
+      {
+        path: 'projects/:id',
+        data: { seo: 'self' },
+        loadComponent: () => import('./pages/article/article.component').then(m => m.ArticleComponent),
+      },
+      {
+        path: 'about',
+        data: { seo: 'about' },
+        loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent),
+      },
+      {
+        path: 'contact',
+        data: { seo: 'contact' },
+        loadComponent: () => import('./pages/contact/contact.component').then(m => m.ContactComponent),
+      },
+      {
         path: '',
-        redirectTo: 'profile',
+        redirectTo: 'home',
         pathMatch: 'full',
       },
       {
-        path: 'profile',
-        loadComponent: () => import('./admin/profile/profile.component').then(m => m.ProfileComponent),
-      },
-      {
-        path: 'project-creator',
-        loadComponent: () => import('./admin/project-creator/project-creator.component').then(m => m.ProjectCreatorComponent),
-      },
-      {
-        path: 'admin-panel',
-        canActivate: [adminGuard],
-        loadComponent: () => import('./admin/admin-panel/admin-panel.component').then(m => m.AdminPanelComponent),
-      },
-      {
-        path: 'social-media',
-        canActivate: [adminGuard],
-        loadComponent: () => import('./admin/social-media/social-media.component').then(m => m.SocialMediaComponent),
+        path: '**',
+        data: { seo: 'not_found' },
+        loadComponent: () => import('./shared/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent),
       },
     ],
-  },
-  {
-    path: '**',
-    loadComponent: () => import('./shared/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent),
   },
 ];

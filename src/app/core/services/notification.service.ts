@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import Swal, { SweetAlertIcon, SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
+import type { SweetAlertIcon, SweetAlertOptions, SweetAlertResult } from 'sweetalert2';
 import { appEnvironment } from '../config/app-environment';
 import { NotificationConfirmOptions } from '../models/notification.model';
+import { loadStylesheet } from '../utils/load-stylesheet';
+
+/** SweetAlert2 is loaded on demand so it stays out of the initial bundle. */
+const loadSwal = () =>
+  Promise.all([import('sweetalert2'), loadStylesheet('sweetalert2')]).then(([m]) => m.default);
 
 @Injectable({ providedIn: 'root' })
 export class NotificationService {
@@ -24,6 +29,7 @@ export class NotificationService {
   }
 
   async confirm(options: NotificationConfirmOptions): Promise<boolean> {
+    const Swal = await loadSwal();
     const result = await Swal.fire({
       icon: options.type ?? 'warning',
       title: options.title,
@@ -63,7 +69,7 @@ export class NotificationService {
 
   /** Used when Angular bootstrap fails before dependency injection is available. */
   static showFatalError(message: string): void {
-    void Swal.fire({
+    void loadSwal().then(Swal => Swal.fire({
       icon: 'error',
       title: 'Application error',
       text: message,
@@ -75,14 +81,15 @@ export class NotificationService {
         htmlContainer: 'app-notification__content',
         confirmButton: 'app-notification__confirm',
       },
-    });
+    }));
   }
 
-  private showModal(
+  private async showModal(
     icon: SweetAlertIcon,
     message: string,
     title?: string,
   ): Promise<SweetAlertResult> {
+    const Swal = await loadSwal();
     return Swal.fire({
       icon,
       title: title ?? this.defaultTitle(icon),

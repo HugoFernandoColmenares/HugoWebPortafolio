@@ -1,66 +1,36 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SocialMediaLink } from '../../core/models/social-media.model';
-import { TranslationKey, TranslationService } from '../../core/services/translation.service';
-import { SocialMediaService } from '../../core/services/social-media.service';
-import { AppConfigService } from '../../core/services/app-config.service';
-import { TechBadgeComponent } from '../../shared/components/tech-badge/tech-badge.component';
-import { SocialLinksComponent } from '../../shared/components/social-links/social-links.component';
-import { Skill } from '../../core/models/skill.model';
-import {
-  SKILL_CATEGORY_ORDER,
-  SKILL_CATEGORY_TRANSLATION_KEYS,
-} from '../../core/constants/skill-categories';
+import { SITE } from '../../core/config/site';
+import { AboutStackGroup, TimelineEntry } from '../../core/models/about.model';
+import { TranslationService } from '../../core/services/translation.service';
+import { IconComponent } from '../../shared/icons/icon.component';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [RouterLink, TechBadgeComponent, SocialLinksComponent],
+  imports: [RouterLink, NgOptimizedImage, IconComponent],
   templateUrl: './about.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: './about.component.css'
+  styleUrl: './about.component.css',
 })
-export class AboutComponent implements OnInit {
+export class AboutComponent {
   readonly ts = inject(TranslationService);
-  private readonly socialMediaService = inject(SocialMediaService);
-  private readonly config = inject(AppConfigService);
+  readonly site = SITE;
 
-  readonly cvUrl = this.config.env.cvUrl;
-  readonly nexoUrl = this.config.env.nexoUrl;
-  readonly artistGithubUrl = this.config.env.artistGithubUrl;
-  readonly socialLinks = signal<SocialMediaLink[]>([]);
-
-  readonly skills: Skill[] = [
-    { name: 'Angular', level: 90, category: 'frontend' },
-    { name: 'TypeScript', level: 88, category: 'frontend' },
-    { name: 'HTML', level: 92, category: 'frontend' },
-    { name: 'CSS', level: 85, category: 'frontend' },
-    { name: '.NET Core', level: 85, category: 'backend' },
-    { name: 'C#', level: 83, category: 'backend' },
-    { name: 'Entity Framework', level: 78, category: 'backend' },
-    { name: 'Node.js', level: 65, category: 'backend' },
-    { name: 'SQL Server', level: 80, category: 'database' },
-    { name: 'PostgreSQL', level: 70, category: 'database' },
-    { name: 'Docker', level: 60, category: 'devops' },
-    { name: 'Git', level: 88, category: 'devops' },
-    { name: 'Azure', level: 55, category: 'devops' },
+  /** From the CV; keep in sync with it rather than inventing roles. */
+  readonly timeline: TimelineEntry[] = [
+    { when: '2024 —', whenKey: 'tl_now', title: 'tl_freelance', org: 'tl_freelance_org' },
+    { when: '2022 — 2025', title: 'tl_cic', org: 'tl_cic_org' },
+    { when: '', whenKey: 'tl_in_progress', title: 'tl_adso', org: 'tl_sena_org' },
+    { when: '2022', title: 'tl_sena', org: 'tl_sena_org' },
+    { when: '2019', title: 'tl_social', org: 'tl_social_org' },
   ];
 
-  readonly skillGroups = SKILL_CATEGORY_ORDER.map((category) => ({
-    category,
-    titleKey: SKILL_CATEGORY_TRANSLATION_KEYS[category] as TranslationKey,
-    skills: this.skills.filter((skill) => skill.category === category),
-  }));
-
-  ngOnInit(): void {
-    void this.loadSocialLinks();
-  }
-
-  private async loadSocialLinks(): Promise<void> {
-    try {
-      this.socialLinks.set(await this.socialMediaService.getPublicLinks('about'));
-    } catch {
-      this.socialLinks.set([]);
-    }
-  }
+  readonly stack: AboutStackGroup[] = [
+    { title: 'about_skill_frontend', items: ['Angular 14–22', 'TypeScript', 'RxJS', 'Signals', 'HTML / CSS', 'PrimeNG'] },
+    { title: 'about_skill_backend', items: ['C#', 'ASP.NET Core', 'Entity Framework Core', 'NestJS / Node.js', 'Python (FastAPI, Flask)'] },
+    { title: 'about_skill_database', items: ['SQL Server', 'PostgreSQL', 'MySQL', 'SQLite', 'Supabase'] },
+    { title: 'about_skill_devops', items: ['Git / GitHub', 'GitHub Actions', 'Docker / Compose', 'Linux (Ubuntu Server)', 'Vercel', 'Railway'] },
+  ];
 }

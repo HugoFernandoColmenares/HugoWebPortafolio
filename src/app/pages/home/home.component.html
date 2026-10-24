@@ -1,80 +1,188 @@
-<!-- Hero Section -->
-<section class="hero">
-  <!-- Animated background blobs -->
-  <div class="hero__bg">
-    <div class="hero__blob hero__blob--1"></div>
-    <div class="hero__blob hero__blob--2"></div>
-  </div>
-
-  <div class="container hero__content">
+<!-- Hero -->
+<section class="hero grid-bg" aria-labelledby="hero-heading">
+  <div class="container hero__grid">
     <div class="hero__intro">
-      <p class="hero__greeting animate-fade-in-up">
-        {{ ts.t()['hero_greeting'] }}
-        <span class="text-accent">👋</span>
-      </p>
-      <h1 class="hero__name animate-fade-in-up gradient-text">
-        {{ ts.t()['hero_name'] }}
-      </h1>
-      <h2 class="hero__title animate-fade-in-up gradient-text">
-        {{ ts.t()['hero_title'] }}
-      </h2>
-      <p class="hero__subtitle animate-fade-in-up">
-        {{ ts.t()['hero_subtitle'] }}
+      <p class="eyebrow"><span class="prompt">$</span> whoami <span class="hero__who">— {{ ts.t().hero_eyebrow }}</span></p>
+      <h1 id="hero-heading" class="hero__heading">{{ ts.t().hero_heading }}</h1>
+      <p class="lead hero__lead">{{ ts.t().hero_lead }}</p>
+
+      <div class="hero__actions">
+        <a routerLink="/contact" class="btn-primary">{{ ts.t().hero_cta_contact }} <app-icon name="arrow-right" /></a>
+        <a routerLink="/projects" class="btn-outline">{{ ts.t().hero_cta_projects }}</a>
+      </div>
+      <p class="hero__email">
+        {{ ts.t().hero_or_email }}
+        <a class="link mono" [href]="'mailto:' + site.email">{{ site.email }}</a>
       </p>
     </div>
 
-    <!-- Hero Avatar & Orbital Tech Chips -->
-    <div class="hero__avatar-wrapper animate-fade-in-up">
-      <div class="hero__avatar">
-        <div class="hero__avatar-inner">
+    <aside class="status" [attr.aria-label]="ts.t().availability_status">
+      <div class="status__bar" aria-hidden="true">
+        <span></span><span></span><span></span>
+        <code>status.json</code>
+      </div>
+      <div class="status__body">
+        <div class="status__who">
           <img
-            src="profile picture.jpeg"
-            alt="Hugo Colmenares"
-            class="hero__avatar-img"
-            width="240"
-            height="240"
-            decoding="async"
-            fetchpriority="high"
+            ngSrc="/img/hugo"
+            ngSrcset="320w, 640w"
+            sizes="96px"
+            width="640"
+            height="640"
+            priority
+            [alt]="ts.t().hero_photo_alt"
+            class="status__photo"
           />
-        </div>
-        <div class="hero__avatar-ring"></div>
-      </div>
-
-      <!-- Órbita giratoria con soporte de rotación inversa para texto derechito -->
-      <div class="hero__orbit">
-        @for (chip of heroChips; track chip.label) {
-          <div class="hero__chip-slot">
-            <span [class]="'hero__chip hero__chip--' + chip.variant">
-              {{ chip.label }}
-            </span>
+          <div>
+            <p class="status__name">Hugo Colmenares</p>
+            <p class="status__role mono">full-stack · angular · .net</p>
           </div>
-        }
+        </div>
+        <dl class="status__list mono">
+          <div>
+            <dt>{{ ts.t().availability_key_status }}</dt>
+            <dd><span class="status-dot status--completed" aria-hidden="true"></span>{{ ts.t().availability_status }}</dd>
+          </div>
+          <div>
+            <dt>{{ ts.t().availability_key_timezone }}</dt>
+            <dd>{{ ts.t().availability_timezone }}</dd>
+          </div>
+          <div>
+            <dt>{{ ts.t().availability_key_languages }}</dt>
+            <dd>{{ ts.t().availability_languages }}</dd>
+          </div>
+          <div>
+            <dt>{{ ts.t().availability_key_stack }}</dt>
+            <dd>{{ site.stack.join(' · ') }}</dd>
+          </div>
+        </dl>
       </div>
+    </aside>
+  </div>
+</section>
+
+<!-- Services -->
+<section class="section band" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow"><span class="eyebrow__mark">//</span> {{ ts.t().services_eyebrow }}</p>
+      <h2 id="services-heading">{{ ts.t().services_heading }}</h2>
+    </div>
+    <ul class="services">
+      <li class="service">
+        <span class="service__num mono" aria-hidden="true">01</span>
+        <h3>{{ ts.t().service_web_title }}</h3>
+        <p>{{ ts.t().service_web_body }}</p>
+        <p class="service__tools mono">Angular · TypeScript · RxJS · PrimeNG</p>
+      </li>
+      <li class="service">
+        <span class="service__num mono" aria-hidden="true">02</span>
+        <h3>{{ ts.t().service_api_title }}</h3>
+        <p>{{ ts.t().service_api_body }}</p>
+        <p class="service__tools mono">C# · ASP.NET Core · EF Core · JWT</p>
+      </li>
+      <li class="service">
+        <span class="service__num mono" aria-hidden="true">03</span>
+        <h3>{{ ts.t().service_data_title }}</h3>
+        <p>{{ ts.t().service_data_body }}</p>
+        <p class="service__tools mono">SQL Server · PostgreSQL · Supabase · Docker</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Track record -->
+<section class="section" aria-labelledby="proof-heading">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow" id="proof-heading"><span class="eyebrow__mark">//</span> {{ ts.t().proof_eyebrow }}</p>
+    </div>
+    <ol class="proof">
+      <li>
+        <p class="proof__when mono">{{ ts.t().proof_freelance_years }}</p>
+        <p>{{ ts.t().proof_freelance }}</p>
+      </li>
+      <li>
+        <p class="proof__when mono">{{ ts.t().proof_cic_years }}</p>
+        <p>{{ ts.t().proof_cic }}</p>
+      </li>
+      <li>
+        <p class="proof__when mono">{{ ts.t().proof_social_years }}</p>
+        <p>{{ ts.t().proof_social }}</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- Featured work -->
+<section class="section" aria-labelledby="featured-heading">
+  <div class="container">
+    <div class="section-head section-head--row">
+      <div>
+        <p class="eyebrow"><span class="eyebrow__mark">//</span> {{ ts.t().featured_eyebrow }}</p>
+        <h2 id="featured-heading">{{ ts.t().featured_heading }}</h2>
+      </div>
+      <a routerLink="/projects" class="btn-ghost">{{ ts.t().featured_all }} <app-icon name="arrow-right" /></a>
     </div>
 
-    <div class="hero__cta">
-      <div class="hero__actions animate-fade-in-up">
-        <a routerLink="/projects" class="btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
-          </svg>
-          {{ ts.t()['hero_cta_projects'] }}
-        </a>
-        <a routerLink="/about" class="btn-outline">
-          {{ ts.t()['hero_cta_about'] }}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
+    @if (catalog.featured().length) {
+      <ul class="featured">
+        @for (project of catalog.featured(); track project.id; let i = $index) {
+          <li [class.featured__wide]="i === 0">
+            <app-project-case-card [project]="project" [position]="i" [wide]="i === 0" />
+          </li>
+        }
+      </ul>
+    } @else if (catalog.error()) {
+      <p class="text-muted">{{ ts.t().projects_load_error }}</p>
+    } @else {
+      <div class="featured featured--loading" aria-hidden="true">
+        <div class="skeleton skeleton--card"></div>
+        <div class="skeleton skeleton--card"></div>
       </div>
+    }
+  </div>
+</section>
 
-      @if (socialLinks().length > 0) {
-        <app-social-links
-          class="animate-fade-in-up"
-          [links]="socialLinks()"
-          context="hero"
-        />
-      }
+<!-- Beyond code -->
+<section class="section band" aria-labelledby="beyond-heading">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow"><span class="eyebrow__mark">//</span> {{ ts.t().beyond_eyebrow }}</p>
+      <h2 id="beyond-heading">{{ ts.t().beyond_heading }}</h2>
+    </div>
+    <div class="beyond">
+      <article class="beyond__item">
+        <p class="beyond__ascii mono" aria-hidden="true">[ listen → translate → build ]</p>
+        <h3>{{ ts.t().beyond_social_title }}</h3>
+        <p>{{ ts.t().beyond_social_body }}</p>
+      </article>
+      <article class="beyond__item">
+        <p class="beyond__ascii mono" aria-hidden="true">[ sketch → ink → color ]</p>
+        <h3>{{ ts.t().beyond_art_title }}</h3>
+        <p>{{ ts.t().beyond_art_body }}</p>
+        <p>
+          <a class="link" [href]="site.deviantArtUrl" target="_blank" rel="noopener noreferrer">{{ ts.t().beyond_art_link }} <app-icon name="external" /></a>
+        </p>
+        <p class="beyond__note">{{ ts.t().beyond_art_note }}</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section" aria-labelledby="cta-heading">
+  <div class="container">
+    <div class="cta">
+      <div>
+        <p class="eyebrow"><span class="prompt">$</span> ./contact --now</p>
+        <h2 id="cta-heading">{{ ts.t().cta_heading }}</h2>
+        <p class="lead">{{ ts.t().cta_body }}</p>
+      </div>
+      <div class="cta__actions">
+        <a routerLink="/contact" class="btn-primary">{{ ts.t().cta_button }} <app-icon name="arrow-right" /></a>
+        <a class="link mono" [href]="'mailto:' + site.email">{{ site.email }}</a>
+      </div>
     </div>
   </div>
 </section>

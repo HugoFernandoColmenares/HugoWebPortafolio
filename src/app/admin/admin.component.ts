@@ -4,6 +4,7 @@ import { TranslationService } from '../core/services/translation.service';
 import { AuthService } from '../core/services/auth.service';
 
 import { NotificationService } from '../core/services/notification.service';
+import { loadStylesheet } from '../core/utils/load-stylesheet';
 
 @Component({
   selector: 'app-admin',
@@ -14,6 +15,9 @@ import { NotificationService } from '../core/services/notification.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AdminComponent {
+  // PrimeIcons are only used in the admin/auth area.
+  private readonly icons = loadStylesheet('primeicons');
+
   readonly ts = inject(TranslationService);
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);

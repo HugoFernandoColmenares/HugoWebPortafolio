@@ -1,45 +1,26 @@
-import { Component, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { SocialMediaLink } from '../../core/models/social-media.model';
-import { SocialMediaService } from '../../core/services/social-media.service';
+import { SITE } from '../../core/config/site';
+import { ProjectCatalogService } from '../../core/services/project-catalog.service';
 import { TranslationService } from '../../core/services/translation.service';
-import { SocialLinksComponent } from '../../shared/components/social-links/social-links.component';
-
-interface HeroChip {
-  label: string;
-  variant: 'angular' | 'dotnet' | 'typescript' | 'sql';
-}
+import { ProjectCaseCardComponent } from '../../shared/components/project-case-card/project-case-card.component';
+import { IconComponent } from '../../shared/icons/icon.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, SocialLinksComponent],
+  imports: [RouterLink, NgOptimizedImage, ProjectCaseCardComponent, IconComponent],
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
 })
 export class HomeComponent implements OnInit {
   readonly ts = inject(TranslationService);
-  private readonly socialMediaService = inject(SocialMediaService);
-
-  readonly socialLinks = signal<SocialMediaLink[]>([]);
-
-  readonly heroChips: HeroChip[] = [
-    { label: 'Angular', variant: 'angular' },
-    { label: '.NET Core', variant: 'dotnet' },
-    { label: 'TypeScript', variant: 'typescript' },
-    { label: 'SQL Server', variant: 'sql' },
-  ];
+  readonly catalog = inject(ProjectCatalogService);
+  readonly site = SITE;
 
   ngOnInit(): void {
-    void this.loadSocialLinks();
-  }
-
-  private async loadSocialLinks(): Promise<void> {
-    try {
-      this.socialLinks.set(await this.socialMediaService.getPublicLinks('hero'));
-    } catch {
-      this.socialLinks.set([]);
-    }
+    void this.catalog.load();
   }
 }

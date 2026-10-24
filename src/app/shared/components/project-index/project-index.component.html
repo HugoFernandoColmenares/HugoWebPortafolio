@@ -1,0 +1,59 @@
+<div class="index">
+  <div class="index__filters" role="group" [attr.aria-label]="ts.t().projects_filter_label">
+    @for (option of filters(); track option.value) {
+      <button
+        type="button"
+        class="chip"
+        [class.is-active]="filter() === option.value"
+        [attr.aria-pressed]="filter() === option.value"
+        (click)="filterChange.emit(option.value)"
+      >
+        {{ option.label }} <span class="chip__count">{{ option.count }}</span>
+      </button>
+    }
+  </div>
+
+  <p class="sr-only" aria-live="polite">{{ ts.format('projects_index_count', { count: visible().length }) }}</p>
+
+  @if (visible().length === 0) {
+    <p class="index__empty">{{ ts.t().projects_empty_filter }}</p>
+  } @else {
+    <ol class="index__list">
+      @for (project of visible(); track project.id; let i = $index) {
+        <li class="row">
+          <span class="row__num" aria-hidden="true">{{ (i + 1).toString().padStart(2, '0') }}</span>
+          <div class="row__main">
+            <h3 class="row__title">
+              <a [routerLink]="['/projects', project.slug]">{{ project.title }}</a>
+              @if (project.contentWarning) {
+                <span class="tag tag--warn" [attr.title]="ts.t().content_warning_long">{{ ts.t().content_warning }}</span>
+              }
+            </h3>
+            <p class="row__summary">{{ project.summary }}</p>
+            <p class="row__stack">{{ project.technologies.join(' · ') }}</p>
+          </div>
+          <div class="row__meta">
+            <span class="row__cat">{{ categoryLabel(project) }}</span>
+            <span class="row__status" [class]="'status--' + project.status">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span class="row__status-text">{{ statusLabel(project) }}</span>
+            </span>
+          </div>
+          <div class="row__links">
+            @if (project.githubUrl) {
+              <a class="row__link" [href]="project.githubUrl" target="_blank" rel="noopener noreferrer">
+                <app-icon name="github" /> {{ ts.t().btn_github }}<span class="sr-only">: {{ project.title }}</span>
+              </a>
+            }
+            @if (project.liveUrl) {
+              <a class="row__link" [class.row__link--warn]="project.contentWarning" [href]="project.liveUrl" target="_blank" rel="noopener noreferrer">
+                <app-icon [name]="project.contentWarning ? 'warning' : 'external'" />
+                {{ project.contentWarning ? ts.t().btn_live_mature : ts.t().btn_live }}<span class="sr-only">: {{ project.title }}</span>
+              </a>
+            }
+          </div>
+        </li>
+      }
+    </ol>
+  }
+</div>

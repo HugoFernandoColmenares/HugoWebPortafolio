@@ -52,7 +52,17 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              {
+                "input": "node_modules/primeicons/primeicons.css",
+                "bundleName": "primeicons",
+                "inject": false
+              },
+              {
+                "input": "node_modules/sweetalert2/dist/sweetalert2.min.css",
+                "bundleName": "sweetalert2",
+                "inject": false
+              }
             ],
             "scripts": []
           },
@@ -112,7 +122,17 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              {
+                "input": "node_modules/primeicons/primeicons.css",
+                "bundleName": "primeicons",
+                "inject": false
+              },
+              {
+                "input": "node_modules/sweetalert2/dist/sweetalert2.min.css",
+                "bundleName": "sweetalert2",
+                "inject": false
+              }
             ],
             "scripts": [],
             "builderMode": "browser"

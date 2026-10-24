@@ -1,9 +1,0 @@
-.social-links--about {
-  justify-content: center;
-}
-
-@media (min-width: 641px) {
-  .social-links--about {
-    justify-content: flex-start;
-  }
-}

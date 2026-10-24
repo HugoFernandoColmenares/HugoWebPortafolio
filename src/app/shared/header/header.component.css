@@ -1,112 +1,122 @@
-.header {
+:host {
   position: sticky;
   top: 0;
-  z-index: 100;
-  height: var(--header-height);
-  background: var(--color-background);
-  padding: 0.5rem 0;
-  border-bottom: 1px solid var(--color-divider);
+  z-index: 50;
+  display: block;
+}
+
+.header {
+  background: color-mix(in srgb, var(--color-background) 88%, transparent);
+  backdrop-filter: saturate(140%) blur(10px);
+  -webkit-backdrop-filter: saturate(140%) blur(10px);
+  border-bottom: 1px solid var(--color-border);
 }
 
 .header__inner {
-  height: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  justify-content: space-between;
+  gap: 1.6rem;
+  height: var(--header-height);
 }
 
-.header__logo {
-  font-size: 1.8rem;
-  font-weight: var(--font-weight-bold);
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
   color: var(--color-text-heading);
-  text-decoration: none;
-  letter-spacing: -0.02em;
-  flex-shrink: 0;
-  transition: opacity var(--transition-fast);
+  font-weight: 650;
+  font-size: 1.6rem;
+  letter-spacing: -0.01em;
+  min-height: 4.4rem;
+  white-space: nowrap;
 }
 
-.header__logo:hover {
-  opacity: 0.8;
-  color: var(--color-text-heading);
+.brand:hover { color: var(--color-text-heading); }
+
+.brand__mark {
+  display: inline-grid;
+  place-items: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: var(--radius-sm);
+  background: #0c0d0f;
+  color: #f3f4f6;
+  border: 1px solid var(--color-border-strong);
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  position: relative;
+}
+
+.brand__mark::after {
+  content: '';
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.6rem;
+  width: 0.5rem;
+  height: 0.2rem;
+  background: #a3e635;
 }
 
 .header__nav {
   display: none;
   align-items: center;
-  justify-self: end;
   gap: 0.4rem;
 }
 
-.header__nav-link {
+.header__link {
   position: relative;
-  padding: 0.8rem 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  min-height: 4.4rem;
+  padding: 0 1.2rem;
+  color: var(--color-text);
+  font-size: 1.5rem;
+  font-weight: 500;
   border-radius: var(--radius-md);
-  font-size: 1.45rem;
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
-  text-decoration: none;
-  transition: color var(--transition-fast), background-color var(--transition-fast);
 }
 
-.header__nav-link:hover {
+.header__link:hover { color: var(--color-text-heading); background: var(--color-surface-2); }
+
+.header__link.is-active {
   color: var(--color-text-heading);
-  background: var(--color-surface-2);
 }
 
-.header__nav-link--active {
-  color: var(--color-text-heading) !important;
-  background: transparent !important;
-}
-
-.header__nav-link--active::after {
+.header__link.is-active::after {
   content: '';
   position: absolute;
-  left: 1.6rem;
-  right: 1.6rem;
-  bottom: 0.4rem;
+  left: 1.2rem;
+  right: 1.2rem;
+  bottom: 0.6rem;
   height: 0.2rem;
-  border-radius: var(--radius-full);
-  background: var(--gradient-brand);
+  background: var(--color-accent);
 }
+
+.header__link--cta {
+  margin-left: 0.8rem;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-heading);
+}
+
+.header__link--cta:hover { border-color: var(--color-text-heading); }
 
 .header__actions {
   display: flex;
   align-items: center;
-  justify-self: end;
   gap: 0.8rem;
-  flex-shrink: 0;
 }
 
-.header__hamburger {
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 0.8rem;
+@media (max-width: 420px) {
+  .brand__name { display: none; }
 }
 
-.header__hamburger-line {
-  display: block;
-  width: 100%;
-  height: 2px;
-  background: var(--color-text-heading);
-  border-radius: 2px;
+@media (min-width: 760px) {
+  .header__nav { display: flex; }
+  .header__menu-btn { display: none; }
 }
 
-@media (min-width: 769px) {
-  .header {
-    background: color-mix(in srgb, var(--color-background) 88%, transparent);
-    backdrop-filter: blur(1.2rem);
-  }
-
-  .header__nav {
-    display: flex;
-  }
-
-  .header__actions {
-    justify-self: end;
-  }
-
-  .header__hamburger {
-    display: none;
-  }
+@media (min-width: 760px) and (max-width: 900px) {
+  .brand__name { display: none; }
 }
