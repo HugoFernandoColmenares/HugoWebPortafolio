@@ -1,8 +1,9 @@
-import { Injectable, computed, signal } from '@angular/core';
+import { DOCUMENT, Injectable, computed, effect, inject, signal } from '@angular/core';
+import { PUBLIC_COPY_EN, PUBLIC_COPY_ES } from '../i18n/public-copy';
 
 export type Language = 'en' | 'es';
 
-const EN_TRANSLATIONS = {
+const EN_BASE = {
   // Nav
   nav_home: 'Home',
   nav_projects: 'Projects',
@@ -352,12 +353,12 @@ const EN_TRANSLATIONS = {
   admin_social_delete_confirm_no: 'Cancel',
 } as const;
 
+const EN_TRANSLATIONS = { ...EN_BASE, ...PUBLIC_COPY_EN };
+
 export type TranslationKey = keyof typeof EN_TRANSLATIONS;
 export type Translations = Record<TranslationKey, string>;
 
-const TRANSLATIONS: Record<Language, Translations> = {
-  en: EN_TRANSLATIONS,
-  es: {
+const ES_BASE: Record<keyof typeof EN_BASE, string> = {
     // Nav
     nav_home: 'Inicio',
     nav_projects: 'Proyectos',
@@ -705,7 +706,11 @@ const TRANSLATIONS: Record<Language, Translations> = {
     admin_social_delete_confirm_message: 'Esta acción eliminará el enlace seleccionado (soft delete). ¿Continuar?',
     admin_social_delete_confirm_yes: 'Eliminar',
     admin_social_delete_confirm_no: 'Cancelar',
-  },
+};
+
+const TRANSLATIONS: Record<Language, Translations> = {
+  en: EN_TRANSLATIONS,
+  es: { ...ES_BASE, ...PUBLIC_COPY_ES },
 };
 
 @Injectable({ providedIn: 'root' })
@@ -715,6 +720,23 @@ export class TranslationService {
   readonly currentLang = signal<Language>(this.getStoredLang());
 
   readonly t = computed<Translations>(() => TRANSLATIONS[this.currentLang()]);
+
+  private readonly document = inject(DOCUMENT);
+
+  constructor() {
+    // Keep <html lang> in sync so screen readers switch pronunciation (WCAG 3.1.1).
+    effect(() => {
+      this.document.documentElement.lang = this.currentLang();
+    });
+  }
+
+  /** Translate a key and replace {placeholders}. */
+  format(key: TranslationKey, params: Record<string, string | number> = {}): string {
+    return Object.entries(params).reduce(
+      (text, [name, value]) => text.replaceAll(`{${name}}`, String(value)),
+      this.t()[key],
+    );
+  }
 
   setLanguage(lang: Language): void {
     this.currentLang.set(lang);
@@ -727,6 +749,10 @@ export class TranslationService {
 
   private getStoredLang(): Language {
     const stored = localStorage.getItem(this.STORAGE_KEY);
-    return stored === 'en' || stored === 'es' ? stored : 'en';
+    if (stored === 'en' || stored === 'es') {
+      return stored;
+    }
+    // First visit: follow the browser language (most visitors are Spanish speakers).
+    return typeof navigator !== 'undefined' && navigator.language?.toLowerCase().startsWith('es') ? 'es' : 'en';
   }
 }
