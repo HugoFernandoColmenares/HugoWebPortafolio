@@ -47,4 +47,19 @@ describe('toPublicProject', () => {
     expect(project.contentWarning).toBeTrue();
     expect(project.featured).toBeFalse();
   });
+
+  it('shows the Woodheart Café wiki with its live demo and no link to its private repository', () => {
+    const id = 'a1000001-0000-4000-8000-000000000027';
+    const project = toPublicProject(
+      row({ id, liveUrl: null, githubUrl: 'https://github.com/FeithNoir/woodheart-cafe-wiki' }),
+      'es',
+      PROJECT_CURATION[id],
+    );
+    expect(project.slug).toBe('woodheart-cafe-wiki');
+    expect(project.liveUrl).toBe('https://woodheart-cafe-wiki.vercel.app/');
+    expect(project.githubUrl).toBeNull();
+    expect(project.cover).toBe('/img/projects/woodheart-wiki');
+    expect(project.contentWarning).toBeFalse();
+    expect(project.caseStudy?.status.es).toContain('Código privado');
+  });
 });

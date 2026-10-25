@@ -520,6 +520,61 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
     },
   },
 
+  'a1000001-0000-4000-8000-000000000027': {
+    slug: 'woodheart-cafe-wiki',
+    cover: '/img/projects/woodheart-wiki',
+    featured: false,
+    title: 'Woodheart Café Wiki',
+    githubUrl: null, // private repository (FeithNoir/woodheart-cafe-wiki)
+    liveUrl: 'https://woodheart-cafe-wiki.vercel.app/',
+    summary: {
+      en: 'Public wiki for an original game project: characters, places, timeline and gallery, built from a lore bible that only publishes what is public.',
+      es: 'Wiki pública de un proyecto de juego original: personajes, lugares, cronología y galería, generada desde una biblia de lore que solo publica lo público.',
+    },
+    description: {
+      en: 'Single-page wiki for Woodheart Café, an original game project by Feith Noir. Angular 22 with standalone components, signals, the new control flow and lazy routes, in strict TypeScript. A Node data pipeline turns the full lore bible into the app’s JSON, keeping only entries and fields marked public, rewriting disputed facts in neutral terms and adding cross-links between entries. Client-side search, per-route SEO with an OG image, responsive WebP artwork refreshed from DeviantArt via oEmbed, and a forest-café-at-night visual style with reduced-motion support. Deployed on Vercel; Spanish (Colombia) interface.',
+      es: 'Wiki de una sola página para Woodheart Café, un proyecto de juego original de Feith Noir. Angular 22 con componentes standalone, signals, el nuevo control flow y rutas lazy, en TypeScript estricto. Un pipeline de datos en Node convierte la biblia completa del lore en el JSON de la app: conserva solo las entradas y campos marcados como públicos, reescribe en tono neutro los hechos en disputa y agrega enlaces cruzados entre entradas. Búsqueda en el cliente, SEO por ruta con imagen OG, ilustraciones WebP responsivas actualizadas desde DeviantArt vía oEmbed y un estilo visual de café en el bosque de noche que respeta el movimiento reducido. Desplegada en Vercel; interfaz en español (Colombia).',
+    },
+    caseStudy: {
+      context: {
+        en: 'The project’s lore bible mixes public canon with spoilers saved for the game. The wiki had to show the world and its characters without ever shipping that reserved material.',
+        es: 'La biblia de lore del proyecto mezcla canon público con spoilers guardados para el juego. La wiki tenía que mostrar el mundo y sus personajes sin publicar nunca ese material reservado.',
+      },
+      built: {
+        en: [
+          'Character pages with work aliases, facts, relationships and artwork; places as a tree from kingdom to café corner; factions, timeline and glossary.',
+          'Client-side search across every entry, accent- and case-insensitive.',
+          'Gallery of SFW artwork credited and linked to its original posts, with an accessible lightbox; characters without public art get a themed placeholder portrait.',
+          'Per-route title, description, canonical and Open Graph tags; sitemap and 404 page; SPA rewrite on Vercel so deep links reload.',
+        ],
+        es: [
+          'Fichas de personaje con alias de trabajo, datos, relaciones e ilustraciones; lugares en árbol del reino al rincón del café; facciones, cronología y glosario.',
+          'Búsqueda en el cliente sobre todas las entradas, sin importar tildes ni mayúsculas.',
+          'Galería de ilustraciones SFW con crédito y enlace a su publicación original, con visor accesible; los personajes sin arte público usan un retrato de reemplazo en el estilo del sitio.',
+          'Título, descripción, canónica y Open Graph por ruta; sitemap y página 404; rewrite SPA en Vercel para que los enlaces profundos recarguen.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Visibility is filtered at build time, not in the UI: reserved data never reaches the bundle, and the raw lore stays outside the repository.',
+          'A build test scans the production output against hashed fingerprints of the reserved text, so leaks fail CI without storing the secrets themselves.',
+          'An editorial layer, versioned next to the code, records which disputed facts are hidden or rephrased.',
+          'Vitest unit tests, Playwright end-to-end tests with axe (no serious issues) on desktop and mobile, ESLint and GitHub Actions CI.',
+        ],
+        es: [
+          'La visibilidad se filtra al generar los datos, no en la interfaz: lo reservado nunca llega al bundle y el lore crudo queda fuera del repositorio.',
+          'Un test revisa el build de producción contra huellas (hashes) del texto reservado, así una filtración rompe el CI sin guardar los secretos.',
+          'Una capa editorial, versionada junto al código, registra qué hechos en disputa se ocultan o se reformulan.',
+          'Tests unitarios con Vitest, end-to-end con Playwright y axe (sin problemas graves) en escritorio y móvil, ESLint y CI en GitHub Actions.',
+        ],
+      },
+      status: {
+        en: 'Live on Vercel. Private code. Interface in Spanish.',
+        es: 'Publicada en Vercel. Código privado. Interfaz en español.',
+      },
+    },
+  },
+
   // ------------------------------------------------------ hidden from public
   // Generic copy + Unsplash stock photo; the linked ReImage repo is a C# CLI
   // renamer, not the WPF/DDD app described. Kept in the DB, hidden here.
