@@ -575,6 +575,61 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
     },
   },
 
+  'a1000001-0000-4000-8000-000000000028': {
+    slug: 'vengajustilolisalvz',
+    cover: '/img/projects/vengajusti',
+    featured: false,
+    title: 'VengaJustiLolis Alv Z',
+    githubUrl: 'https://github.com/HugoFernandoColmenares/VengaJustiLolisAlvZ',
+    liveUrl: 'https://hugofernandocolmenares.github.io/VengaJustiLolisAlvZ/',
+    summary: {
+      en: 'Meta-fiction of a tabletop role-playing group turned WhatsApp group: annual awards with voting, posts and the lore of the Rift, in one Angular 22 app.',
+      es: 'Meta-ficción de un grupo de rol de mesa convertido en grupo de WhatsApp: premios anuales con votación, posts y el lore de la Grieta en una sola app Angular 22.',
+    },
+    description: {
+      en: 'Site for VengaJustiLolis Alv Z, the meta-fiction of a tabletop role-playing group that became a WhatsApp group. It merges two older sites (a comic-style awards page and a lore page) into one Angular 22 app with standalone components, signals and lazy routes. Annual awards voting and posts sit behind a swappable backend interface ready for Firebase (Firestore + Google Auth, one vote per person, category and year enforced by security rules); without configuration it runs in demo mode on localStorage. Results charts are accessible HTML lists, header art is pure CSS with no hotlinked images, and the site has full Open Graph tags for WhatsApp previews, reduced-motion support and no horizontal scroll from 320 px. Deployed on GitHub Pages through GitHub Actions; Spanish (Latin America) interface.',
+      es: 'Sitio de VengaJustiLolis Alv Z, la meta-ficción de un grupo de rol de mesa que terminó convertido en grupo de WhatsApp. Une dos sitios anteriores (una página de premios estilo cómic y otra de lore) en una sola app Angular 22 con componentes standalone, signals y rutas lazy. La votación de los premios anuales y los posts van detrás de una interfaz de backend intercambiable lista para Firebase (Firestore + Auth con Google, un voto por persona, categoría y año validado por reglas de seguridad); sin configuración funciona en modo demo con localStorage. Los gráficos de resultados son listas HTML accesibles, el arte de las cabeceras es CSS puro sin imágenes de terceros y el sitio tiene Open Graph completo para la vista previa en WhatsApp, soporte de movimiento reducido y cero scroll horizontal desde 320 px. Publicado en GitHub Pages con GitHub Actions; interfaz en español latino.',
+    },
+    caseStudy: {
+      context: {
+        en: 'The group had two disconnected sites: a comic-style awards page with strong identity but layout and accessibility issues, and a lore page built on a generic template with placeholders. It needed one site, a way to vote each year and a place for posts.',
+        es: 'El grupo tenía dos sitios desconectados: una página de premios estilo cómic con mucha identidad pero problemas de maquetación y accesibilidad, y una de lore hecha sobre una plantilla genérica con placeholders. Hacía falta un solo sitio, una forma de votar cada año y un lugar para posts.',
+      },
+      built: {
+        en: [
+          '2025 awards results with highlighted winners, accessible bar charts and the group’s comments in chat bubbles.',
+          'Annual voting with one vote per person and category, posts with detail pages and an admin area to create categories.',
+          'Lore of the Rift, characters and factions migrated from the old site in the same comic visual style.',
+          'Responsive menu with aria-expanded and Esc to close, skip link, visible focus, per-route titles and Open Graph/Twitter tags.',
+        ],
+        es: [
+          'Resultados de los premios 2025 con ganador destacado, gráficos de barras accesibles y los comentarios del grupo en burbujas de chat.',
+          'Votación anual con un voto por persona y categoría, posts con página de detalle y un área de admin para crear categorías.',
+          'Lore de la Grieta, personajes y facciones migrados del sitio anterior con el mismo estilo cómic.',
+          'Menú responsivo con aria-expanded y Esc para cerrar, enlace para saltar al contenido, foco visible, títulos por ruta y etiquetas Open Graph/Twitter.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Components only inject a Backend token: Firebase is lazy-loaded only when configured, so demo mode ships without the SDK.',
+          'The Firebase web config stays out of the repository and is injected at build time from GitHub Actions secrets.',
+          'Charts in HTML instead of canvas libraries, and CSS art instead of hotlinked images with expiring URLs.',
+          'Vitest unit tests, Playwright and axe checks at 320–1440 px, and a per-route index.html so GitHub Pages deep links return 200.',
+        ],
+        es: [
+          'Los componentes solo inyectan un token Backend: Firebase se carga de forma diferida solo si hay configuración, así el modo demo no descarga el SDK.',
+          'La config web de Firebase queda fuera del repositorio y se inyecta al compilar desde los secrets de GitHub Actions.',
+          'Gráficos en HTML en vez de librerías de canvas, y arte en CSS en vez de imágenes enlazadas con URLs que caducan.',
+          'Tests unitarios con Vitest, revisión con Playwright y axe de 320 a 1440 px, e index.html por ruta para que los enlaces profundos en GitHub Pages respondan 200.',
+        ],
+      },
+      status: {
+        en: 'Live on GitHub Pages in demo mode; Firebase connection pending. Open source. Interface in Spanish.',
+        es: 'Publicado en GitHub Pages en modo demo; falta conectar Firebase. Código abierto. Interfaz en español.',
+      },
+    },
+  },
+
   // ------------------------------------------------------ hidden from public
   // Generic copy + Unsplash stock photo; the linked ReImage repo is a C# CLI
   // renamer, not the WPF/DDD app described. Kept in the DB, hidden here.

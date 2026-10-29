@@ -62,4 +62,14 @@ describe('toPublicProject', () => {
     expect(project.contentWarning).toBeFalse();
     expect(project.caseStudy?.status.es).toContain('Código privado');
   });
+
+  it('shows VengaJustiLolis Alv Z with its GitHub Pages demo and public repository', () => {
+    const id = 'a1000001-0000-4000-8000-000000000028';
+    const project = toPublicProject(row({ id }), 'es', PROJECT_CURATION[id]);
+    expect(project.slug).toBe('vengajustilolisalvz');
+    expect(project.liveUrl).toBe('https://hugofernandocolmenares.github.io/VengaJustiLolisAlvZ/');
+    expect(project.githubUrl).toBe('https://github.com/HugoFernandoColmenares/VengaJustiLolisAlvZ');
+    expect(project.cover).toBe('/img/projects/vengajusti');
+    expect(project.summary).toContain('WhatsApp');
+  });
 });
