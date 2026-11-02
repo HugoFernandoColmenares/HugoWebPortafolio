@@ -9,7 +9,7 @@ import { Language } from '../services/translation.service';
  * misleading button), optimized local covers, Spanish copy, case studies and
  * content warnings. Rows that are not listed here are shown as they come.
  *
- * Every link below was checked with curl/gh on 2026-10-24. Do not add repo
+ * Every link below was checked with curl/gh on 2026-10-24 (new entries on 2026-11-02). Do not add repo
  * URLs that were not verified to exist and match the project.
  */
 
@@ -233,6 +233,7 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
     featured: true,
     rank: 4,
     title: 'DevChronicle',
+    liveUrl: 'https://devchronicle-hugo.web.app',
     summary: {
       en: 'Markdown journal in three repos: Angular client, Rust/Axum API on SQLite, and a Compose stack behind nginx.',
       es: 'Diario en Markdown en tres repos: cliente Angular, API en Rust/Axum sobre SQLite y un stack Compose detrás de nginx.',
@@ -274,8 +275,8 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
         ],
       },
       status: {
-        en: 'Runs locally with Docker Compose. No public demo yet.',
-        es: 'Corre localmente con Docker Compose. Todavía sin demo pública.',
+        en: 'Live on Firebase Hosting (Firestore + Google Auth); also runs locally with Docker Compose.',
+        es: 'Publicado en Firebase Hosting (Firestore + Auth con Google); también corre en local con Docker Compose.',
       },
     },
     related: [
@@ -580,8 +581,8 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
     cover: '/img/projects/vengajusti',
     featured: false,
     title: 'VengaJustiLolis Alv Z',
-    githubUrl: 'https://github.com/HugoFernandoColmenares/VengaJustiLolisAlvZ',
-    liveUrl: 'https://hugofernandocolmenares.github.io/VengaJustiLolisAlvZ/',
+    githubUrl: 'https://github.com/HugoFernandoColmenares/VengaJustiLolisAlvZNg',
+    liveUrl: 'https://hugofernandocolmenares.github.io/VengaJustiLolisAlvZNg/',
     summary: {
       en: 'Meta-fiction of a tabletop role-playing group turned WhatsApp group: annual awards with voting, posts and the lore of the Rift, in one Angular 22 app.',
       es: 'Meta-ficción de un grupo de rol de mesa convertido en grupo de WhatsApp: premios anuales con votación, posts y el lore de la Grieta en una sola app Angular 22.',
@@ -627,6 +628,227 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
         en: 'Live on GitHub Pages in demo mode; Firebase connection pending. Open source. Interface in Spanish.',
         es: 'Publicado en GitHub Pages en modo demo; falta conectar Firebase. Código abierto. Interfaz en español.',
       },
+    },
+  },
+
+  'a1000001-0000-4000-8000-000000000029': {
+    slug: 'linkshelf',
+    cover: '/img/projects/linkshelf',
+    featured: false,
+    title: 'LinkShelf',
+    githubUrl: `${GH}/LinkShelf`,
+    liveUrl: null, // not deployed yet (Firebase project linkshelf-hugo has no hosting)
+    summary: {
+      en: 'Personal link manager with a browser extension: saves, cleans and deduplicates TLDR articles in one cloud library instead of browser bookmarks.',
+      es: 'Gestor personal de enlaces con extensión de navegador: guarda, limpia y deduplica artículos de TLDR en una biblioteca en la nube en vez de los favoritos.',
+    },
+    description: {
+      en: 'Personal link manager for the articles that pile up from the TLDR newsletter. An Angular 22 web app searches, filters, edits and cleans the collection; a WXT browser extension (Chrome, Edge, Brave, Firefox) saves the current tab in one click or from the context menu. A shared @linkshelf/core package normalizes URLs on the client: it strips utm_*, fbclid and gclid, unwraps TLDR tracking redirects without network calls and uses the SHA-256 of the normalized URL as the Firestore document id, so exact duplicates are impossible by construction; near-duplicates are flagged by title similarity before saving. Cloud Firestore and Google Auth on the free Spark plan; pnpm monorepo with Firestore rules tested against the emulators.',
+      es: 'Gestor personal de enlaces para los artículos que se acumulan del newsletter TLDR. Una web en Angular 22 busca, filtra, edita y limpia la colección; una extensión WXT (Chrome, Edge, Brave, Firefox) guarda la pestaña actual en un clic o desde el menú contextual. Un paquete compartido @linkshelf/core normaliza las URL en el cliente: quita utm_*, fbclid y gclid, desenvuelve las redirecciones de tracking de TLDR sin red y usa el SHA-256 de la URL normalizada como id del documento en Firestore, así los duplicados exactos son imposibles por construcción; los casi duplicados se avisan por similitud de títulos antes de guardar. Cloud Firestore y Auth con Google en el plan gratuito Spark; monorepo con pnpm y reglas de Firestore probadas contra los emuladores.',
+    },
+    caseStudy: {
+      context: {
+        en: 'Hundreds of TLDR bookmarks had grown out of control: the same URL with different utm_* parameters, with or without www, wrapped in newsletter redirects, and tied to a single browser.',
+        es: 'Cientos de favoritos de TLDR habían crecido sin control: la misma URL con distintos utm_*, con o sin www, envuelta en redirecciones del newsletter y atada a un solo navegador.',
+      },
+      built: {
+        en: [
+          'Library with categories, secondary tags and filters by domain, tag and date.',
+          'Save flow that cleans the URL, suggests a category by rules and warns about exact and near duplicates.',
+          'Browser extension to save the current tab or a link from the context menu.',
+        ],
+        es: [
+          'Biblioteca con categorías, etiquetas secundarias y filtros por dominio, etiqueta y fecha.',
+          'Flujo de guardado que limpia la URL, sugiere categoría por reglas y avisa de duplicados exactos y cercanos.',
+          'Extensión de navegador para guardar la pestaña actual o un enlace desde el menú contextual.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Document id = SHA-256 of the normalized URL, so the database itself rejects duplicates.',
+          'All normalization runs on the client in a shared package used by the web app and the extension.',
+          'Firebase web config stays out of the repository; local development and tests use the demo-linkshelf emulators.',
+        ],
+        es: [
+          'Id del documento = SHA-256 de la URL normalizada, así la propia base rechaza duplicados.',
+          'Toda la normalización corre en el cliente en un paquete compartido por la web y la extensión.',
+          'La config web de Firebase queda fuera del repo; el desarrollo local y los tests usan los emuladores demo-linkshelf.',
+        ],
+      },
+      status: {
+        en: 'MVP running locally against the Firebase emulators; no public deployment yet. Open source. Interface in Spanish.',
+        es: 'MVP funcionando en local contra los emuladores de Firebase; todavía sin despliegue público. Código abierto. Interfaz en español.',
+      },
+    },
+  },
+
+  'a1000001-0000-4000-8000-000000000030': {
+    slug: 'periodico-ia',
+    cover: '/img/projects/periodico-ia',
+    featured: false,
+    title: 'El Periódico de la IA',
+    githubUrl: `${GH}/periodico-ia`,
+    liveUrl: null, // runs locally; not deployed
+    summary: {
+      en: 'Full-stack AI newspaper: Fastify aggregates 15 sources and an Angular 22 front page ranks news on on-device AI and small models.',
+      es: 'Periódico de IA full-stack: Fastify reúne 15 fuentes y una portada en Angular 22 ordena las noticias de IA en el dispositivo y modelos pequeños.',
+    },
+    description: {
+      en: 'Digital newspaper that gathers the most important artificial intelligence news, focused on on-device AI and small models, plus a “what to learn” section aimed at the job market. A Node/Fastify API refreshes around 15 public sources (arXiv, Hacker News and others) on a schedule, scores each article and explains why it was picked; an Angular 22 client renders a classic broadsheet front page with sections for on-device AI, models, research, industry and tools, plus search and a manual refresh.',
+      es: 'Periódico digital que reúne las noticias más importantes de inteligencia artificial, con foco en IA en el dispositivo y modelos pequeños, y una sección de qué aprender para el mercado laboral. Una API en Node/Fastify actualiza unas 15 fuentes públicas (arXiv, Hacker News y otras) de forma programada, puntúa cada artículo y explica por qué se eligió; un cliente en Angular 22 muestra una portada de periódico clásico con secciones de IA en el dispositivo, modelos, investigación, industria y herramientas, además de búsqueda y actualización manual.',
+    },
+    caseStudy: {
+      context: {
+        en: 'AI news moves too fast to follow source by source; the goal was one daily front page about the part that matters for local, small models, with a clear reason for each pick.',
+        es: 'Las noticias de IA van demasiado rápido para seguirlas fuente por fuente; la idea era una portada diaria sobre lo que importa para modelos pequeños y locales, con una razón clara para cada elección.',
+      },
+      built: {
+        en: [
+          'Fastify API that aggregates and scores articles from public feeds on a schedule.',
+          'Broadsheet-style front page with sections, search and “why is this here?” explanations.',
+          'Curated learning roadmap stored as versioned JSON content.',
+        ],
+        es: [
+          'API en Fastify que reúne y puntúa artículos de feeds públicos de forma programada.',
+          'Portada estilo periódico con secciones, búsqueda y explicaciones de “¿por qué está aquí?”.',
+          'Ruta de aprendizaje curada guardada como contenido JSON versionado.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Transparent ranking: every article shows the score and the reason it was selected.',
+          'Content and learning roadmap live in the repository, so they are reviewed like code.',
+        ],
+        es: [
+          'Ranking transparente: cada artículo muestra su puntaje y la razón por la que se eligió.',
+          'El contenido y la ruta de aprendizaje viven en el repositorio y se revisan como código.',
+        ],
+      },
+      status: {
+        en: 'Runs locally (API + web); no public demo yet. Open source. Interface in Spanish.',
+        es: 'Corre en local (API + web); todavía sin demo pública. Código abierto. Interfaz en español.',
+      },
+    },
+  },
+
+  'a1000001-0000-4000-8000-000000000031': {
+    slug: 'da-metricas',
+    cover: '/img/projects/da-metricas',
+    featured: false,
+    title: 'DA Métricas',
+    githubUrl: 'https://github.com/FeithNoir/da-metricas',
+    liveUrl: null, // runs locally; not deployed
+    summary: {
+      en: 'Public DeviantArt metrics without the official API: gallery sync, SQLite history and statistics explained in plain Spanish.',
+      es: 'Métricas públicas de DeviantArt sin la API oficial: sincroniza la galería, guarda historial en SQLite y explica las estadísticas en español sencillo.',
+    },
+    description: {
+      en: 'Full-stack app that measures the public performance of a DeviantArt artist’s works without the official API. It syncs the gallery from the public RSS feed and oEmbed, keeps a metrics history in SQLite and presents a statistical analysis explained in plain Spanish: descriptives, engagement, outliers, correlations, tags, dates, age and growth, also by franchise and character. A Trends section measures the most recent and most popular works on the platform and contrasts them with the gallery, with rule-based tips that show their figures and confidence. Angular 22 + Node 24 + Fastify; polite requests with retries, cache and concurrency limits.',
+      es: 'Aplicación full-stack que mide el rendimiento público de las obras de un artista de DeviantArt sin la API oficial. Sincroniza la galería desde el feed RSS público y oEmbed, guarda un historial de métricas en SQLite y presenta un análisis estadístico explicado en español sencillo: descriptivos, interacción, atípicos, correlaciones, etiquetas, fechas, antigüedad y crecimiento, también por franquicia y personaje. La sección Tendencias mide las obras más recientes y más populares de la plataforma y las contrasta con la galería, con consejos basados en reglas que muestran sus cifras y su confianza. Angular 22 + Node 24 + Fastify; peticiones respetuosas con reintentos, caché y límites de concurrencia.',
+    },
+    caseStudy: {
+      context: {
+        en: 'DeviantArt shows per-work numbers but no history or analysis, and its official API needs app credentials. The goal was honest insight from public data only.',
+        es: 'DeviantArt muestra cifras por obra pero no historial ni análisis, y su API oficial pide credenciales de app. La meta era sacar conclusiones honestas solo con datos públicos.',
+      },
+      built: {
+        en: [
+          'Gallery sync from the public feed and oEmbed, with the work page as a fallback.',
+          'Statistics dashboard with plain-language explanations and a glossary.',
+          'Trends benchmark against recent and popular works, with rule-based advice.',
+          'Scheduled automatic sync, at most every 6 hours.',
+        ],
+        es: [
+          'Sincronización de la galería desde el feed público y oEmbed, con la página de la obra como respaldo.',
+          'Panel de estadísticas con explicaciones en lenguaje sencillo y un diccionario.',
+          'Comparativa de Tendencias contra obras recientes y populares, con consejos por reglas.',
+          'Sincronización automática programada, como mucho cada 6 horas.',
+        ],
+      },
+      decisions: {
+        en: [
+          'No official API and no accounts: only public endpoints, with pauses, retries and caching.',
+          'Every tip shows the numbers and confidence behind it instead of opaque scores.',
+          'Server tests run against trimmed real response fixtures and a simulated DeviantArt.',
+        ],
+        es: [
+          'Sin API oficial ni cuentas: solo endpoints públicos, con pausas, reintentos y caché.',
+          'Cada consejo muestra las cifras y la confianza que lo respaldan en vez de puntajes opacos.',
+          'Los tests del servidor usan fixtures reales recortadas y un DeviantArt simulado.',
+        ],
+      },
+      status: {
+        en: 'Runs locally; no public demo. Open source. Interface in Spanish.',
+        es: 'Corre en local; sin demo pública. Código abierto. Interfaz en español.',
+      },
+    },
+  },
+
+  'a1000001-0000-4000-8000-000000000032': {
+    slug: 'liquidharness',
+    cover: '/img/projects/liquidharness',
+    featured: false,
+    title: 'LiquidHarness',
+    githubUrl: `${GH}/LiquidHarness`,
+    liveUrl: null, // CLI, nothing to host
+    summary: {
+      en: 'Local-first agent runtime in Go for Liquid AI LFM2.5: file tools behind a policy engine, explicit approvals, a workspace jail and an audit log.',
+      es: 'Runtime de agentes local en Go para Liquid AI LFM2.5: herramientas de archivos tras un motor de políticas, aprobaciones explícitas, jaula de workspace y auditoría.',
+    },
+    description: {
+      en: 'Single-binary agent harness that runs Liquid AI LFM2.5 on your own computer. It reads, searches, summarizes and edits the files you point it at, with explicit approvals, a workspace jail and a full audit trail; no cloud account and no data leaves the machine unless asked. ask and run --print talk to an OpenAI-compatible LFM2.5 backend with SSE streaming, budget and loop detection, context trimming and parallel read-only tools; write tools are confined to the workspace and every decision is appended to a JSONL audit log. The model manager downloads, resumes and verifies GGUF weights, and doctor checks config, paths, permissions and model connectivity.',
+      es: 'Harness de agentes en un solo binario que ejecuta Liquid AI LFM2.5 en tu propio equipo. Lee, busca, resume y edita los archivos que le indiques, con aprobaciones explícitas, una jaula de workspace y auditoría completa; sin cuenta en la nube y sin que ningún dato salga del equipo salvo que lo pidas. ask y run --print hablan con un backend LFM2.5 compatible con OpenAI con streaming SSE, presupuesto y detección de bucles, recorte de contexto y herramientas de solo lectura en paralelo; las de escritura quedan confinadas al workspace y cada decisión se agrega a un log de auditoría JSONL. El gestor de modelos descarga, reanuda y verifica pesos GGUF, y doctor revisa configuración, rutas, permisos y conexión con el modelo.',
+    },
+    caseStudy: {
+      context: {
+        en: 'Small local models are good enough for file chores, but most agent tools assume a cloud account and broad machine access. LiquidHarness keeps the model and the data local and makes every risky action explicit.',
+        es: 'Los modelos pequeños locales alcanzan para tareas con archivos, pero la mayoría de agentes asumen una cuenta en la nube y acceso amplio al equipo. LiquidHarness mantiene modelo y datos en local y vuelve explícita cada acción riesgosa.',
+      },
+      built: {
+        en: [
+          'CLI with version, config, doctor, policy, models, ask and run commands.',
+          'Agent turn with streaming, budgets, loop detection and extractive compaction.',
+          'Policy engine with risk levels (R0–R2) and ask/allow modes for each tool.',
+        ],
+        es: [
+          'CLI con los comandos version, config, doctor, policy, models, ask y run.',
+          'Turno de agente con streaming, presupuestos, detección de bucles y compactación extractiva.',
+          'Motor de políticas con niveles de riesgo (R0–R2) y modos ask/allow por herramienta.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Every path is resolved through the workspace jail in code, not by convention.',
+          'Shell and network tools are disabled by default; writes require approval.',
+          'One Go binary with no runtime dependencies; CI on every push.',
+        ],
+        es: [
+          'Cada ruta se resuelve a través de la jaula del workspace en código, no por convención.',
+          'Las herramientas de shell y red vienen desactivadas; las escrituras piden aprobación.',
+          'Un solo binario en Go sin dependencias en tiempo de ejecución; CI en cada push.',
+        ],
+      },
+      status: {
+        en: 'In development (safe-execution phase complete); storage, TUI and installers pending. Open source (Apache-2.0).',
+        es: 'En desarrollo (fase de ejecución segura completa); faltan almacenamiento, TUI e instaladores. Código abierto (Apache-2.0).',
+      },
+    },
+  },
+
+  'a1000001-0000-4000-8000-000000000033': {
+    slug: 'duelists-forge',
+    cover: '/img/projects/duelists-forge',
+    featured: false,
+    title: "Duelist's Forge",
+    githubUrl: 'https://github.com/FeithNoir/DuelistsForge',
+    liveUrl: 'https://feithnoir.github.io/DuelistsForge/',
+    summary: {
+      en: 'Custom Yu-Gi-Oh!-style card maker with live preview, 3D flip and PNG download, bilingual and keyboard accessible.',
+      es: 'Creador de cartas estilo Yu-Gi-Oh! con vista previa en vivo, giro 3D y descarga en PNG, bilingüe y accesible con teclado.',
+    },
+    description: {
+      en: 'Interactive web app to create, preview and download custom Yu-Gi-Oh!-style cards. An editor groups core info, monster specs and visuals and text, while the card updates live with an immersive 3D flip effect; the finished card downloads as an image. Spanish/English interface, keyboard support (Tab focuses and flips the card) and no backend. Published on GitHub Pages; an Angular 22 rebuild with a migration tutorial is in review.',
+      es: 'Aplicación web interactiva para crear, previsualizar y descargar cartas personalizadas estilo Yu-Gi-Oh!. Un editor agrupa información básica, datos de monstruo y visuales y texto, mientras la carta se actualiza en vivo con un efecto de giro 3D; la carta terminada se descarga como imagen. Interfaz en español e inglés, soporte de teclado (Tab enfoca y gira la carta) y sin backend. Publicada en GitHub Pages; una reconstrucción en Angular 22 con tutorial de migración está en revisión.',
     },
   },
 

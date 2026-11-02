@@ -67,9 +67,35 @@ describe('toPublicProject', () => {
     const id = 'a1000001-0000-4000-8000-000000000028';
     const project = toPublicProject(row({ id }), 'es', PROJECT_CURATION[id]);
     expect(project.slug).toBe('vengajustilolisalvz');
-    expect(project.liveUrl).toBe('https://hugofernandocolmenares.github.io/VengaJustiLolisAlvZ/');
-    expect(project.githubUrl).toBe('https://github.com/HugoFernandoColmenares/VengaJustiLolisAlvZ');
+    expect(project.liveUrl).toBe('https://hugofernandocolmenares.github.io/VengaJustiLolisAlvZNg/');
+    expect(project.githubUrl).toBe('https://github.com/HugoFernandoColmenares/VengaJustiLolisAlvZNg');
     expect(project.cover).toBe('/img/projects/vengajusti');
     expect(project.summary).toContain('WhatsApp');
   });
+
+  it('shows DevChronicle with its Firebase Hosting demo', () => {
+    const id = 'a1000001-0000-4000-8000-000000000018';
+    const project = toPublicProject(row({ id }), 'es', PROJECT_CURATION[id]);
+    expect(project.liveUrl).toBe('https://devchronicle-hugo.web.app');
+    expect(project.caseStudy?.status.es).toContain('Firebase Hosting');
+  });
+
+  const added: [string, string, string, string | null, string][] = [
+    ['029', 'linkshelf', 'https://github.com/HugoFernandoColmenares/LinkShelf', null, 'enlaces'],
+    ['030', 'periodico-ia', 'https://github.com/HugoFernandoColmenares/periodico-ia', null, 'IA'],
+    ['031', 'da-metricas', 'https://github.com/FeithNoir/da-metricas', null, 'DeviantArt'],
+    ['032', 'liquidharness', 'https://github.com/HugoFernandoColmenares/LiquidHarness', null, 'LFM2.5'],
+    ['033', 'duelists-forge', 'https://github.com/FeithNoir/DuelistsForge', 'https://feithnoir.github.io/DuelistsForge/', 'Yu-Gi-Oh!'],
+  ];
+  for (const [n, slug, githubUrl, liveUrl, keyword] of added) {
+    it(`shows ${slug} with its verified links and local cover`, () => {
+      const id = `a1000001-0000-4000-8000-000000000${n}`;
+      const project = toPublicProject(row({ id }), 'es', PROJECT_CURATION[id]);
+      expect(project.slug).toBe(slug);
+      expect(project.githubUrl).toBe(githubUrl);
+      expect(project.liveUrl).toBe(liveUrl);
+      expect(project.cover).toBe(`/img/projects/${slug}`);
+      expect(project.summary).toContain(keyword);
+    });
+  }
 });
