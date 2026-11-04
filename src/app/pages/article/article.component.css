@@ -64,7 +64,7 @@
 
 .article__cover {
   margin: clamp(3.2rem, 5vw, 5.6rem) 0;
-  border: 1px solid var(--color-border);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 22%, var(--color-border));
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
@@ -171,9 +171,14 @@
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   color: var(--color-text-heading);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
 }
 
-.pager__link:hover { border-color: var(--color-border-strong); color: var(--color-accent); }
+.pager__link:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
 .pager__dir { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 1.25rem; color: var(--color-text-muted); }
 .pager__title { font-size: 1.9rem; font-weight: 650; letter-spacing: -0.015em; }
 .pager__link--next { text-align: right; align-items: flex-end; }
