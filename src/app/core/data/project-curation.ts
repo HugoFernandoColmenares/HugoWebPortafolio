@@ -852,6 +852,57 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
     },
   },
 
+  'a1000001-0000-4000-8000-000000000037': {
+    slug: 'onirifix',
+    cover: '/img/projects/onirifix',
+    featured: false,
+    title: 'OniriFix',
+    githubUrl: 'https://github.com/FeithNoir/OniriFix',
+    liveUrl: null,
+    summary: {
+      en: 'Offline deterministic editorial corrector for Spanish fiction: L1/L2/L3 rules, desktop GUI and CLI, PDF in and out.',
+      es: 'Corrector editorial offline y determinista para ficción en español: reglas L1/L2/L3, GUI de escritorio y CLI, PDF de entrada y salida.',
+    },
+    description: {
+      en: 'Desktop and CLI tool that reads Spanish fiction manuscripts (PDF or Markdown) and applies deterministic L1/L2/L3 rules for accents, dialogue dashes, punctuation and repeated paragraphs, while leaving creative choices to the author. Built with Python 3.11, PySide6 (TagFlow-like UI), Click/Rich and SQLite. Exports corrected manuscripts and reports as PDF. Fire-tested on a ~223,000-word novel: analysis in about 4 seconds.',
+      es: 'Corrector editorial offline para ficción en español. Lee manuscritos en PDF o Markdown, aplica reglas deterministas L1/L2/L3 (tildes, diálogos con raya, puntuación, repeticiones) y deja las decisiones creativas al autor. Interfaz de escritorio con PySide6 al estilo TagFlow, CLI con Click/Rich y exportación a PDF. Probado con una novela de unas 223.000 palabras: analiza en unos 4 segundos.',
+    },
+    caseStudy: {
+      context: {
+        en: 'Spanish fiction editing piles up mechanical work (accents, dialogue dashes, punctuation) that a writer should not have to hunt by hand before the creative pass.',
+        es: 'La edición de ficción en español acumula trabajo mecánico (tildes, rayas de diálogo, puntuación) que el autor no debería cazar a mano antes del pase creativo.',
+      },
+      built: {
+        en: [
+          'Rule engine with L1 (auto), L2 (assisted) and L3 (report-only) levels and per-finding accept/reject.',
+          'PySide6 desktop UI with progress, cancel, chapter jump and "safe L2" batch apply; Click/Rich CLI.',
+          'PDF/Markdown input and PDF report + corrected manuscript export; SQLite register for glossaries.',
+        ],
+        es: [
+          'Motor de reglas con niveles L1 (auto), L2 (asistido) y L3 (solo aviso) y aceptar/rechazar por hallazgo.',
+          'Interfaz de escritorio PySide6 con progreso, cancelar, salto a capítulo y lote «L2 seguras»; CLI Click/Rich.',
+          'Entrada PDF/Markdown y exportación de informe + manuscrito corregido en PDF; registro SQLite para glosarios.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Deterministic rules only: no generative AI rewrites the prose.',
+          'Creative continuity, POV and sense-dependent tú/tu or por qué/porque stay with the author.',
+          'Manuscripts and editorial reports stay out of the public repo (.gitignore).',
+        ],
+        es: [
+          'Solo reglas deterministas: ninguna IA generativa reescribe la prosa.',
+          'La continuidad creativa, el punto de vista y tú/tu o por qué/porque según el sentido quedan en el autor.',
+          'Los manuscritos y los informes editoriales quedan fuera del repo público (.gitignore).',
+        ],
+      },
+      status: {
+        en: 'Completed MVP with desktop GUI, CLI and PDF export. Open source (MIT). No live web demo (desktop app).',
+        es: 'MVP completo con GUI de escritorio, CLI y exportación PDF. Código abierto (MIT). Sin demo web (app de escritorio).',
+      },
+    },
+  },
+
   // ------------------------------------------------------ hidden from public
   // Generic copy + Unsplash stock photo; the linked ReImage repo is a C# CLI
   // renamer, not the WPF/DDD app described. Kept in the DB, hidden here.
