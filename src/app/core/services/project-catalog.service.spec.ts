@@ -86,6 +86,7 @@ describe('toPublicProject', () => {
     ['031', 'da-metricas', 'https://github.com/FeithNoir/da-metricas', null, 'DeviantArt'],
     ['032', 'liquidharness', 'https://github.com/HugoFernandoColmenares/LiquidHarness', null, 'LFM2.5'],
     ['033', 'duelists-forge', 'https://github.com/FeithNoir/DuelistsForge', 'https://feithnoir.github.io/DuelistsForge/', 'Yu-Gi-Oh!'],
+    ['037', 'onirifix', 'https://github.com/FeithNoir/OniriFix', null, 'editorial'],
   ];
   for (const [n, slug, githubUrl, liveUrl, keyword] of added) {
     it(`shows ${slug} with its verified links and local cover`, () => {
