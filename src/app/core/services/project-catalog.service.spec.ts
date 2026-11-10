@@ -87,6 +87,7 @@ describe('toPublicProject', () => {
     ['032', 'liquidharness', 'https://github.com/HugoFernandoColmenares/LiquidHarness', null, 'LFM2.5'],
     ['033', 'duelists-forge', 'https://github.com/FeithNoir/DuelistsForge', 'https://feithnoir.github.io/DuelistsForge/', 'Yu-Gi-Oh!'],
     ['037', 'onirifix', 'https://github.com/FeithNoir/OniriFix', null, 'editorial'],
+    ['038', 'bookpublisher', 'https://github.com/FeithNoir/BookPublisher', null, 'maquetación'],
   ];
   for (const [n, slug, githubUrl, liveUrl, keyword] of added) {
     it(`shows ${slug} with its verified links and local cover`, () => {
