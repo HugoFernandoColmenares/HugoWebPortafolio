@@ -903,6 +903,57 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
     },
   },
 
+  'a1000001-0000-4000-8000-000000000038': {
+    slug: 'bookpublisher',
+    cover: '/img/projects/bookpublisher',
+    featured: false,
+    title: 'BookPublisher',
+    githubUrl: 'https://github.com/FeithNoir/BookPublisher',
+    liveUrl: null,
+    summary: {
+      en: 'Local studio that turns PDF into Word or Markdown and exports long books to PDF with four typographic themes, chapter-parallel cache, progress and cancel.',
+      es: 'Estudio local de maquetación que convierte PDF a Word o Markdown y exporta libros largos a PDF con cuatro temas tipográficos, caché por capítulo, progreso y cancelación.',
+    },
+    description: {
+      en: 'Local layout studio for books, novels, guides and manuals. Imports a PDF and converts it to Markdown or Word, and exports Markdown, plain text or Word to print-quality PDF with the Códice, Novela clásica, Manual técnico and Sencillo themes. Angular 22 studio and a FastAPI + Typst + PyMuPDF engine. Export runs per chapter in parallel, with a cache, progress and cancel: a 683-page novel completes in about 1.9 s.',
+      es: 'Estudio local de maquetación de libros, novelas, guías y manuales. Importa un PDF y lo convierte a Markdown o Word, y exporta Markdown, texto plano o Word a PDF con los temas Códice, Novela clásica, Manual técnico y Sencillo. Interfaz en Angular 22 y motor FastAPI + Typst + PyMuPDF. La exportación corre por capítulos en paralelo, con caché, progreso y cancelación: una novela de 683 páginas sale en unos 1,9 s.',
+    },
+    caseStudy: {
+      context: {
+        en: 'Laying out a long novel, guide or manual as a print-quality PDF, or recovering an existing PDF as Markdown or Word, gets frustrating when export is slow and cannot be canceled.',
+        es: 'Maquetar una novela, guía o manual largo como PDF de imprenta, o recuperar un PDF existente como Markdown o Word, se vuelve frustrante si la exportación es lenta y no se puede cancelar.',
+      },
+      built: {
+        en: [
+          'PDF import to Markdown and Word that keeps titles, paragraphs, italics, bold, small caps, lists, tables, notes and images, and strips headers, footers, page numbers and broken hyphenation.',
+          'Four typographic themes (Códice, Novela clásica, Manual técnico, Sencillo) composed with Typst; also export to Word or Markdown.',
+          'Angular 22 studio and FastAPI engine; chapter-parallel export with cache, progress, remaining time and immediate cancel.',
+        ],
+        es: [
+          'Importación de PDF a Markdown y Word que conserva títulos, párrafos, cursivas, negritas, versalitas, listas, tablas, notas e imágenes, y quita cabeceras, pies, números de página y palabras partidas.',
+          'Cuatro temas tipográficos (Códice, Novela clásica, Manual técnico, Sencillo) compuestos con Typst; también exporta a Word o Markdown.',
+          'Estudio en Angular 22 y motor FastAPI; exportación por capítulos en paralelo, con caché, progreso, tiempo restante y cancelación inmediata.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Everything is processed on the computer you run it on; nothing is uploaded to a server.',
+          'A per-chapter cache so a 683-page novel exports in about 1.9 s and a repeat takes about 0.2 s.',
+          'Public samples are public-domain or written for the project (Don Quijote); private manuscripts stay out of the repo.',
+        ],
+        es: [
+          'Todo se procesa en el equipo del usuario; nada se sube a un servidor.',
+          'Caché por capítulo: una novela de 683 páginas se exporta en unos 1,9 s y repetir tarda unos 0,2 s.',
+          'Las muestras públicas son de dominio público o escritas para el proyecto (Don Quijote); los manuscritos privados quedan fuera del repo.',
+        ],
+      },
+      status: {
+        en: 'Completed local studio with PDF import and PDF/Word/Markdown export. Open source (MIT). No live web demo (runs locally).',
+        es: 'Estudio local completo, con importación de PDF y exportación a PDF, Word o Markdown. Código abierto (MIT). Sin demo web (corre en local).',
+      },
+    },
+  },
+
   // ------------------------------------------------------ hidden from public
   // Generic copy + Unsplash stock photo; the linked ReImage repo is a C# CLI
   // renamer, not the WPF/DDD app described. Kept in the DB, hidden here.
