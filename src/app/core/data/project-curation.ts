@@ -637,7 +637,7 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
     featured: false,
     title: 'LinkShelf',
     githubUrl: `${GH}/LinkShelf`,
-    liveUrl: null, // not deployed yet (Firebase project linkshelf-hugo has no hosting)
+    liveUrl: 'https://linkshelf-hugo.web.app',
     summary: {
       en: 'Personal link manager with a browser extension: saves, cleans and deduplicates TLDR articles in one cloud library instead of browser bookmarks.',
       es: 'Gestor personal de enlaces con extensión de navegador: guarda, limpia y deduplica artículos de TLDR en una biblioteca en la nube en vez de los favoritos.',
@@ -676,8 +676,8 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
         ],
       },
       status: {
-        en: 'MVP running locally against the Firebase emulators; no public deployment yet. Open source. Interface in Spanish.',
-        es: 'MVP funcionando en local contra los emuladores de Firebase; todavía sin despliegue público. Código abierto. Interfaz en español.',
+        en: 'MVP live on Firebase Hosting (https://linkshelf-hugo.web.app) with demo mode in the browser and personal mode behind an allowlist. Open source. Interface in Spanish.',
+        es: 'MVP en Firebase Hosting (https://linkshelf-hugo.web.app), con modo demo en el navegador y modo personal con lista de acceso. Código abierto. Interfaz en español.',
       },
     },
   },
