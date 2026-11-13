@@ -81,7 +81,7 @@ describe('toPublicProject', () => {
   });
 
   const added: [string, string, string, string | null, string][] = [
-    ['029', 'linkshelf', 'https://github.com/HugoFernandoColmenares/LinkShelf', null, 'enlaces'],
+    ['029', 'linkshelf', 'https://github.com/HugoFernandoColmenares/LinkShelf', 'https://linkshelf-hugo.web.app', 'enlaces'],
     ['030', 'periodico-ia', 'https://github.com/HugoFernandoColmenares/periodico-ia', null, 'IA'],
     ['031', 'da-metricas', 'https://github.com/FeithNoir/da-metricas', null, 'DeviantArt'],
     ['032', 'liquidharness', 'https://github.com/HugoFernandoColmenares/LiquidHarness', null, 'LFM2.5'],
