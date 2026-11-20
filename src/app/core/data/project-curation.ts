@@ -954,6 +954,222 @@ export const PROJECT_CURATION: Record<string, ProjectCuration> = {
     },
   },
 
+  'a1000001-0000-4000-8000-000000000039': {
+    slug: 'epibio',
+    cover: '/img/projects/epibio',
+    featured: false,
+    title: 'EpiBio',
+    githubUrl: `${GH}/EpiBio`,
+    liveUrl: null,
+    summary: {
+      en: 'Reproducible Python pipeline that compares 16S microbial communities on corroded seafloor steel and surrounding sediment, using public MGnify and ENA data.',
+      es: 'Pipeline reproducible en Python que compara comunidades microbianas 16S del acero corroído en el fondo marino y del sedimento, con datos públicos de MGnify y la ENA.',
+    },
+    description: {
+      en: 'Python pipeline that downloads the MGnify SSU table and the ENA amplicon metadata without an API key, groups reads by genus, computes relative abundances and applies rarefaction, alpha and beta diversity (Bray-Curtis), PCoA and PERMANOVA with scikit-bio. It writes interactive plotly HTML charts and a console summary. Based on Rajala et al. (Microbiome, 2022) on sulfate-dependent corrosion of mild steel in the deep sea. Fixed seed and 8 pytest tests.',
+      es: 'Pipeline en Python que descarga sin clave la tabla SSU de MGnify y los metadatos de amplicón de la ENA, agrupa por género, calcula abundancias relativas y aplica rarefacción, diversidad alfa y beta (Bray-Curtis), PCoA y PERMANOVA con scikit-bio. Genera gráficas HTML interactivas con plotly y un resumen en consola. Parte del estudio de Rajala et al. (Microbiome, 2022) sobre la corrosión del acero en el mar profundo. Semilla fija y 8 pruebas con pytest.',
+    },
+    caseStudy: {
+      context: {
+        en: 'Comparing the microbiome of corroded steel chains with the sediment around them usually means a pile of one-off notebooks. The goal was a pipeline anyone can rerun from public data and check against the published report.',
+        es: 'Comparar el microbioma de cadenas de acero corroídas con el sedimento que las rodea suele terminar en una pila de notebooks sueltos. La meta fue un pipeline que cualquiera pueda repetir con datos públicos y contrastar con el informe publicado.',
+      },
+      built: {
+        en: [
+          'Download of the MGnify SSU table and ENA metadata with httpx, no account or key required.',
+          'Lineage parsing, genus grouping and relative abundances with pandas.',
+          'Rarefaction, alpha diversity, Bray-Curtis, PCoA and PERMANOVA with scikit-bio; interactive plotly charts and a console summary.',
+        ],
+        es: [
+          'Descarga de la tabla SSU de MGnify y de los metadatos de la ENA con httpx, sin cuenta ni clave.',
+          'Partición del linaje taxonómico, agrupación por género y abundancias relativas con pandas.',
+          'Rarefacción, diversidad alfa, Bray-Curtis, PCoA y PERMANOVA con scikit-bio; gráficas interactivas con plotly y resumen en consola.',
+        ],
+      },
+      decisions: {
+        en: [
+          'One module per responsibility (download, taxonomy, diversity, charts, report) and pure functions, so each step can be tested on its own.',
+          'Fixed seed (SEMILLA = 42) and a DESCARGAS.txt log so a run can be reproduced.',
+          'The data belongs to EMBL-EBI and the study authors: the repo cites it and keeps the downloaded files out of git.',
+        ],
+        es: [
+          'Un módulo por responsabilidad (descarga, taxonomía, diversidad, gráficas, reporte) y funciones puras, para probar cada paso por separado.',
+          'Semilla fija (SEMILLA = 42) y bitácora DESCARGAS.txt para poder repetir una corrida.',
+          'Los datos son de EMBL-EBI y de los autores del estudio: el repo los cita y deja los archivos descargados fuera de git.',
+        ],
+      },
+      status: {
+        en: 'Completed first version (0.1.0) with a verified end-to-end run: Desulfovibrio dominates the chains and PC1 (about 64.7 %) separates sediment from chain samples. Open source (MIT). No live web demo (runs locally).',
+        es: 'Primera versión (0.1.0) completa, con una corrida de punta a punta verificada: Desulfovibrio domina en las cadenas y PC1 (cerca del 64,7 %) separa el sedimento de las cadenas. Código abierto (MIT). Sin demo web (corre en local).',
+      },
+    },
+    related: [
+      {
+        label: 'DevChronicle: comparar comunidades microbianas con pandas y scikit-bio',
+        url: 'https://devchronicle-hugo.web.app/post/comparar-comunidades-microbianas-acero-corroido-sedimento-pandas-scikit-bio',
+      },
+    ],
+  },
+
+  'a1000001-0000-4000-8000-000000000040': {
+    slug: 'atelier-criollo',
+    cover: '/img/projects/atelier-criollo',
+    featured: false,
+    title: 'Atelier Criollo',
+    githubUrl: null, // private repository (FeithNoir/Atelier-Criollo): demo only
+    liveUrl: 'https://ateliercriollo.vercel.app/',
+    summary: {
+      en: 'Local-first 3D floor planner and interior editor with a Colombian Criollo Art Deco look: 2D blueprint plus cel-shaded 3D view, themed interiors and multi-room floors.',
+      es: 'Planificador de planos e interiores 3D local-first con estética Art Déco criolla colombiana: plano 2D y vista 3D cel-shaded, interiores temáticos y pisos con varias habitaciones.',
+    },
+    description: {
+      en: 'Browser floor planner and interior editor that keeps everything on your device. Walls, furniture, glass, plants, décor and lights are edited in a 2D blueprint and in a WebGL 3D view with stylized cel-shaded rendering. It has themed interior templates (Café, Salón, Botanical, Atelier), multi-room floors with stairs, procedural materials, day and night lighting, and local drafts and named projects in IndexedDB with JSON import and export. An MCP surface over HTTP and stdio lets external clients inspect and change the scene. React, Three.js and Zustand, with an Express server.',
+      es: 'Planificador de planos e interiores en el navegador que guarda todo en el equipo. Muros, muebles, vidrios, plantas, decoración y luces se editan en un plano 2D y en una vista 3D con WebGL y render cel-shaded estilizado. Incluye plantillas de interiores temáticas (Café, Salón, Botánico, Atelier), pisos con varias habitaciones y escaleras, materiales procedurales, luz de día y de noche, y borradores y proyectos con nombre en IndexedDB con importación y exportación JSON. Una interfaz MCP por HTTP y stdio permite que clientes externos inspeccionen y modifiquen la escena. React, Three.js y Zustand, con un servidor Express.',
+    },
+    caseStudy: {
+      context: {
+        en: 'Laying out rooms in a floor-plan tool usually means a flat drawing that says little about how the space will feel. The idea was an editor where the same plan is also a lit 3D scene with its own visual identity.',
+        es: 'Distribuir habitaciones en una herramienta de planos suele dar un dibujo plano que dice poco de cómo se sentirá el espacio. La idea fue un editor donde el mismo plano también sea una escena 3D iluminada y con identidad visual propia.',
+      },
+      built: {
+        en: [
+          'Dual 2D blueprint and 3D WebGL editing of walls, furniture, glass, plants, décor and lights, with themed interiors and multi-room floors.',
+          'Procedural materials, day and night toon ramps and lighting moods in Three.js.',
+          'Local persistence in IndexedDB (drafts, named projects, JSON import and export) and an MCP HTTP and stdio surface for external clients.',
+        ],
+        es: [
+          'Edición dual: plano 2D y vista 3D con WebGL de muros, muebles, vidrios, plantas, decoración y luces, con interiores temáticos y pisos de varias habitaciones.',
+          'Materiales procedurales, rampas toon de día y de noche y ambientes de luz en Three.js.',
+          'Persistencia local en IndexedDB (borradores, proyectos con nombre, importación y exportación JSON) y una interfaz MCP por HTTP y stdio para clientes externos.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Local-first: drafts and projects live in the browser, with no account and no upload.',
+          'Collision rules keep a 12 cm clearance between objects and stop furniture from overlapping walls.',
+          'The repository is private, so the portfolio links only the live demo.',
+        ],
+        es: [
+          'Local-first: los borradores y proyectos viven en el navegador, sin cuenta y sin subir nada.',
+          'Reglas de colisión que mantienen 12 cm de separación entre objetos e impiden que los muebles se monten sobre los muros.',
+          'El repositorio es privado, así que el portafolio enlaza solo la demo en vivo.',
+        ],
+      },
+      status: {
+        en: 'In progress: editor, interiors, floors, local storage and MCP work; polish items remain. Live demo on Vercel. Code is private.',
+        es: 'En desarrollo: el editor, los interiores, los pisos, el guardado local y el MCP funcionan; quedan detalles de pulido. Demo en vivo en Vercel. El código es privado.',
+      },
+    },
+  },
+
+  'a1000001-0000-4000-8000-000000000041': {
+    slug: 'shapecraft',
+    cover: '/img/projects/shapecraft',
+    featured: false,
+    title: 'ShapeCraft',
+    githubUrl: null, // private repository (FeithNoir/ShapeCraft)
+    liveUrl: null,
+    summary: {
+      en: 'Modular 3D designer-toy customizer: pick hair, ears, tail, clothes and accessories, morph the body, pose the figure and export PNG, 360° GIF or GLB.',
+      es: 'Personalizador 3D modular de figuras de diseño: elige peinado, orejas, cola, ropa y accesorios, ajusta el cuerpo, posa la figura y exporta en PNG, GIF 360° o GLB.',
+    },
+    description: {
+      en: 'Figurine studio in the browser built with React, TypeScript, Zustand and Three.js. A dock lets you switch hair, ears, tail, tops, bottoms, shoes and accessories with colors and material finishes (metallic, matte, glossy, satin), adjust the body with morph parameters, apply character presets and play a library of seven poses. The view offers four camera angles and four backdrops, accepts your own GLB models, and exports a PNG snapshot (optionally transparent), a 360° turntable GIF or a 3D GLB/GLTF file. Catalog and preset consistency are covered by tests.',
+      es: 'Estudio de figuras en el navegador hecho con React, TypeScript, Zustand y Three.js. Un panel permite cambiar peinado, orejas, cola, tops, bottoms, zapatos y accesorios con colores y acabados de material (metálico, mate, brillante, satinado), ajustar el cuerpo con parámetros de morfología, aplicar presets de personaje y reproducir una biblioteca de siete poses. La vista ofrece cuatro ángulos de cámara y cuatro fondos, acepta modelos GLB propios y exporta una captura PNG (con fondo transparente opcional), un GIF giratorio de 360° o un archivo 3D GLB/GLTF. Pruebas de consistencia para el catálogo y los presets.',
+    },
+    caseStudy: {
+      context: {
+        en: 'Dressing a stylized figure normally means going back to a 3D tool for every outfit change. The goal was a studio where parts are modular and a look can be built, posed and exported in a few clicks.',
+        es: 'Vestir una figura estilizada suele obligar a volver a una herramienta 3D por cada cambio de ropa. La meta fue un estudio donde las piezas sean modulares y un look se arme, se ponga en pose y se exporte en pocos clics.',
+      },
+      built: {
+        en: [
+          'Part catalog by category (hair, ears, tail, tops, bottoms, shoes, accessories) with colors and four material finishes, plus body morph parameters.',
+          'Pose library with seven poses, camera and backdrop presets, character presets and GLB import.',
+          'Export to PNG, 360° GIF and GLB/GLTF with Three.js exporters.',
+        ],
+        es: [
+          'Catálogo de piezas por categoría (peinados, orejas, cola, tops, bottoms, zapatos, accesorios) con colores y cuatro acabados de material, más parámetros de morfología del cuerpo.',
+          'Biblioteca de siete poses, ajustes de cámara y fondo, presets de personaje e importación de GLB.',
+          'Exportación a PNG, GIF de 360° y GLB/GLTF con los exportadores de Three.js.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Parts are built procedurally by factories per category, so adding an item is adding an entry to the catalog.',
+          'One Zustand store holds the look; presets are data checked by tests.',
+          'The repository is private and the project has no public demo yet, so the portfolio shows no links.',
+        ],
+        es: [
+          'Las piezas se construyen de forma procedural con fábricas por categoría, así que agregar un ítem es agregar una entrada al catálogo.',
+          'Un solo store de Zustand guarda el look; los presets son datos revisados por pruebas.',
+          'El repositorio es privado y el proyecto aún no tiene demo pública, así que el portafolio no muestra enlaces.',
+        ],
+      },
+      status: {
+        en: 'In progress: customizer, poses and export work. Private repository and no public demo.',
+        es: 'En desarrollo: el personalizador, las poses y la exportación funcionan. Repositorio privado y sin demo pública.',
+      },
+    },
+  },
+
+  'a1000001-0000-4000-8000-000000000042': {
+    slug: 'character-custom-creator',
+    cover: '/img/projects/character-custom-creator',
+    featured: false,
+    title: 'Character Custom Creator',
+    githubUrl: null, // private repository (FeithNoir/CharacterCustomCreatorApp)
+    liveUrl: null,
+    summary: {
+      en: 'Paperdoll character editor for the browser: dress a character from PNG assets, a local folder or a MediBang Pro .mdp project, with the art staying on your device.',
+      es: 'Editor de personajes tipo paperdoll para el navegador: viste a un personaje con PNG, una carpeta local o un proyecto .mdp de MediBang Pro, sin que el arte salga del equipo.',
+    },
+    description: {
+      en: 'Paperdoll editor built with Angular 22 (standalone components, signals, zoneless). It takes art from the built-in demo mannequin, a local folder of images or a MediBang Pro .mdp project, decoded in a Web Worker with fflate: offsets, visibility, opacity, clipping masks, "through" folders and the common blend modes are kept so stacking matches the drawing. Folders the importer does not recognize can be re-mapped to a category. It exports a transparent or paper-colored PNG at full size, 2400 px or 1200 px. Nothing is uploaded. Unit tests with Vitest, end-to-end checks with Playwright and an accessible, responsive Ukiyo-e style interface.',
+      es: 'Editor paperdoll hecho con Angular 22 (componentes standalone, signals, zoneless). Toma el arte del maniquí de demostración, de una carpeta local de imágenes o de un proyecto .mdp de MediBang Pro, decodificado en un Web Worker con fflate: se respetan desplazamientos, visibilidad, opacidad, máscaras de recorte, carpetas «through» y los modos de mezcla más comunes, para que el orden de capas coincida con el dibujo. Las carpetas que el importador no reconoce se pueden reasignar a una categoría. Exporta un PNG transparente o con color de papel a tamaño completo, 2400 px o 1200 px. Nada se sube a un servidor. Pruebas unitarias con Vitest, pruebas de punta a punta con Playwright y una interfaz accesible, adaptable y de estilo ukiyo-e.',
+    },
+    caseStudy: {
+      context: {
+        en: 'Illustrators keep their wardrobe pieces as layers inside a drawing app. Dressing a character from those layers should not require uploading the art anywhere or redrawing it.',
+        es: 'Quienes ilustran guardan las prendas de un personaje como capas dentro de una app de dibujo. Vestir al personaje con esas capas no debería exigir subir el arte a ningún lado ni redibujarlo.',
+      },
+      built: {
+        en: [
+          'Three art sources: demo mannequin, local folder (File System Access API or classic upload) and MediBang Pro .mdp files.',
+          '.mdp decoding in a Web Worker with fflate, flattening every garment folder into one selectable item.',
+          'Wardrobe with category mapping, suit-versus-pieces rules, saved looks and PNG export.',
+        ],
+        es: [
+          'Tres fuentes de arte: maniquí de demostración, carpeta local (File System Access API o subida clásica) y archivos .mdp de MediBang Pro.',
+          'Decodificación del .mdp en un Web Worker con fflate, aplanando cada carpeta de prenda en un ítem seleccionable.',
+          'Guardarropa con mapeo de categorías, reglas de traje contra piezas, looks guardados y exportación a PNG.',
+        ],
+      },
+      decisions: {
+        en: [
+          'Private by design: files are read in the browser and never uploaded; .mdp projects, extracted layers and local art are git-ignored.',
+          'The import runs off the main thread so the interface stays responsive on big projects.',
+          'The only art in the repository is a generated demo mannequin; the repository is private and the portfolio shows no links.',
+        ],
+        es: [
+          'Privado por diseño: los archivos se leen en el navegador y nunca se suben; los proyectos .mdp, las capas extraídas y el arte local están en .gitignore.',
+          'La importación corre fuera del hilo principal para que la interfaz siga fluida con proyectos grandes.',
+          'El único arte del repositorio es un maniquí de demostración generado; el repositorio es privado y el portafolio no muestra enlaces.',
+        ],
+      },
+      status: {
+        en: 'In progress: three art sources, .mdp import and PNG export work; improvements follow a phased plan. Private repository and no public demo.',
+        es: 'En desarrollo: las tres fuentes de arte, la importación de .mdp y la exportación a PNG funcionan; las mejoras siguen un plan por fases. Repositorio privado y sin demo pública.',
+      },
+    },
+    related: [
+      {
+        label: 'DevChronicle: leer archivos .mdp en el navegador con fflate y un Web Worker',
+        url: 'https://devchronicle-hugo.web.app/post/leer-archivos-mdp-medibang-navegador-typescript-fflate-web-worker-angular-22',
+      },
+    ],
+  },
+
   // ------------------------------------------------------ hidden from public
   // Generic copy + Unsplash stock photo; the linked ReImage repo is a C# CLI
   // renamer, not the WPF/DDD app described. Kept in the DB, hidden here.

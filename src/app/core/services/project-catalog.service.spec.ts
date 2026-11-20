@@ -80,7 +80,7 @@ describe('toPublicProject', () => {
     expect(project.caseStudy?.status.es).toContain('Firebase Hosting');
   });
 
-  const added: [string, string, string, string | null, string][] = [
+  const added: [string, string, string | null, string | null, string][] = [
     ['029', 'linkshelf', 'https://github.com/HugoFernandoColmenares/LinkShelf', 'https://linkshelf-hugo.web.app', 'enlaces'],
     ['030', 'periodico-ia', 'https://github.com/HugoFernandoColmenares/periodico-ia', null, 'IA'],
     ['031', 'da-metricas', 'https://github.com/FeithNoir/da-metricas', null, 'DeviantArt'],
@@ -88,6 +88,10 @@ describe('toPublicProject', () => {
     ['033', 'duelists-forge', 'https://github.com/FeithNoir/DuelistsForge', 'https://feithnoir.github.io/DuelistsForge/', 'Yu-Gi-Oh!'],
     ['037', 'onirifix', 'https://github.com/FeithNoir/OniriFix', null, 'editorial'],
     ['038', 'bookpublisher', 'https://github.com/FeithNoir/BookPublisher', null, 'maquetación'],
+    ['039', 'epibio', 'https://github.com/HugoFernandoColmenares/EpiBio', null, 'microbianas'],
+    ['040', 'atelier-criollo', null, 'https://ateliercriollo.vercel.app/', 'planos'],
+    ['041', 'shapecraft', null, null, 'figuras'],
+    ['042', 'character-custom-creator', null, null, 'paperdoll'],
   ];
   for (const [n, slug, githubUrl, liveUrl, keyword] of added) {
     it(`shows ${slug} with its verified links and local cover`, () => {
